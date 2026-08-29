@@ -19,7 +19,7 @@ description: 在 Claude Code 中创作符合 OpenMAIC DSL 协议的课程：大�
 | 逐页生成课件与讲稿 | **workflow-generate**：scaffold → 逐节生成（配方库+normalize+check）→ 内容/规范审查闭环 → 门2 预览抽检 |
 | 离线预览 / 审片 | `node scripts/preview.mjs <dir>` → `open <dir>/build/preview.html` |
 | 给讲稿配音 | **workflow-voice**：doctor → 门3 讲稿终审 → dry-run 成本清单 → 增量合成 → prune → 审片 |
-| 改课程（任何措辞/顺序/版式） | workflow-edit（M5）：**只改源**，随后按需增量重合成/重校验 |
+| 改课程（任何措辞/顺序/版式/音色/配色） | **workflow-edit**：指令路由表 → 只改源 → `edit.mjs status` 级联收敛 → 全课终审 |
 | 解包已有 .maic.zip 继续编辑 | `node scripts/unpack.mjs <zip> <dir>` |
 | 出包 / 交付 | `node scripts/build.mjs <dir>`（内置 check error 门禁 + review blocker 门禁） |
 
@@ -37,6 +37,7 @@ node scripts/check.mjs  <courseDir>     # 三层校验：DSL 契约 / 文档 lin
 node scripts/preview.mjs <courseDir>    # 离线审片台 build/preview.html（门2 产物）
 node scripts/tts.mjs doctor|prune …     # 语音连通检查 / 死音频清理
 node scripts/tts.mjs <courseDir> [--dry-run] [--force] [--scenes 3-5]   # 增量 TTS 合成
+node scripts/edit.mjs status|move|delete|insert|theme|voice …  # 编辑操作 + 级联看板
 node scripts/build.mjs  <courseDir>     # compile + check/review 门禁 + zip(store) → build/<name>.maic.zip
 ```
 
@@ -52,7 +53,7 @@ node scripts/build.mjs  <courseDir>     # compile + check/review 门禁 + zip(st
 - `references/layout-patterns.md` —— 版式配方库，校准坐标（**写画布时必读**）
 - `references/review-checklists.md` —— 审查框架规则 + 三类清单（**任何审查前必读**）
 - `references/workflow-voice.md` —— 语音模块流程 + 密钥/音色参考（**配音前必读**）
-- `references/workflow-edit.md` —— 编辑模块流程（M5 落地）
+- `references/workflow-edit.md` —— 编辑模块：指令路由表 + 级联收敛 + 全课终审（**任何编辑前必读**）
 
 ## 环境变量（语音模块，M4；豆包首发、可替换）
 

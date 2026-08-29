@@ -68,7 +68,7 @@ skill 按 SKILL.md 路由。
 | M2 | 审查框架 + outline 模块（大纲审查闭环） | ✅ 完成（findings 门禁已接入 build；outline lint/sync） |
 | M3 | generate 模块（内容+规范审查、修复闭环、版式配方、preview） | ✅ 完成（layout-patterns 校准坐标；generate scaffold/normalize；preview 离线审片台） |
 | M4 | voice 模块（豆包 adapter + env + doctor + 哈希缓存） | ✅ 完成（**真实豆包合成验证**；改一句只重合成一句；prune 死音频清理） |
-| M5 | edit 模块 + 全课终审 | ⬜ |
+| M5 | edit 模块 + 全课终审 | ✅ 完成（edit.mjs 六操作 + status 级联看板；全课终审入 workflow-edit） |
 | M6 | `--auto` 全自动打磨 + 文档 | ⬜ |
 
 ## 已知事实（实现时踩过/验证过）
