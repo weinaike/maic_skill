@@ -447,6 +447,54 @@ export function pruneAudio(courseDir, options = {}) {
   return { pruned: deadKeys.length, kept: Object.keys(kept).length, dryRun: false, deadKeys };
 }
 
+
+/**
+ * Verify text↔audio sync (the manual-edit guard): every speech line must
+ * resolve through audioKey → voice.lock → existing file with a duration;
+ * lock entries no longer referenced are dead; durations far off the
+ * chars/rate expectation flag suspicious (hand-swapped) files.
+ * @param {string} courseDir
+ * @returns {{ ok: {scene:string,text:string}[], missing: {scene:string,text:string,key:string}[], fileMissing: {scene:string,file:string}[], dead: string[], suspicious: {scene:string,file:string,duration:number,expect:number}[] }}
+ */
+export function verifyAudio(courseDir) {
+  const project = readCourse(courseDir);
+  const voice = project.voice.voice;
+  const speed = project.voice.speed;
+  /** @type {any} */
+  const r = { ok: [], missing: [], fileMissing: [], dead: [], suspicious: [] };
+  const usedKeys = new Set();
+  for (const scene of project.scenes) {
+    for (const block of scene.speech) {
+      if (block.kind !== 'speech') continue;
+      const key = audioKey(block.text, voice, speed);
+      usedKeys.add(key);
+      const entry = project.voiceLock[key];
+      if (!entry || typeof entry['file'] !== 'string') {
+        r.missing.push({ scene: scene.file, text: block.text.slice(0, 36), key });
+        continue;
+      }
+      const local = path.join(courseDir, String(entry['file']));
+      if (!existsSync(local)) {
+        r.fileMissing.push({ scene: scene.file, file: String(entry['file']) });
+        continue;
+      }
+      r.ok.push({ scene: scene.file, text: block.text.slice(0, 36) });
+      // duration sanity: zh ≈370 chars/min (speech-style §9 实测口径)
+      const dur = Number(entry['duration']);
+      if (Number.isFinite(dur) && dur > 0) {
+        const expect = (block.text.length / 370) * 60;
+        if (Math.abs(dur - expect) / expect > 0.5) {
+          r.suspicious.push({ scene: scene.file, file: String(entry['file']), duration: dur, expect: Math.round(expect) });
+        }
+      }
+    }
+  }
+  for (const [key, entry] of Object.entries(project.voiceLock)) {
+    if (!key.startsWith('orphan:') && !usedKeys.has(key)) r.dead.push(String(entry['file']));
+  }
+  return r;
+}
+
 /** Environment / connectivity doctor. Synthesizes one short sentence. */
 export async function ttsDoctor() {
   const cfg = resolveTtsConfig();
@@ -503,6 +551,17 @@ if (isMain) {
     if (args[0] === 'doctor') {
       process.exit((await ttsDoctor()) ? 0 : 1);
     }
+    if (args[0] === 'verify') {
+      const r = verifyAudio(path.resolve(args[1] ?? '.'));
+      for (const m of r.missing) console.error(`  ✗ 失配（讲稿已改，音频未重合成）${m.scene}: ${m.text}…`);
+      for (const m of r.fileMissing) console.error(`  ✗ 音频文件缺失 ${m.scene}: ${m.file}`);
+      for (const s of r.suspicious) console.log(`  ⚠ 时长可疑（可能换错文件）${s.scene}: ${s.file} 实测 ${s.duration.toFixed(1)}s vs 字数预期 ≈${s.expect}s`);
+      for (const d of r.dead) console.log(`  · 死音频（讲稿已不含此句）: ${d}`);
+      const bad = r.missing.length + r.fileMissing.length;
+      console.log(`音频同步: ${bad ? '✗ 不同步' : '✓ 同步'} · 一致 ${r.ok.length} / 失配 ${r.missing.length} / 文件缺失 ${r.fileMissing.length} / 可疑 ${r.suspicious.length} / 死音频 ${r.dead.length}`);
+      if (bad) console.log(`  → node scripts/tts.mjs <dir>（增量补齐）&& node scripts/tts.mjs prune <dir>（清死音频）`);
+      process.exit(bad ? 1 : 0);
+    }
     if (args[0] === 'prune') {
       const r = pruneAudio(path.resolve(args[1] ?? '.'), { dryRun: args.includes('--dry-run') });
       if (r.dryRun) {
@@ -513,7 +572,7 @@ if (isMain) {
       process.exit(0);
     }
     if (args.length === 0 || args[0] === '--help') {
-      console.log('usage: node scripts/tts.mjs doctor | <courseDir> [--dry-run] [--force] [--scenes 3-5] [--provider …] [--voice …] [--speed …]');
+      console.log('usage: node scripts/tts.mjs doctor | verify | prune | <courseDir> [--dry-run] [--force] [--scenes 3-5] [--provider …] [--voice …] [--speed …]');
       process.exit(0);
     }
     const courseDir = path.resolve(args[0]);

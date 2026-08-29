@@ -28,6 +28,7 @@
 ```bash
 node scripts/edit.mjs status <dir>     # 级联看板：①缺音频 ②审查过期 ③大纲漂移 ④TODO ⑤check
 # 按提示逐项清零：
+node scripts/tts.mjs verify <dir>      # ① 讲稿↔音频同步校验（失配/死音频/时长可疑）
 node scripts/tts.mjs <dir>             # ① 增量补被改的句子
 node scripts/review.mjs verdict <dir>  # ② 重新审查变更的 scope
 node scripts/outline.mjs lint <dir>    # ③ 大纲对齐

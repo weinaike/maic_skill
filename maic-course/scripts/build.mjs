@@ -38,6 +38,16 @@ export async function buildCourse(courseDir, options = {}) {
     throw new Error(`${errors.length} error(s) — fix them before building (run check.mjs for the full report)`);
   }
 
+  // Audio gate: a voiced course shipping speech lines without audio is a
+  // silent staleness bug (manual 讲稿 edits not re-synthesized) — refuse.
+  const voiced = Object.keys(project.voiceLock).length > 0;
+  if (voiced && notes.audioMisses.length > 0) {
+    for (const miss of notes.audioMisses.slice(0, 5)) {
+      console.error(`  ✗ [audio] ${miss.scene}: ${miss.text}…`);
+    }
+    throw new Error(`${notes.audioMisses.length} 句讲稿改后未重合成音频（已配音课程不允许无声出包）→ node scripts/tts.mjs ${courseDir}`);
+  }
+
   // Review gate: open blockers from any review scope refuse to ship.
   const review = reviewVerdict(courseDir);
   for (const b of review.blockers) {

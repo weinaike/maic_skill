@@ -39,7 +39,7 @@ node scripts/review.mjs init|validate|verdict …    # 审查 findings（blocker
 node scripts/compile.mjs <courseDir> [--stdout]     # 源 → manifest（确定性、无损）
 node scripts/check.mjs  <courseDir>     # 三层校验：DSL 契约 / 文档 lint / 导入模拟（error 时 exit 1）
 node scripts/preview.mjs <courseDir>    # 离线审片台（翻页+连播：←/→ 翻页、Space 连播、spotlight 同步高亮）
-node scripts/tts.mjs doctor|prune …     # 语音连通检查 / 死音频清理
+node scripts/tts.mjs doctor|verify|prune …  # 连通检查 / 讲稿↔音频同步校验 / 死音频清理
 node scripts/tts.mjs <courseDir> [--dry-run] [--force] [--scenes 3-5]   # 增量 TTS 合成
 node scripts/edit.mjs status|move|delete|insert|theme|voice …  # 编辑操作 + 级联看板
 node scripts/build.mjs  <courseDir>     # compile + check/review 门禁 + zip(store) → build/<name>.maic.zip
@@ -76,7 +76,7 @@ MAIC_TTS_MODEL=            # openai-compatible 专用
 
 ## 硬性规则
 
-1. 编辑永远作用于源文件（scenes/*.md、course.yaml），改完必须 `check`；讲稿文本变了 ⇒ 受影响音频自动失配，需重跑 voice（键 = hash(text|voice|speed)）。
+1. 编辑永远作用于源文件（scenes/*.md、course.yaml），改完必须 `check`；讲稿文本变了 ⇒ 受影响音频自动失配（键 = hash(text|voice|speed)）——用 `tts.mjs verify <dir>` 校验三态（一致/失配/死音频），**已配音课程失配时 build 会硬拒绝**，重跑 `tts.mjs <dir>` + `prune` 收敛。
 2. `build` 的 error 门禁不可绕过；warnings 需在报告里向用户明示。
 3. 画布 text 元素 content 只用白名单 HTML（p/span/br/b/strong/i/em/u/a + 限定 style 属性）。
 4. 场景顺序 = 文件名数字前缀；重排序 = 改名。
