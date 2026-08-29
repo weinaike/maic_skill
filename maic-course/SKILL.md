@@ -16,7 +16,8 @@ description: 在 Claude Code 中创作符合 OpenMAIC DSL 协议的课程：大�
 | 新建课程 / 从 brief 出大纲 | **workflow-outline**：interview 或 brief → `outline.md` → lint → 大纲审查闭环 → 门1 冻结 |
 | 解包课程后补大纲 | `node scripts/outline.mjs sync <dir>` → 充实 → lint → 审查 |
 | 审查 / 复审 | `node scripts/review.mjs …`（规程见 review-checklists.md） |
-| 逐页生成课件与讲稿 | workflow-generate（M3）：按大纲生成 `scenes/NN-*.md` → 内容+规范审查 → preview |
+| 逐页生成课件与讲稿 | **workflow-generate**：scaffold → 逐节生成（配方库+normalize+check）→ 内容/规范审查闭环 → 门2 预览抽检 |
+| 离线预览 / 审片 | `node scripts/preview.mjs <dir>` → `open <dir>/build/preview.html` |
 | 给讲稿配音 | workflow-voice（M4）：TTS 合成进 `audio/` + voice.lock（env 配置见下） |
 | 改课程（任何措辞/顺序/版式） | workflow-edit（M5）：**只改源**，随后按需增量重合成/重校验 |
 | 解包已有 .maic.zip 继续编辑 | `node scripts/unpack.mjs <zip> <dir>` |
@@ -28,9 +29,12 @@ description: 在 Claude Code 中创作符合 OpenMAIC DSL 协议的课程：大�
 node scripts/setup.mjs                  # 同步 @openmaic/dsl dist 到 vendor/ + 环境体检（首次必跑）
 node scripts/unpack.mjs <a.maic.zip> <courseDir> [--force]
 node scripts/outline.mjs lint|sync <courseDir>     # 大纲结构校验 / 从场景反推大纲
+node scripts/generate.mjs scaffold <courseDir> [--scenes 3-5]   # 从大纲生成场景骨架
+node scripts/generate.mjs normalize <scene.md>…    # 生成画布补 DSL 默认值（只对生成场景用）
 node scripts/review.mjs init|validate|verdict …    # 审查 findings（blocker 门禁）
 node scripts/compile.mjs <courseDir> [--stdout]     # 源 → manifest（确定性、无损）
 node scripts/check.mjs  <courseDir>     # 三层校验：DSL 契约 / 文档 lint / 导入模拟（error 时 exit 1）
+node scripts/preview.mjs <courseDir>    # 离线审片台 build/preview.html（门2 产物）
 node scripts/build.mjs  <courseDir>     # compile + check/review 门禁 + zip(store) → build/<name>.maic.zip
 ```
 
@@ -42,9 +46,10 @@ node scripts/build.mjs  <courseDir>     # compile + check/review 门禁 + zip(st
 - `references/maic-format.md` —— .maic.zip manifest 契约 + 平台导入器真实验收逻辑
 - `references/dsl-cheatsheet.md` —— 画布元素 / 动作类型 / 主题 / 白名单（**生成画布前必读**）
 - `references/workflow-outline.md` —— 大纲模块流程（**做大纲前必读**）
+- `references/workflow-generate.md` —— 生成模块流程（**生成场景前必读**）
+- `references/layout-patterns.md` —— 版式配方库，校准坐标（**写画布时必读**）
 - `references/review-checklists.md` —— 审查框架规则 + 三类清单（**任何审查前必读**）
-- `references/layout-patterns.md` —— 版式配方（M3 落地）
-- `references/workflow-{generate,voice,edit}.md` —— 其余模块流程（M3-M5 落地）
+- `references/workflow-{voice,edit}.md` —— 其余模块流程（M4-M5 落地）
 
 ## 环境变量（语音模块，M4；豆包首发、可替换）
 
