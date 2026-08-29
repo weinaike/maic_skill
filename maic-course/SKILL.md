@@ -59,6 +59,7 @@ node scripts/build.mjs  <courseDir>     # compile + check/review 门禁 + zip(st
 - `references/workflow-voice.md` —— 语音模块流程 + 密钥/音色参考（**配音前必读**）
 - `references/workflow-edit.md` —— 编辑模块：指令路由表 + 级联收敛 + 全课终审（**任何编辑前必读**）
 - `references/workflow-auto.md` —— 全自动模式流水线 + 停止红线 + 报告模板（**自动出课前必读**）
+- `references/agents.md` —— 上下文隔离派发配置：导演-演员分工矩阵 + 三个 sub agent 提示词模板（**批量生成/审查前必读**）
 
 ## 环境变量（语音模块，M4；豆包首发、可替换）
 
@@ -80,3 +81,4 @@ MAIC_TTS_MODEL=            # openai-compatible 专用
 3. 画布 text 元素 content 只用白名单 HTML（p/span/br/b/strong/i/em/u/a + 限定 style 属性）。
 4. 场景顺序 = 文件名数字前缀；重排序 = 改名。
 5. 自动模式（用户说全自动/不要问我）下，每个生成环节后仍必须执行对应审查并自动修复（≤2 轮），审查报告落 `build/review/`，未解决的 blocker 必须停下升级给人。
+6. 派发纪律（见 agents.md）：≥3 节批量生成或自动模式，生成派 sub agent（模板 A，风格锚点+承接缝合）；**审查永远派 sub agent**（模板 B，同上下文自审无效）；跨任务状态只走文件，派发前确认用户口头偏好已落盘。

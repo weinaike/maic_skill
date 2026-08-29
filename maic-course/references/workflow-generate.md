@@ -18,7 +18,9 @@ node scripts/generate.mjs scaffold <courseDir> [--scenes 3-5]   # 全部或指�
 每节生成 `NN-标题.md` 骨架（frontmatter + TODO 注释：画布意图/讲稿意图/字数预算
 随骨架写入文件，生成时对着自己的 brief 填）。**增量**：已存在的场景跳过（--force 覆盖）。
 
-### 2. 逐节生成（一节一节做，不要一口气全生成再检查）
+### 2. 逐节生成（派发规则见 references/agents.md：≥3 节或自动模式用模板 A 派 sub agent，3-4 节并行 + 第 1 页先行做风格锚点 + 批后承接缝合；协作模式单节可主 Agent 直做）
+
+（以下为主 Agent 直做时的规程，sub agent 的完整版已内置于模板 A）
 
 **画布**（slide）：
 1. 由大纲"画布意图"关键词选配方（layout-patterns.md）：封面/三栏卡/四栏卡/2×2/
@@ -46,9 +48,10 @@ gains/proficiency/language…），生成后 `check.mjs` 会过 validatePBLConte
 ### 3. 审查闭环（每 ~3 节一批，或用户指定批大小）
 
 1. `node scripts/check.mjs <courseDir>` —— 结构层先清零
-2. 切 reviewer 角色，按 `review-checklists.md` §内容审查 C1-C6 + §规范审查 S1-S5
-   逐节审；findings 写 `build/review/content-review.rN.json` 与
-   `build/review/spec-review.rN.json`（target 均为 `scenes`）
+2. **用模板 B 派独立审查 sub agent**（审查永远隔离——同上下文自审只找得到小毛病），
+   按 `review-checklists.md` §内容审查 C1-C6 + §规范审查 S1-S5 逐节审；findings 写
+   `build/review/content-review.rN.json` 与 `build/review/spec-review.rN.json`
+   （target 均为 `scenes`）
 3. `node scripts/review.mjs verdict <courseDir>` —— open blocker ⇒ 生成者按 findings
    修复（改源）→ check → 重审（round+1），≤2 轮，仍 blocker ⇒ 停下升级用户
 
