@@ -43,6 +43,13 @@ ln -s "$(pwd)/maic-course" /path/to/OpenMAIC/.claude/skills/maic-course
 ## 使用
 
 ```bash
+# 测试（12 项集成：skill 自检 + 从零建课 + 黄金 round-trip）
+node test/all.mjs
+
+# 从零新建一门课（全自动对话即可，机械命令如下）
+node maic-course/scripts/init.mjs courses/my-course --name 课程名 --audience 受众
+# …大纲 workflow（interview/brief）→ generate → voice → build，见 SKILL.md 路由
+
 # 解包一门平台导出的课程继续编辑
 node maic-course/scripts/unpack.mjs ~/Desktop/00.Agent*.maic.zip courses/00-agent-intro
 
@@ -69,7 +76,7 @@ skill 按 SKILL.md 路由。
 | M3 | generate 模块（内容+规范审查、修复闭环、版式配方、preview） | ✅ 完成（layout-patterns 校准坐标；generate scaffold/normalize；preview 离线审片台） |
 | M4 | voice 模块（豆包 adapter + env + doctor + 哈希缓存） | ✅ 完成（**真实豆包合成验证**；改一句只重合成一句；prune 死音频清理） |
 | M5 | edit 模块 + 全课终审 | ✅ 完成（edit.mjs 六操作 + status 级联看板；全课终审入 workflow-edit） |
-| M6 | `--auto` 全自动打磨 + 文档 | ⬜ |
+| M6 | `--auto` 全自动 + 新课脚手架 + 集成测试 + 安装 | ✅ 完成（workflow-auto 流水线；init.mjs；`test/all.mjs` 12 项；已装至 OpenMAIC `.claude/skills/`） |
 
 ## 已知事实（实现时踩过/验证过）
 
@@ -79,3 +86,8 @@ skill 按 SKILL.md 路由。
 - 真实课程（00.Agent）的画布里存在装饰性出血形状（故意越界）与孤儿媒体文件——
   check 对这两类只报 warning，与平台自身行为一致。
 - 平台导入器把 `media/<文件名主干>` 当作画布元素 id 挂媒体；主干不匹配只是媒体悬空，不炸导入。
+- **symlink 安装的坑**（已修）：node 把 ESM 的 `import.meta.url` 解析为真实路径而
+  `process.argv[1]` 保留链接路径，朴素的 is-main 判断在 `.claude/skills/` symlink 下
+  静默失效——所有脚本统一走 `lib/main.mjs` 的 realpath 对比。
+- 豆包 TTS 的 arkcli key 自动解析要求 `~/.arkcli/config.yaml` 有激活 profile；密钥
+  永远优先读 `MAIC_TTS_API_KEY`。

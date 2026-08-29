@@ -7,12 +7,14 @@ description: 在 Claude Code 中创作符合 OpenMAIC DSL 协议的课程：大�
 
 把"课程"当作一个**源码项目**（人擅长改的大纲与讲稿 + agent 生成的画布 JSON），
 编译产出平台可导入的 `.maic.zip`。四个功能模块（大纲 / 内容 / 语音 / 编辑）+ 贯穿的
-编译-校验-打包管线。**自动执行时每个生成环节后必须跑对应审查（见 references/workflow 路由）。**
+编译-校验-打包管线。**自动执行时每个生成环节后必须跑对应审查（规程见 review-checklists.md
+与各 workflow-*.md；全自动串联见 workflow-auto.md）。**
 
 ## 快速路由
 
 | 用户意图 | 动作 |
 |---|---|
+| 全自动出课（brief 进 zip 出） | **workflow-auto**：init → 大纲+审查 → 生成+审查 → 语音 → 全课终审 → build → 报告 |
 | 新建课程 / 从 brief 出大纲 | **workflow-outline**：interview 或 brief → `outline.md` → lint → 大纲审查闭环 → 门1 冻结 |
 | 解包课程后补大纲 | `node scripts/outline.mjs sync <dir>` → 充实 → lint → 审查 |
 | 审查 / 复审 | `node scripts/review.mjs …`（规程见 review-checklists.md） |
@@ -27,6 +29,8 @@ description: 在 Claude Code 中创作符合 OpenMAIC DSL 协议的课程：大�
 
 ```bash
 node scripts/setup.mjs                  # 同步 @openmaic/dsl dist 到 vendor/ + 环境体检（首次必跑）
+node scripts/setup.mjs --check          # skill 完整性自检（SKILL·文档·脚本·dsl 四层）
+node scripts/init.mjs <dir> --name 课程名 [--audience …]   # 新课程脚手架
 node scripts/unpack.mjs <a.maic.zip> <courseDir> [--force]
 node scripts/outline.mjs lint|sync <courseDir>     # 大纲结构校验 / 从场景反推大纲
 node scripts/generate.mjs scaffold <courseDir> [--scenes 3-5]   # 从大纲生成场景骨架
@@ -54,6 +58,7 @@ node scripts/build.mjs  <courseDir>     # compile + check/review 门禁 + zip(st
 - `references/review-checklists.md` —— 审查框架规则 + 三类清单（**任何审查前必读**）
 - `references/workflow-voice.md` —— 语音模块流程 + 密钥/音色参考（**配音前必读**）
 - `references/workflow-edit.md` —— 编辑模块：指令路由表 + 级联收敛 + 全课终审（**任何编辑前必读**）
+- `references/workflow-auto.md` —— 全自动模式流水线 + 停止红线 + 报告模板（**自动出课前必读**）
 
 ## 环境变量（语音模块，M4；豆包首发、可替换）
 

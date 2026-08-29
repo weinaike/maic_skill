@@ -18,8 +18,9 @@ import { fileURLToPath } from 'node:url';
 import { readCourse } from './lib/course.mjs';
 import { compileCourse } from './compile.mjs';
 import { loadConfig } from './lib/dsl.mjs';
+import { isMainModule } from './lib/main.mjs';
 
-const isMain = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+const isMain = isMainModule(import.meta.url);
 
 /**
  * @param {import('./lib/course.mjs').CourseProject} project

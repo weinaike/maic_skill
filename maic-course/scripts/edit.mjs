@@ -31,9 +31,10 @@ import { pruneAudio } from './tts.mjs';
 import { parseSceneMd, serializeSceneMd } from './lib/scene.mjs';
 import { parseYaml, stringifyYaml } from './lib/yaml.mjs';
 import { loadConfig } from './lib/dsl.mjs';
+import { isMainModule } from './lib/main.mjs';
 import { readFileSync } from 'node:fs';
 
-const isMain = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+const isMain = isMainModule(import.meta.url);
 
 // ---------------------------------------------------------------------------
 // status — the cascade dashboard

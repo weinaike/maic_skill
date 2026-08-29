@@ -23,10 +23,11 @@ import { fileURLToPath } from 'node:url';
 import { readCourse } from './lib/course.mjs';
 import { compileCourse } from './compile.mjs';
 import { loadDsl, loadConfig } from './lib/dsl.mjs';
+import { isMainModule } from './lib/main.mjs';
 
 /** @typedef {{ layer: 'L1'|'L2'|'L3', severity: 'error'|'warning'|'info', location: string, message: string }} Finding */
 
-const isMain = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+const isMain = isMainModule(import.meta.url);
 
 /** Tags / style properties observed in real platform exports (calibrated on the 00.Agent sample). */
 const HTML_TAG_ALLOWLIST = new Set(['p', 'span', 'br', 'b', 'strong', 'i', 'em', 'u', 'a', 'sub', 'sup']);

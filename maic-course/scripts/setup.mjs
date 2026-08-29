@@ -6,12 +6,60 @@
  * Usage:
  *   node scripts/setup.mjs [--repo /path/to/OpenMAIC]
  */
-import { cpSync, rmSync, existsSync, readdirSync } from 'node:fs';
+import { cpSync, rmSync, existsSync, readdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { loadConfig, dslCandidates, loadDsl, SKILL_ROOT } from './lib/dsl.mjs';
 
 const args = process.argv.slice(2);
+
+// ---------------------------------------------------------------------------
+// --check: skill integrity self-test (install/upgrade confidence)
+// ---------------------------------------------------------------------------
+if (args.includes('--check')) {
+  const failures = [];
+  // 1. SKILL.md frontmatter (name + description — what Claude Code discovers)
+  const skillPath = path.join(SKILL_ROOT, 'SKILL.md');
+  if (!existsSync(skillPath)) failures.push('SKILL.md missing');
+  else {
+    const fm = readFileSync(skillPath, 'utf8').match(/^---\n([\s\S]*?)\n---/);
+    if (!fm) failures.push('SKILL.md: no frontmatter');
+    else {
+      if (!/^name:\s*\S+/m.test(fm[1])) failures.push('SKILL.md: frontmatter missing name');
+      if (!/^description:\s*\S+/m.test(fm[1])) failures.push('SKILL.md: frontmatter missing description');
+    }
+    // 2. every references/… and scripts/… mentioned in SKILL.md exists
+    for (const m of readFileSync(skillPath, 'utf8').matchAll(/(references|scripts|templates)\/[\w./-]+/g)) {
+      if (!existsSync(path.join(SKILL_ROOT, m[0]))) failures.push(`SKILL.md 引用缺失: ${m[0]}`);
+    }
+  }
+  // 3. references inventory
+  const requiredRefs = [
+    'scene-source-spec.md', 'maic-format.md', 'dsl-cheatsheet.md', 'layout-patterns.md',
+    'review-checklists.md', 'workflow-outline.md', 'workflow-generate.md',
+    'workflow-voice.md', 'workflow-edit.md', 'workflow-auto.md',
+  ];
+  for (const ref of requiredRefs) {
+    if (!existsSync(path.join(SKILL_ROOT, 'references', ref))) failures.push(`references/${ref} 缺失`);
+  }
+  // 4. scripts syntax
+  const scriptsDir = path.join(SKILL_ROOT, 'scripts');
+  for (const f of readdirSync(scriptsDir).filter((f) => f.endsWith('.mjs'))) {
+    const r = spawnSync(process.execPath, ['--check', path.join(scriptsDir, f)], { stdio: 'pipe' });
+    if (r.status !== 0) failures.push(`scripts/${f}: 语法错误`);
+  }
+  // 5. dsl vendor present + loadable
+  try {
+    const dsl = await loadDsl();
+    console.log(`  dsl: DSL_VERSION ${dsl.DSL_VERSION}（vendor${existsSync(path.join(SKILL_ROOT, 'vendor', 'dsl', 'index.js')) ? '' : ' ← 仓库 fallback'}）`);
+  } catch (err) {
+    failures.push(`dsl 无法加载: ${err instanceof Error ? err.message : err}`);
+  }
+  for (const f of failures) console.error(`  ✗ ${f}`);
+  console.log(failures.length ? `✗ skill 自检未过（${failures.length} 项）` : '✓ skill 完整性自检通过（SKILL/references/scripts/dsl）');
+  process.exit(failures.length ? 1 : 0);
+}
+
 const repoFlag = readFlag(args, '--repo');
 const config = loadConfig();
 const repoPath = repoFlag ?? config.dslRepoPath;

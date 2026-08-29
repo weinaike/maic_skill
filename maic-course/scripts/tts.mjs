@@ -33,8 +33,9 @@ import { compileCourse } from './compile.mjs';
 import { audioKey, shortHash } from './lib/hash.mjs';
 import { stringifyYaml } from './lib/yaml.mjs';
 import { loadConfig } from './lib/dsl.mjs';
+import { isMainModule } from './lib/main.mjs';
 
-const isMain = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+const isMain = isMainModule(import.meta.url);
 
 const DOUBAO_RESOURCE_ID = 'seed-tts-2.0';
 const DOUBAO_TTS_BASE = 'https://openspeech.bytedance.com/api/v3/tts';

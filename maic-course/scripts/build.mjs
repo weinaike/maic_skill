@@ -18,8 +18,9 @@ import { compileCourse } from './compile.mjs';
 import { checkCourse } from './check.mjs';
 import { reviewVerdict } from './review.mjs';
 import { loadConfig } from './lib/dsl.mjs';
+import { isMainModule } from './lib/main.mjs';
 
-const isMain = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+const isMain = isMainModule(import.meta.url);
 
 /**
  * @param {string} courseDir

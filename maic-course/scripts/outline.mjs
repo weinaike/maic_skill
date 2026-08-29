@@ -17,8 +17,9 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readCourse } from './lib/course.mjs';
 import { audioKey } from './lib/hash.mjs';
+import { isMainModule } from './lib/main.mjs';
 
-const isMain = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+const isMain = isMainModule(import.meta.url);
 
 /** Section header: `## 3. 标题 · slide · 2min` */
 const SECTION_RE = /^##\s+(\d+)\.\s+(.+?)\s*·\s*(slide|quiz|pbl|interactive)\s*·\s*([\d.]+)\s*min\s*$/;

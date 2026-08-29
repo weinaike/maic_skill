@@ -22,8 +22,9 @@ import { fileURLToPath } from 'node:url';
 import { parseOutline } from './outline.mjs';
 import { parseSceneMd, serializeSceneMd } from './lib/scene.mjs';
 import { loadDsl } from './lib/dsl.mjs';
+import { isMainModule } from './lib/main.mjs';
 
-const isMain = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+const isMain = isMainModule(import.meta.url);
 
 /**
  * Create scene-file stubs for the outline sections in range.

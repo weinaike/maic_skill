@@ -29,10 +29,11 @@
  *   node scripts/review.mjs verdict <courseDir> [--no-fail]
  */
 import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
+import { isMainModule } from './lib/main.mjs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const isMain = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+const isMain = isMainModule(import.meta.url);
 
 const SCOPES = new Set(['outline', 'content', 'spec', 'full']);
 const SEVERITIES = new Set(['blocker', 'warning', 'nit']);

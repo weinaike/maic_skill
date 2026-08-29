@@ -16,6 +16,7 @@ import { fileURLToPath } from 'node:url';
 import { readCourse, stageFromCourse, appVersionOf } from './lib/course.mjs';
 import { audioKey, actionId } from './lib/hash.mjs';
 import { loadConfig } from './lib/dsl.mjs';
+import { isMainModule } from './lib/main.mjs';
 
 const SCENE_TYPES = new Set(['slide', 'quiz', 'pbl', 'interactive']);
 
@@ -175,8 +176,7 @@ function guessMime(ext) {
 // ---------------------------------------------------------------------------
 // CLI (guarded so build/check can import compileCourse as a module)
 // ---------------------------------------------------------------------------
-const isMain =
-  process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+const isMain = isMainModule(import.meta.url);
 
 if (isMain) {
   const args = process.argv.slice(2);
