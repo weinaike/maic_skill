@@ -37,13 +37,13 @@ if (args.includes('--check')) {
   const requiredRefs = [
     'scene-source-spec.md', 'maic-format.md', 'dsl-cheatsheet.md', 'layout-patterns.md',
     'review-checklists.md', 'workflow-outline.md', 'workflow-generate.md',
-    'workflow-voice.md', 'workflow-edit.md', 'workflow-auto.md', 'speech-style.md', 'agents.md',
+    'workflow-voice.md', 'workflow-edit.md', 'workflow-auto.md', 'speech-style.md', 'agents.md', 'workflow-translate.md',
   ];
   for (const ref of requiredRefs) {
     if (!existsSync(path.join(SKILL_ROOT, 'references', ref))) failures.push(`references/${ref} 缺失`);
   }
   // 3.5 registered agent types (mechanical context isolation)
-  for (const agent of ['maic-scene-generator.md', 'maic-reviewer.md', 'maic-fixer.md']) {
+  for (const agent of ['maic-scene-generator.md', 'maic-reviewer.md', 'maic-fixer.md', 'maic-translator.md']) {
     const p = path.join(SKILL_ROOT, 'agents', agent);
     if (!existsSync(p)) failures.push(`agents/${agent} 缺失`);
     else {

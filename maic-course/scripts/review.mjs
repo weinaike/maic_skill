@@ -35,7 +35,7 @@ import { fileURLToPath } from 'node:url';
 
 const isMain = isMainModule(import.meta.url);
 
-const SCOPES = new Set(['outline', 'content', 'spec', 'full']);
+const SCOPES = new Set(['outline', 'content', 'spec', 'full', 'translation']);
 const SEVERITIES = new Set(['blocker', 'warning', 'nit']);
 const STATUSES = new Set(['open', 'fixed', 'wontfix']);
 

@@ -63,6 +63,21 @@ reviewer 角色（建议开子代理或至少以全新视角+本清单逐项核�
 | S4 | 源规范 | 场景文件 NN- 前缀连续；frontmatter type/title 完整；`@[elementId]` 无悬空（check 会抓，这里确认没有新增） |
 | S5 | 媒体卫生 | 无未引用的 audio/ 堆积（改稿后的死音频应清理 voice.lock 与文件）；media/ 文件在 media.lock 有记录 |
 
+## 四、翻译审查（scope: translation，对象 目标课程 scenes + glossary，对照源课程）
+
+前置：`node scripts/translate.mjs verify <targetDir>` 通过（结构一致性由脚本
+保证，审查者不重复查 id/几何/句数）。
+
+| # | 维度 | 核对问题 |
+|---|------|----------|
+| T1 | 忠实度 | 逐段对照源文与译文：语义无漂移、无增删要点；数字/单位/代码/URL/命令逐字不变 |
+| T2 | 术语一致 | glossary 逐条落实；同一术语全课同一译法；目标 course.yaml language 的"保留原文清单"被遵守 |
+| T3 | 目标语讲稿风格 | speech-style 在目标语的对应：口语化、承接句、金句口头化、符号读法；段落时长按目标语速率（zh ≈350字/min、en ≈150词/min）±15% |
+| T4 | 画布适配 | 译文不溢出文本盒（建议对照 preview 实测）；字号仍在层级表内；无因加长导致的压叠 |
+| T5 | 完整性 | 源文要点逐条有落点、无漏译段；无源语残留（CJK in 非zh 目标）；quiz/pbl 同步译出；spotlight 仍指向承载该要点的元素 |
+
+---
+
 ## 全课终审（scope: full，build 前最后一道）
 
 - 跨场景术语/风格一致性（同一概念前后叫法一致；口吻统一）

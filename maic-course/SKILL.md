@@ -20,6 +20,8 @@ description: 在 Claude Code 中创作符合 OpenMAIC DSL 协议的课程：大�
 | 审查 / 复审 | `node scripts/review.mjs …`（规程见 review-checklists.md） |
 | 逐页生成课件与讲稿 | **workflow-generate**：scaffold → 逐节生成（配方库+normalize+check）→ 内容/规范审查闭环 → 门2 预览抽检 |
 | 离线预览 / 审片 | `node scripts/preview.mjs <dir>` → 单页翻页审片台（连播模式顺序播讲稿、画布 spotlight 同步高亮、自动翻页） |
+| 把课程翻译成另一语言 | **workflow-translate**：translate init（派生课程，结构冻结）→ 术语表 → 并行 maic-translator → verify（结构/残留）→ translation 审查 → 目标语配音出包 |
+| 翻译审查 | scope=translation（T1-T5，对照源课程，必派 maic-reviewer） |
 | 给讲稿配音 | **workflow-voice**：doctor → 门3 讲稿终审 → dry-run 成本清单 → 增量合成 → prune → 审片 |
 | 改课程（任何措辞/顺序/版式/音色/配色） | **workflow-edit**：指令路由表 → 只改源 → `edit.mjs status` 级联收敛 → 全课终审 |
 | 解包已有 .maic.zip 继续编辑 | `node scripts/unpack.mjs <zip> <dir>` |
@@ -42,6 +44,7 @@ node scripts/preview.mjs <courseDir>    # 离线审片台（翻页+连播：←/
 node scripts/tts.mjs doctor|verify|prune …  # 连通检查 / 讲稿↔音频同步校验 / 死音频清理
 node scripts/tts.mjs <courseDir> [--dry-run] [--force] [--scenes 3-5]   # 增量 TTS 合成
 node scripts/edit.mjs status|move|delete|insert|theme|voice …  # 编辑操作 + 级联看板
+node scripts/translate.mjs init|verify …   # 课程翻译：派生初始化 / 结构一致性+残留校验
 node scripts/build.mjs  <courseDir>     # compile + check/review 门禁 + zip(store) → build/<name>.maic.zip
 ```
 
@@ -59,6 +62,7 @@ node scripts/build.mjs  <courseDir>     # compile + check/review 门禁 + zip(st
 - `references/workflow-voice.md` —— 语音模块流程 + 密钥/音色参考（**配音前必读**）
 - `references/workflow-edit.md` —— 编辑模块：指令路由表 + 级联收敛 + 全课终审（**任何编辑前必读**）
 - `references/workflow-auto.md` —— 全自动模式流水线 + 停止红线 + 报告模板（**自动出课前必读**）
+- `references/workflow-translate.md` —— 翻译模块：派生课程/术语表/译者派发/审查与配音（**翻译前必读**）
 - `references/agents.md` —— 上下文隔离派发配置：导演-演员分工矩阵 + 三个 sub agent 提示词模板（**批量生成/审查前必读**）
 
 ## 环境变量（语音模块，M4；豆包首发、可替换）
