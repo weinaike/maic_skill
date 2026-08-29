@@ -19,7 +19,7 @@ description: 在 Claude Code 中创作符合 OpenMAIC DSL 协议的课程：大�
 | 解包课程后补大纲 | `node scripts/outline.mjs sync <dir>` → 充实 → lint → 审查 |
 | 审查 / 复审 | `node scripts/review.mjs …`（规程见 review-checklists.md） |
 | 逐页生成课件与讲稿 | **workflow-generate**：scaffold → 逐节生成（配方库+normalize+check）→ 内容/规范审查闭环 → 门2 预览抽检 |
-| 离线预览 / 审片 | `node scripts/preview.mjs <dir>` → `open <dir>/build/preview.html` |
+| 离线预览 / 审片 | `node scripts/preview.mjs <dir>` → 单页翻页审片台（连播模式顺序播讲稿、画布 spotlight 同步高亮、自动翻页） |
 | 给讲稿配音 | **workflow-voice**：doctor → 门3 讲稿终审 → dry-run 成本清单 → 增量合成 → prune → 审片 |
 | 改课程（任何措辞/顺序/版式/音色/配色） | **workflow-edit**：指令路由表 → 只改源 → `edit.mjs status` 级联收敛 → 全课终审 |
 | 解包已有 .maic.zip 继续编辑 | `node scripts/unpack.mjs <zip> <dir>` |
@@ -38,7 +38,7 @@ node scripts/generate.mjs normalize <scene.md>…    # 生成画布补 DSL 默�
 node scripts/review.mjs init|validate|verdict …    # 审查 findings（blocker 门禁）
 node scripts/compile.mjs <courseDir> [--stdout]     # 源 → manifest（确定性、无损）
 node scripts/check.mjs  <courseDir>     # 三层校验：DSL 契约 / 文档 lint / 导入模拟（error 时 exit 1）
-node scripts/preview.mjs <courseDir>    # 离线审片台 build/preview.html（门2 产物）
+node scripts/preview.mjs <courseDir>    # 离线审片台（翻页+连播：←/→ 翻页、Space 连播、spotlight 同步高亮）
 node scripts/tts.mjs doctor|prune …     # 语音连通检查 / 死音频清理
 node scripts/tts.mjs <courseDir> [--dry-run] [--force] [--scenes 3-5]   # 增量 TTS 合成
 node scripts/edit.mjs status|move|delete|insert|theme|voice …  # 编辑操作 + 级联看板
