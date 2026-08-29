@@ -7,9 +7,9 @@ title: "Project: Build Your First MCP"
 
 You've learned it — now it's time to hand in your homework. This project has exactly one task: take a real function from your research workflow and turn it into a working MCP.
 
-How do you pick? Three directions, take your pick. Literature batch processing, like downloading, deduplication, renaming. Data cleaning, like turning an instrument's messy export into a tidy table. Or plotting: wrap that matplotlib snippet you keep rewriting into a tool. The rule is one line — choose something you will genuinely reuse.
+How do you pick? Three directions, take your pick. Literature batch processing, like downloading, deduplication, renaming. Data cleaning, like turning an instrument's messy export into a tidy table. Or plotting: wrap that matplotlib snippet you keep rewriting as a tool. The rule is one line — choose something you will genuinely reuse.
 
-There are four acceptance criteria, all on the project page. First, it runs: the Server starts and connects. Second, it gets chosen correctly — the Agent uses the tool when it should, not because you begged. That criterion is really testing your description.
+There are four acceptance criteria, all on the project page. First, it runs: the Server starts and connects. Second, it gets chosen correctly — the Agent uses the tool when it should, not because you begged it to. That criterion is really testing your description.
 
 Third, usable results: the returned data is clean and lean. Fourth, a description up to standard, with the full interface trio in place.
 
@@ -28,7 +28,7 @@ Don't overreach — one function is enough. When you finish, you'll see it: from
     "gains": [
       "Master the minimal fastmcp build path: a decorator turns a plain function into a tool",
       "Design strongly typed interfaces: types are the schema, enums constrain the values",
-      "Write tool descriptions the model picks correctly, and keep returns lean",
+      "Write tool descriptions that get the tool chosen correctly, and keep returns lean",
       "Run scripted acceptance checks with the Client, and locate problems along the debugging path"
     ],
     "tags": [
@@ -69,7 +69,7 @@ Don't overreach — one function is enough. When you finish, you'll see it: from
       {
         "id": "ms_build",
         "title": "Implement and Connect",
-        "description": "Implement the Server with fastmcp, launch it over stdio, and plug it into the course client in three steps",
+        "description": "Implement the Server with fastmcp, launch it over stdio, and plug it into the course client with the three-step setup",
         "status": "locked",
         "order": 2,
         "microtasks": [],

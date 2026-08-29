@@ -11,7 +11,7 @@ Look at the code block on the right. Step one, install. pip install fastmcp, the
 
 Let's use paper downloading as the example. download_paper used to be just a function in your script. Give it a URL, and it pulls the PDF down, saves it, and returns the saved path.
 
-With the decorator on and the parameter types written in, the Agent can see the tool. It knows what the tool is called, what to pass in, and what comes back. Notice the docstring just under the function signature. That's the manual you write for the model. Section five comes back to how to write it well.
+With the decorator on and the parameter types written in, the Agent can see the tool. It knows what the tool is called, what to pass in, and what comes back. Notice the docstring just under the function signature. That's the manual you write for the model. We'll come back to it in section five.
 
 Step three, start it up. Call mcp.run(), stdio by default, so it runs right on your machine. Then use the three-step setup from the last part. One command, claude mcp add, to mount it. Your tool shows up in the list right away. Give it a trial call. It works. @[text_step_run]
 
@@ -167,7 +167,7 @@ Some of you may prefer TypeScript. That works too. The official SDK is shaped th
       "top": 366,
       "width": 295,
       "height": 60,
-      "content": "<p style=\"font-size: 16px; color: #9a3412;\">③ Start with mcp.run()<br /><span style=\"font-size: 13px; color: #475569;\">stdio by default; then the 3-step check</span></p>",
+      "content": "<p style=\"font-size: 16px; color: #9a3412;\">③ Start with mcp.run()<br /><span style=\"font-size: 13px; color: #475569;\">stdio by default; then the three-step setup check</span></p>",
       "defaultFontName": "Microsoft YaHei",
       "defaultColor": "#9a3412"
     },

@@ -5,7 +5,7 @@ title: The Three Primitives: Tools / Resources / Prompts
 
 ## 讲稿
 
-So far, tool is the only primitive we've touched. This section walks through the interfaces of all three, no deep dive, just enough to recognize each one and know what belongs where. @[text_title]
+So far, @mcp.tool is the only primitive we've touched. This section walks through the interfaces of all three, no deep dive, just enough to recognize each one and know what belongs where. @[text_title]
 
 Three interfaces, three cards, read them left to right. First, @mcp.tool, an old friend by now. Arguments in, results out; this is what the Agent uses to act. Batch-downloading papers, for example: hand it a list of URLs and a save directory, and it pulls every PDF back and returns the saved-file list. @[code_card_tool]
 

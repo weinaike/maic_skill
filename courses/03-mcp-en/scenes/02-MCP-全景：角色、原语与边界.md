@@ -5,7 +5,7 @@ title: The MCP Landscape: Roles, Primitives, and Boundaries
 
 ## 讲稿
 
-Before we start, let's look at the whole map. The MCP world has just three roles. The Host is the client, like Claude Code or WorkBuddy. The Server is the tool provider, the program you write. And in the middle, the Client is the protocol layer, passing messages by the MCP spec. They speak JSON-RPC, stdio locally, HTTP remotely. Remember that much. No need to memorize the details. @[text_roles]
+Before we start, let's look at the whole map. The MCP world has just three roles. The Host is the client, like Claude Code or WorkBuddy. The Server is the tool provider, the program you write. And in the middle, the Client is the protocol layer, passing messages per the MCP spec. They speak JSON-RPC, stdio locally, HTTP remotely. Remember that much. No need to memorize the details. @[text_roles]
 
 So what can a Server offer? Three things, and we call them the three primitives. Check the three cards, left to right. First, Tools. A tool is a function the Agent can call. It lets the Agent run an action and get a result back. Tools are what you'll use most. @[text_card_tools]
 

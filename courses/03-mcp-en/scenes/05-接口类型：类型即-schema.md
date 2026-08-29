@@ -5,7 +5,7 @@ title: Interface Types: Types Are the Schema
 
 ## 讲稿
 
-A tool that can be called at all is just the passing bar; getting it called accurately is what interface types are for. This section gives you the line most worth remembering in this course: the tighter your types, the steadier the model's calls. @[text_sub]
+A tool that can be called at all is just the passing bar; getting the model to call it accurately is what interface types are for. This section gives you the line most worth remembering in this course: the tighter your types, the steadier the model's calls. @[text_sub]
 
 Start with the bad example on the left. Parameters q and limit carry no types, so the model can only guess: is q a string? Should limit be a number or text? One bad guess and the call fails, and you're the one stuck debugging it for ages. @[code_naive]
 
@@ -13,7 +13,7 @@ Now the right side: query is a str, limit an int with a default, sort pinned by 
 
 Beyond types, there is documentation. The function's docstring, and the notes you put inside Annotated, all become part of the tool description the model sees. So the line "search papers, return title, year, and link" is not a comment for humans; it is the manual written for the model.
 
-This setup hands you three direct wins. Defaults or an Optional make optional parameters obvious; enum constraints like Literal block the classic wrong-value error outright; and Pydantic or a list of dicts keeps long interfaces clean. @[text_mapping]
+This setup hands you three direct wins. Defaults or an Optional make optional parameters obvious. Enum constraints like Literal block the classic wrong-value error outright. And Pydantic or a list of dicts keeps long interfaces clean. @[text_mapping]
 
 Here's something to do right now: open the function you plan to wrap, give every parameter a type, and write one decent docstring. The payoff on this step is the highest in all of MCP development.
 
