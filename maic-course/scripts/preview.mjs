@@ -90,7 +90,7 @@ export function renderPreviewHtml(project, manifest, notes) {
   .scene-wrap.active { display:flex; }
   .canvas-card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px; box-shadow:0 1px 8px rgba(15,23,42,.06); }
   /* 画布按原生 1000×562.5 渲染（元素坐标与内联字号都原生），整体 transform 等比缩放 */
-  .stage-wrap2 { width:850px; height:478.5px; overflow:hidden; background:repeating-conic-gradient(#f8fafc 0% 25%, #fff 0% 50%) 0/16px 16px; border-radius:8px; }
+  .stage-wrap2 { width:850px; height:478.5px; margin:0 auto; overflow:hidden; background:repeating-conic-gradient(#f8fafc 0% 25%, #fff 0% 50%) 0/16px 16px; border-radius:8px; }
   .canvas { position:relative; width:1000px; height:562.5px; transform:scale(0.85); transform-origin:0 0; background:#fff; overflow:hidden; }
   /* 平台渲染器 reset 了段落默认边距——不重置的话每个文本框都被 p 的 1em margin 撑高，布局漂移 */
   .canvas p, .canvas ul, .canvas li { margin:0; padding:0; }
