@@ -29,8 +29,8 @@ node scripts/generate.mjs scaffold <courseDir> [--scenes 3-5]   # 全部或指�
 4. `node scripts/generate.mjs normalize <file>`（补默认值/派生几何）
 5. 立即 `node scripts/check.mjs <courseDir>`——本节无 error 才进下一节
 
-**讲稿**（所有类型场景）：
-- 按 TODO 里的字数预算（分钟 × 240 字 ±15%）拆段，**一段 = 一个要点**
+**讲稿**（所有类型场景，**遵循 references/speech-style.md 十条规范**）：
+- 按 TODO 里的字数预算（分钟 × 350 字 ±15%，豆包实测语速）拆段，**一段 = 一个要点**
 - 首段承接上页（"上一页我们看到…，接下来…"），末段收口或引出下页
 - **口语化**：是"说"不是"读"——短句、承接词、指代画布（"大家看左边这栏"）
 - spotlight 对齐：讲到哪张卡，该段尾注 `@[该卡标题元素id]`；一段最多 1-2 个
