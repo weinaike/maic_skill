@@ -1,0 +1,33 @@
+# 术语表 —— 翻译前由术语 pass 填定；译者只读不写，审查按此核对 T2
+MCP: MCP
+Agent: Agent
+Token: Token
+Prompt: Prompt
+Skill: Skill
+SubAgent: SubAgent
+Claude Code: Claude Code
+WorkBuddy: WorkBuddy
+fastmcp: fastmcp
+JSON-RPC: JSON-RPC
+stdio: stdio
+HTTP: HTTP
+Tools: Tools
+Resources: Resources
+Prompts: Prompts
+Host: Host
+Client: Client
+Server: Server
+URI: URI
+Literal: Literal
+Annotated: Annotated
+Pydantic: Pydantic
+Context: Context
+Inspector: Inspector
+上下文: context
+提示词模板: prompt template
+工具: tool
+资源: resource
+原语: primitive
+函数: function
+装饰器: decorator
+类型即 schema: types are the schema
