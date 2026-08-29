@@ -459,6 +459,9 @@ export function pruneAudio(courseDir, options = {}) {
 export function verifyAudio(courseDir) {
   const project = readCourse(courseDir);
   const voice = project.voice.voice;
+  // 时长预期按课程语言取速率：zh ≈370 字/min；en ≈150 wpm ≈825 chars/min（speech-style §9）
+  const lang = String(project.course['lang'] ?? 'zh');
+  const charsPerMin = lang === 'zh' ? 370 : 825;
   const speed = project.voice.speed;
   /** @type {any} */
   const r = { ok: [], missing: [], fileMissing: [], dead: [], suspicious: [] };
@@ -482,7 +485,7 @@ export function verifyAudio(courseDir) {
       // duration sanity: zh ≈370 chars/min (speech-style §9 实测口径)
       const dur = Number(entry['duration']);
       if (Number.isFinite(dur) && dur > 0) {
-        const expect = (block.text.length / 370) * 60;
+        const expect = (block.text.length / charsPerMin) * 60;
         if (Math.abs(dur - expect) / expect > 0.5) {
           r.suspicious.push({ scene: scene.file, file: String(entry['file']), duration: dur, expect: Math.round(expect) });
         }
