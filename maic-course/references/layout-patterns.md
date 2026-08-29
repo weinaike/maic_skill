@@ -128,3 +128,13 @@ text  支撑说明 (150,340) 700×60  18px 居中 灰
 4. 图表 chart 元素：`chartType` + `data.labels/series`，色取 themeColors，仅用于真数据。
 5. 生成后必跑：`generate.mjs normalize <file>`（补默认/派生几何）→ `check.mjs <dir>`。
 6. 一页配方只选**一个**主配方；混排（如 cards+底部表格）参照 table-compare 的组合方式。
+
+### 10. code-variants · 代码版式（03-mcp 课新增，已实测）
+
+code 元素形状：`{ "type": "code", "language": "python", "lines": [{"id":"L1","content":"…"}], "fontSize": N, "showLineNumbers": false }`（每行一个 CodeLine，id 用 L1..Ln）。
+
+- **code-right**（步骤+代码）：左侧窄栏步骤卡 (60,170) 330 宽；右侧 code (410,168) 530×300，fontSize 13，≤12 行
+- **code-compare**（正反对比）：双 code (60/510,168) 430×275，fontSize 12；上方各一行 ✕/✓ 标签 (y140)；底部类型映射行 (60,455) 880×56
+- **code-cards**（卡内嵌码）：cards-3 卡内嵌 code (卡x+15, y+50) 240×130，fontSize 11，≤5 行
+
+代码行长度 ≤46 字符（530 宽 13px / 240 宽 11px 下不折行的实测安全值）。

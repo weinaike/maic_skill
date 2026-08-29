@@ -157,6 +157,12 @@ function renderCanvas(canvas) {
       });
     } else if (el.type === 'table') {
       out.push(renderTable(el, box));
+    } else if (el.type === 'code') {
+      const fs = (el.fontSize ?? 14) * 0.85;
+      const lines = (el.lines ?? []).map((/** @type {{content: string}} */ l) => escapeHtml(l.content ?? ''));
+      out.push(
+        `<pre style="${box}margin:0;padding:8px 10px;background:#0f172a;color:#e2e8f0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:${fs}px;line-height:1.55;overflow:hidden;border-radius:4px;white-space:pre;">${lines.join('\n')}</pre>`,
+      );
     } else {
       out.push(`<div class="ph" style="${box}">${el.type}</div>`);
     }
