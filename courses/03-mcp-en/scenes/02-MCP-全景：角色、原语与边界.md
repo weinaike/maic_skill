@@ -1,19 +1,19 @@
 ---
 type: slide
-title: MCP 全景：角色、原语与边界
+title: The MCP Landscape: Roles, Primitives, and Boundaries
 ---
 
 ## 讲稿
 
-开始之前，先把地图看全。MCP 的世界里就三个角色：Host 是客户端，比如 Claude Code、WorkBuddy；Server 是工具提供方，也就是你写的程序；中间的 Client 是协议层，负责按 MCP 的规范传话。通信走 JSON-RPC，本地用 stdio，远程用 HTTP——这两句记住就行，细节不用背。 @[text_roles]
+Before we start, let's look at the whole map. The MCP world has just three roles. The Host is the client, like Claude Code or WorkBuddy. The Server is the tool provider, the program you write. And in the middle, the Client is the protocol layer, passing messages by the MCP spec. They speak JSON-RPC, stdio locally, HTTP remotely. Remember that much. No need to memorize the details. @[text_roles]
 
-Server 能往外提供三样东西，我们叫三原语——从左往右看这三张卡。第一是 Tools，工具——可以被调用的函数，让 Agent 执行动作、拿回结果，这是最常用的。 @[text_card_tools]
+So what can a Server offer? Three things, and we call them the three primitives. Check the three cards, left to right. First, Tools. A tool is a function the Agent can call. It lets the Agent run an action and get a result back. Tools are what you'll use most. @[text_card_tools]
 
-第二是 Resources，资源——只读的数据，比如文件、数据库表、实验结果，按地址暴露出来给客户端读。第三是 Prompts，提示词模板——把常用的提问方式固化成参数化模板，用户一键套用。 @[text_card_res]
+Second, Resources. A resource is read-only data. Think files, database tables, experiment results. They're exposed at an address for the client to read. Third, Prompts. A prompt is a template for questions you ask often, parameterized so users can apply it with one click. @[text_card_res]
 
-那什么时候该用 MCP？记住一条速记：要执行动作，做成 MCP 工具；要沉淀流程知识，写成 Skill；要多个角色分工协作，用 SubAgent——这三件套各管一摊，别混着用。 @[text_boundary]
+So when should you reach for MCP? Remember one quick rule. To execute an action, make it an MCP tool. To capture process knowledge, write a Skill. To split work across several roles, use SubAgents. Each of the three owns its own lane. Don't mix them up. @[text_boundary]
 
-可能有同学问：这和传统的 function calling 有什么区别？区别就在"标准"两个字——function calling 绑定在某一家模型上，而 MCP 是客户端无关的：你封装一次，Claude Code 能用，其他支持 MCP 的客户端也都能用。这就是它值得学的原因。
+Now you might ask, how is this different from traditional function calling? The difference comes down to one word: standard. Function calling is tied to one model. MCP is client-agnostic. Wrap it once, and Claude Code can use it, and so can any other MCP-capable client. That's why it's worth learning.
 
 ## 画布
 
@@ -57,7 +57,7 @@ Server 能往外提供三样东西，我们叫三原语——从左往右看这�
       "top": 40,
       "width": 880,
       "height": 62,
-      "content": "<p style=\"font-size: 28px; color: #1f2937;\">MCP 全景：角色、原语与边界</p>",
+      "content": "<p style=\"font-size: 28px; color: #1f2937;\">The MCP Landscape: Roles, Primitives, and Boundaries</p>",
       "defaultFontName": "Microsoft YaHei",
       "defaultColor": "#1f2937"
     },
@@ -84,7 +84,7 @@ Server 能往外提供三样东西，我们叫三原语——从左往右看这�
       "top": 120,
       "width": 880,
       "height": 30,
-      "content": "<p style=\"font-size: 14px; color: #6b7280;\">先把地图看全：谁在通信、传什么、和我们已有知识的关系</p>",
+      "content": "<p style=\"font-size: 14px; color: #6b7280;\">Get the whole map first: who's talking, what gets passed, how it connects to what you know</p>",
       "defaultFontName": "Microsoft YaHei",
       "defaultColor": "#6b7280"
     },
@@ -95,7 +95,7 @@ Server 能往外提供三样东西，我们叫三原语——从左往右看这�
       "top": 162,
       "width": 880,
       "height": 34,
-      "content": "<p style=\"font-size: 14px; text-align: center; color: #475569;\">Host（客户端，如 Claude Code）── Client（协议层）── Server（工具提供方）</p>",
+      "content": "<p style=\"font-size: 14px; text-align: center; color: #475569;\">Host (client, e.g. Claude Code) — Client (protocol layer) — Server (tool provider)</p>",
       "defaultFontName": "Microsoft YaHei",
       "defaultColor": "#475569"
     },
@@ -122,7 +122,7 @@ Server 能往外提供三样东西，我们叫三原语——从左往右看这�
       "top": 238,
       "width": 230,
       "height": 46,
-      "content": "<p style=\"font-size: 20px; color: #1e3a5f;\">Tools · 工具</p>",
+      "content": "<p style=\"font-size: 20px; color: #1e3a5f;\">Tools</p>",
       "defaultFontName": "Microsoft YaHei",
       "defaultColor": "#1e3a5f"
     },
@@ -133,7 +133,7 @@ Server 能往外提供三样东西，我们叫三原语——从左往右看这�
       "top": 292,
       "width": 230,
       "height": 120,
-      "content": "<p style=\"font-size: 15px; color: #475569;\">• 可调用的函数<br />• 让 Agent 执行动作并拿回结果<br />• 例：检索文献、下载 PDF、跑清洗脚本</p>",
+      "content": "<p style=\"font-size: 14px; color: #475569;\">• Functions the Agent can call<br />• Run an action, get a result back<br />• e.g. search papers, download PDFs, run cleaning scripts</p>",
       "defaultFontName": "Microsoft YaHei",
       "defaultColor": "#475569"
     },
@@ -160,7 +160,7 @@ Server 能往外提供三样东西，我们叫三原语——从左往右看这�
       "top": 238,
       "width": 230,
       "height": 46,
-      "content": "<p style=\"font-size: 20px; color: #065f46;\">Resources · 资源</p>",
+      "content": "<p style=\"font-size: 20px; color: #065f46;\">Resources</p>",
       "defaultFontName": "Microsoft YaHei",
       "defaultColor": "#065f46"
     },
@@ -171,7 +171,7 @@ Server 能往外提供三样东西，我们叫三原语——从左往右看这�
       "top": 292,
       "width": 230,
       "height": 120,
-      "content": "<p style=\"font-size: 15px; color: #475569;\">• 只读数据，按 URI 暴露<br />• 例：文件、数据库表、实验结果<br />• 客户端按地址读取</p>",
+      "content": "<p style=\"font-size: 14px; color: #475569;\">• Read-only data, exposed by URI<br />• e.g. files, database tables, experiment results<br />• The client reads by address</p>",
       "defaultFontName": "Microsoft YaHei",
       "defaultColor": "#475569"
     },
@@ -198,7 +198,7 @@ Server 能往外提供三样东西，我们叫三原语——从左往右看这�
       "top": 238,
       "width": 230,
       "height": 46,
-      "content": "<p style=\"font-size: 20px; color: #9a3412;\">Prompts · 提示词模板</p>",
+      "content": "<p style=\"font-size: 20px; color: #9a3412;\">Prompts</p>",
       "defaultFontName": "Microsoft YaHei",
       "defaultColor": "#9a3412"
     },
@@ -209,7 +209,7 @@ Server 能往外提供三样东西，我们叫三原语——从左往右看这�
       "top": 292,
       "width": 230,
       "height": 120,
-      "content": "<p style=\"font-size: 15px; color: #475569;\">• 参数化的提问模板<br />• 例：论文评审提纲、周报框架<br />• 用户一键套用</p>",
+      "content": "<p style=\"font-size: 14px; color: #475569;\">• Parameterized question templates<br />• e.g. paper review outline, weekly report skeleton<br />• Users apply one in a click</p>",
       "defaultFontName": "Microsoft YaHei",
       "defaultColor": "#475569"
     },
@@ -220,7 +220,7 @@ Server 能往外提供三样东西，我们叫三原语——从左往右看这�
       "top": 462,
       "width": 880,
       "height": 64,
-      "content": "<p style=\"font-size: 14px; color: #334155;\">边界速记：要执行动作 → MCP 工具｜要流程知识 → Skill｜要分身协作 → SubAgent<br />相比 function calling，MCP 赢在标准化——一次封装，任意客户端可用</p>",
+      "content": "<p style=\"font-size: 14px; color: #334155;\">Boundary rule: an action to run → MCP tool | process know-how → Skill | split roles → SubAgent<br />Compared with function calling, MCP wins by being a standard: wrap it once, works in any client</p>",
       "defaultFontName": "Microsoft YaHei",
       "defaultColor": "#334155"
     }

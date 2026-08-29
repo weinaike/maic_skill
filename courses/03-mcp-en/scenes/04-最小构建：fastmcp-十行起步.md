@@ -1,21 +1,21 @@
 ---
 type: slide
-title: 最小构建：fastmcp 十行起步
+title: Minimal Build: fastmcp in Ten Lines
 ---
 
 ## 讲稿
 
-现在轮到自己动手了。目标很明确：把一个你已经在用的科研函数，变成 Agent 能调用的工具。我们用 Python 的 fastmcp 库，整个过程真的只有十行左右。 @[text_step_install]
+Now it's our turn to build something. The goal is clear. Take a research function you already use, and turn it into a tool the Agent can call. We'll use the Python library fastmcp. The whole thing really is about ten lines. @[text_step_install]
 
-看右边这段代码。第一步，安装：pip install fastmcp，然后创建一个 Server 实例，起个名字。第二步，关键的一步——在你原来的函数上面加一个 @mcp.tool 装饰器。就这么一下，普通函数立刻变成了 MCP 工具：函数名变成工具名，参数变成工具的入参，返回值就是结果。 @[code_minimal]
+Look at the code block on the right. Step one, install. pip install fastmcp, then create a Server instance and give it a name. Step two, and this is the key move. Add one @mcp.tool decorator on top of your existing function. Just like that, a plain function becomes an MCP tool. The function name becomes the tool name. The parameters become the tool's inputs. The return value is the result. @[code_minimal]
 
-我们拿文献下载来举例。download_paper，原来就是你脚本里的一个函数：给它一个网址，它把 PDF 拉下来存好，返回保存路径。
+Let's use paper downloading as the example. download_paper used to be just a function in your script. Give it a URL, and it pulls the PDF down, saves it, and returns the saved path.
 
-加了装饰器、写上参数类型之后，Agent 就能"看到"这个工具，知道它叫什么、要传什么、会返回什么。注意函数下面那句 docstring——它是写给模型看的说明书，后面第五节会专门讲怎么写好它。
+With the decorator on and the parameter types written in, the Agent can see the tool. It knows what the tool is called, what to pass in, and what comes back. Notice the docstring just under the function signature. That's the manual you write for the model. Section five comes back to how to write it well.
 
-第三步，启动：mcp.run()，默认走 stdio，本地就能跑。然后用上一节的三步接入回去：claude mcp add 一条命令挂上，工具列表里立刻出现你的工具，试调用，通了。 @[text_step_run]
+Step three, start it up. Call mcp.run(), stdio by default, so it runs right on your machine. Then use the three-step setup from the last part. One command, claude mcp add, to mount it. Your tool shows up in the list right away. Give it a trial call. It works. @[text_step_run]
 
-有同学可能想用 TypeScript——完全可以，官方 SDK 的写法是同构的，装饰器换成对应的注解就行。后面我们都用 Python 讲。
+Some of you may prefer TypeScript. That works too. The official SDK is shaped the same way. Just swap the decorator for the matching annotation. We'll stay with Python for the rest of the course.
 
 ## 画布
 
@@ -59,7 +59,7 @@ title: 最小构建：fastmcp 十行起步
       "top": 40,
       "width": 880,
       "height": 62,
-      "content": "<p style=\"font-size: 28px; color: #1f2937;\">最小构建：fastmcp 十行起步</p>",
+      "content": "<p style=\"font-size: 28px; color: #1f2937;\">Minimal Build: fastmcp in Ten Lines</p>",
       "defaultFontName": "Microsoft YaHei",
       "defaultColor": "#1f2937"
     },
@@ -86,7 +86,7 @@ title: 最小构建：fastmcp 十行起步
       "top": 120,
       "width": 880,
       "height": 30,
-      "content": "<p style=\"font-size: 14px; color: #6b7280;\">一个装饰器的距离：普通函数 → Agent 可调用的工具</p>",
+      "content": "<p style=\"font-size: 14px; color: #6b7280;\">One decorator away: plain function → a tool the Agent can call</p>",
       "defaultFontName": "Microsoft YaHei",
       "defaultColor": "#6b7280"
     },
@@ -113,7 +113,7 @@ title: 最小构建：fastmcp 十行起步
       "top": 182,
       "width": 295,
       "height": 60,
-      "content": "<p style=\"font-size: 16px; color: #1e3a5f;\">① 安装与初始化<br /><span style=\"font-size: 13px; color: #475569;\">pip install fastmcp → FastMCP(名字)</span></p>",
+      "content": "<p style=\"font-size: 16px; color: #1e3a5f;\">① Install and initialize<br /><span style=\"font-size: 13px; color: #475569;\">pip install fastmcp → FastMCP(name)</span></p>",
       "defaultFontName": "Microsoft YaHei",
       "defaultColor": "#1e3a5f"
     },
@@ -140,7 +140,7 @@ title: 最小构建：fastmcp 十行起步
       "top": 274,
       "width": 295,
       "height": 60,
-      "content": "<p style=\"font-size: 16px; color: #065f46;\">② @mcp.tool 装饰器<br /><span style=\"font-size: 13px; color: #475569;\">函数名/参数/返回值 → 工具的三件套</span></p>",
+      "content": "<p style=\"font-size: 16px; color: #065f46;\">② The @mcp.tool decorator<br /><span style=\"font-size: 13px; color: #475569;\">name/params/return → the tool's three parts</span></p>",
       "defaultFontName": "Microsoft YaHei",
       "defaultColor": "#065f46"
     },
@@ -167,7 +167,7 @@ title: 最小构建：fastmcp 十行起步
       "top": 366,
       "width": 295,
       "height": 60,
-      "content": "<p style=\"font-size: 16px; color: #9a3412;\">③ mcp.run() 启动<br /><span style=\"font-size: 13px; color: #475569;\">默认 stdio 本地跑，接回三步接入验收</span></p>",
+      "content": "<p style=\"font-size: 16px; color: #9a3412;\">③ Start with mcp.run()<br /><span style=\"font-size: 13px; color: #475569;\">stdio by default; then the 3-step check</span></p>",
       "defaultFontName": "Microsoft YaHei",
       "defaultColor": "#9a3412"
     },
@@ -212,7 +212,7 @@ title: 最小构建：fastmcp 十行起步
         },
         {
           "id": "L8",
-          "content": "    \"\"\"下载论文 PDF，返回保存路径\"\"\""
+          "content": "    \"\"\"Download the paper PDF and return the saved path\"\"\""
         },
         {
           "id": "L9",
@@ -220,7 +220,7 @@ title: 最小构建：fastmcp 十行起步
         },
         {
           "id": "L10",
-          "content": "    return f\"已保存：{path}\""
+          "content": "    return f\"Saved: {path}\""
         },
         {
           "id": "L11",
@@ -228,7 +228,7 @@ title: 最小构建：fastmcp 十行起步
         },
         {
           "id": "L12",
-          "content": "mcp.run()  # stdio 启动"
+          "content": "mcp.run()  # starts on stdio"
         }
       ]
     },
@@ -239,7 +239,7 @@ title: 最小构建：fastmcp 十行起步
       "top": 482,
       "width": 880,
       "height": 40,
-      "content": "<p style=\"font-size: 14px; color: #475569;\">接入回看 §3：claude mcp add paper-tools -- python server.py → 工具列表出现 → 试调用 ｜ TypeScript SDK 写法同构</p>",
+      "content": "<p style=\"font-size: 14px; color: #475569;\">Recap §3: claude mcp add paper-tools -- python server.py → tool shows up → try a call | TypeScript SDK works the same</p>",
       "defaultFontName": "Microsoft YaHei",
       "defaultColor": "#475569"
     }

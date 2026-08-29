@@ -1,23 +1,23 @@
 ---
 type: slide
-title: 三原语接口：Tools / Resources / Prompts
+title: The Three Primitives: Tools / Resources / Prompts
 ---
 
 ## 讲稿
 
-前面我们一直在用 tool，这一节把三个原语的接口都过一遍——不深入，就是让你认识它们长什么样、什么内容该装进哪个。 @[text_title]
+So far, tool is the only primitive we've touched. This section walks through the interfaces of all three, no deep dive, just enough to recognize each one and know what belongs where. @[text_title]
 
-三个接口，从左往右看这三张卡。第一个，@mcp.tool，你已经熟了。参数进去、结果出来，Agent 执行动作用它——比如批量下载论文：给它一组网址和一个保存目录，它把 PDF 逐个拉回来，返回保存清单。 @[code_card_tool]
+Three interfaces, three cards, read them left to right. First, @mcp.tool, an old friend by now. Arguments in, results out; this is what the Agent uses to act. Batch-downloading papers, for example: hand it a list of URLs and a save directory, and it pulls every PDF back and returns the saved-file list. @[code_card_tool]
 
-第二个，@mcp.resource，注意装饰器里带了一个 URI 地址：固定地址暴露一份配置，模板地址还能带上路径参数，把一整类只读数据挂出来——你的实验结果目录、数据库表，都可以这样暴露。 @[code_card_res]
+Second, @mcp.resource, and notice the URI address inside the decorator. A fixed URI exposes one config item; a template URI takes path parameters and opens a whole class of read-only data: results directories, database tables. @[code_card_res]
 
-第三个，@mcp.prompt，参数化的提示词模板：比如把"请从方法、数据、结论三个角度评审这篇论文"固化成模板，以后一键套用。 @[code_card_pr]
+Third, @mcp.prompt, a parameterized prompt template. Take "review this paper from three angles, methods, data, and conclusions", freeze it into a template, and reuse it with one click from then on. @[code_card_pr]
 
-一句话选型：要执行动作，用 tool；要暴露只读数据，用 resource；要固化提问方式，用 prompt。 @[text_pick]
+Here's the rule of thumb: to run an action, use tool; to expose read-only data, use resource; to freeze a way of asking, use prompt. @[text_pick]
 
-返回值方面，三个原语都可以返回文本，tool 还可以返回 Image 图片或者结构化内容——比如图表存成图片直接回给 Agent 看。科研场景里最有意思的玩法，就是把 matplotlib 出的图直接作为工具返回值。
+On return values, all three primitives can return text. A tool can also return an Image or structured content, say a chart saved as a picture and shown straight to the Agent. The most fun you can have in a research setting is returning a matplotlib figure directly as a tool result.
 
-至于 Sampling、Elicitation、Roots 这些进阶原语，本课不讲，用到的时候再查文档就好。
+As for the advanced primitives, Sampling, Elicitation, and Roots: this course skips them; check the docs when you need them.
 
 ## 画布
 
@@ -61,7 +61,7 @@ title: 三原语接口：Tools / Resources / Prompts
       "top": 40,
       "width": 880,
       "height": 62,
-      "content": "<p style=\"font-size: 28px; color: #1f2937;\">三原语接口：Tools / Resources / Prompts</p>",
+      "content": "<p style=\"font-size: 28px; color: #1f2937;\">The Three Primitives: Tools / Resources / Prompts</p>",
       "defaultFontName": "Microsoft YaHei",
       "defaultColor": "#1f2937"
     },
@@ -88,7 +88,7 @@ title: 三原语接口：Tools / Resources / Prompts
       "top": 120,
       "width": 880,
       "height": 30,
-      "content": "<p style=\"font-size: 14px; color: #6b7280;\">接口层面的简单认识：三个装饰器，三种装法</p>",
+      "content": "<p style=\"font-size: 14px; color: #6b7280;\">A first look at the interfaces: three decorators, three ways to package</p>",
       "defaultFontName": "Microsoft YaHei",
       "defaultColor": "#6b7280"
     },
@@ -115,7 +115,7 @@ title: 三原语接口：Tools / Resources / Prompts
       "top": 184,
       "width": 230,
       "height": 40,
-      "content": "<p style=\"font-size: 18px; color: #1e3a5f;\">@mcp.tool · 动作</p>",
+      "content": "<p style=\"font-size: 18px; color: #1e3a5f;\">@mcp.tool · Action</p>",
       "defaultFontName": "Microsoft YaHei",
       "defaultColor": "#1e3a5f"
     },
@@ -144,7 +144,7 @@ title: 三原语接口：Tools / Resources / Prompts
         },
         {
           "id": "L4",
-          "content": "    \"\"\"批量下载论文 PDF\"\"\""
+          "content": "    \"\"\"Batch-download paper PDFs\"\"\""
         },
         {
           "id": "L5",
@@ -159,7 +159,7 @@ title: 三原语接口：Tools / Resources / Prompts
       "top": 368,
       "width": 230,
       "height": 40,
-      "content": "<p style=\"font-size: 13px; color: #475569;\">执行动作并拿回结果</p>",
+      "content": "<p style=\"font-size: 13px; color: #475569;\">Run an action, get results back</p>",
       "defaultFontName": "Microsoft YaHei",
       "defaultColor": "#475569"
     },
@@ -186,7 +186,7 @@ title: 三原语接口：Tools / Resources / Prompts
       "top": 184,
       "width": 230,
       "height": 40,
-      "content": "<p style=\"font-size: 18px; color: #065f46;\">@mcp.resource · 数据</p>",
+      "content": "<p style=\"font-size: 18px; color: #065f46;\">@mcp.resource · Data</p>",
       "defaultFontName": "Microsoft YaHei",
       "defaultColor": "#065f46"
     },
@@ -222,7 +222,7 @@ title: 三原语接口：Tools / Resources / Prompts
       "top": 368,
       "width": 230,
       "height": 40,
-      "content": "<p style=\"font-size: 13px; color: #475569;\">按 URI 暴露只读数据</p>",
+      "content": "<p style=\"font-size: 13px; color: #475569;\">Expose read-only data by URI</p>",
       "defaultFontName": "Microsoft YaHei",
       "defaultColor": "#475569"
     },
@@ -249,7 +249,7 @@ title: 三原语接口：Tools / Resources / Prompts
       "top": 184,
       "width": 230,
       "height": 40,
-      "content": "<p style=\"font-size: 18px; color: #9a3412;\">@mcp.prompt · 模板</p>",
+      "content": "<p style=\"font-size: 18px; color: #9a3412;\">@mcp.prompt · Template</p>",
       "defaultFontName": "Microsoft YaHei",
       "defaultColor": "#9a3412"
     },
@@ -274,7 +274,7 @@ title: 三原语接口：Tools / Resources / Prompts
         },
         {
           "id": "L3",
-          "content": "    return f\"请评审：{name}\""
+          "content": "    return f\"Review paper: {name}\""
         }
       ]
     },
@@ -285,7 +285,7 @@ title: 三原语接口：Tools / Resources / Prompts
       "top": 368,
       "width": 230,
       "height": 40,
-      "content": "<p style=\"font-size: 13px; color: #475569;\">固化参数化的提问方式</p>",
+      "content": "<p style=\"font-size: 13px; color: #475569;\">Freeze a reusable way of asking</p>",
       "defaultFontName": "Microsoft YaHei",
       "defaultColor": "#475569"
     },
@@ -296,7 +296,7 @@ title: 三原语接口：Tools / Resources / Prompts
       "top": 448,
       "width": 880,
       "height": 60,
-      "content": "<p style=\"font-size: 14px; color: #334155;\">选型：要执行动作 → tool｜要暴露只读数据 → resource（URI 模板带参数）｜要固化提问 → prompt<br />返回：三原语皆可文本；tool 另可回传 Image 或结构化内容</p>",
+      "content": "<p style=\"font-size: 14px; color: #334155;\">Pick: run an action → tool | expose read-only data → resource (URI template params) | freeze a question → prompt<br />Returns: all three can return text; a tool can also return an Image or structured content</p>",
       "defaultFontName": "Microsoft YaHei",
       "defaultColor": "#334155"
     }

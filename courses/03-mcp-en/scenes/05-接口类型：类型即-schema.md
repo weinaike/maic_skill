@@ -1,21 +1,21 @@
 ---
 type: slide
-title: 接口类型：类型即 schema
+title: Interface Types: Types Are the Schema
 ---
 
 ## 讲稿
 
-工具能被调用，只是及格线；要让它被"调得准"，靠的是接口类型。这一节是整门课最值得记住的一句：类型写得越准，模型调用越稳。 @[text_sub]
+A tool that can be called at all is just the passing bar; getting it called accurately is what interface types are for. This section gives you the line most worth remembering in this course: the tighter your types, the steadier the model's calls. @[text_sub]
 
-先看左边这个反面例子。参数 q 和 limit 没写类型——模型只能猜：q 是字符串吗？limit 要传数字还是文字？猜错了调用就失败，失败了你还得排查半天。 @[code_naive]
+Start with the bad example on the left. Parameters q and limit carry no types, so the model can only guess: is q a string? Should limit be a number or text? One bad guess and the call fails, and you're the one stuck debugging it for ages. @[code_naive]
 
-再看右边：query 标了 str，limit 是 int 还带默认值，排序字段用 Literal 限定成两个取值，返回声明是 list[dict]。这些类型信息会被自动转成 JSON Schema，随着工具一起发给模型——模型是"看着说明书"在传参，不是在猜。 @[code_strong]
+Now the right side: query is a str, limit an int with a default, sort pinned by Literal to two values, and the return a list of dicts. Those types turn into a JSON Schema automatically and travel with the tool, so the model passes arguments from the manual, not from guesswork. @[code_strong]
 
-类型之外还有文档。函数的 docstring，以及 Annotated 里的说明文字，都会变成模型可见的工具描述。所以那句"按关键词检索文献，返回标题、年份、链接"，不只是给人看的注释——它是写给模型的使用说明。
+Beyond types, there is documentation. The function's docstring, and the notes you put inside Annotated, all become part of the tool description the model sees. So the line "search papers, return title, year, and link" is not a comment for humans; it is the manual written for the model.
 
-这套机制带来三个直接好处：第一，哪些参数必传、哪些可选清清楚楚——默认值或 Optional 标出来的就是可选；第二，Literal 这类枚举约束，把"传错值"这个高频错误直接堵死；第三，长参数可以用 Pydantic 模型或 list[dict] 收纳，接口保持干净。 @[text_mapping]
+This setup hands you three direct wins. Defaults or an Optional make optional parameters obvious; enum constraints like Literal block the classic wrong-value error outright; and Pydantic or a list of dicts keeps long interfaces clean. @[text_mapping]
 
-建议大家现在就打开自己准备封装的那个函数，把每个参数补上类型，再写一句像样的 docstring——这一步的投入产出比，是整个 MCP 开发里最高的。
+Here's something to do right now: open the function you plan to wrap, give every parameter a type, and write one decent docstring. The payoff on this step is the highest in all of MCP development.
 
 ## 画布
 
@@ -59,7 +59,7 @@ title: 接口类型：类型即 schema
       "top": 40,
       "width": 880,
       "height": 62,
-      "content": "<p style=\"font-size: 28px; color: #1f2937;\">接口类型：类型即 schema</p>",
+      "content": "<p style=\"font-size: 28px; color: #1f2937;\">Interface Types: Types Are the Schema</p>",
       "defaultFontName": "Microsoft YaHei",
       "defaultColor": "#1f2937"
     },
@@ -86,7 +86,7 @@ title: 接口类型：类型即 schema
       "top": 120,
       "width": 880,
       "height": 30,
-      "content": "<p style=\"font-size: 14px; color: #6b7280;\">类型写得越准，模型调用越稳——类型会自动变成模型可见的 schema</p>",
+      "content": "<p style=\"font-size: 14px; color: #6b7280;\">The tighter your types, the steadier the model's calls — types become the schema the model sees</p>",
       "defaultFontName": "Microsoft YaHei",
       "defaultColor": "#6b7280"
     },
@@ -97,7 +97,7 @@ title: 接口类型：类型即 schema
       "top": 158,
       "width": 430,
       "height": 32,
-      "content": "<p style=\"font-size: 15px; color: #b91c1c;\">✕ 朴素写法：模型只能猜</p>",
+      "content": "<p style=\"font-size: 15px; color: #b91c1c;\">✕ Naive: the model can only guess</p>",
       "defaultFontName": "Microsoft YaHei",
       "defaultColor": "#b91c1c"
     },
@@ -130,15 +130,15 @@ title: 接口类型：类型即 schema
         },
         {
           "id": "L5",
-          "content": "# q 是什么类型？必传吗？"
+          "content": "# What type is q? Is it required?"
         },
         {
           "id": "L6",
-          "content": "# limit 传 10 还是 \"10\"？"
+          "content": "# limit: 10 or \"10\"?"
         },
         {
           "id": "L7",
-          "content": "# 模型不知道，只能靠猜"
+          "content": "# The model can't tell; it guesses"
         }
       ]
     },
@@ -149,7 +149,7 @@ title: 接口类型：类型即 schema
       "top": 158,
       "width": 430,
       "height": 32,
-      "content": "<p style=\"font-size: 15px; color: #047857;\">✓ 强类型 + 文档：模型看得懂</p>",
+      "content": "<p style=\"font-size: 15px; color: #047857;\">✓ Strong types + docs: the model understands</p>",
       "defaultFontName": "Microsoft YaHei",
       "defaultColor": "#047857"
     },
@@ -202,7 +202,7 @@ title: 接口类型：类型即 schema
         },
         {
           "id": "L10",
-          "content": "    \"\"\"检索文献，返回标题/年份/链接\"\"\""
+          "content": "    \"\"\"Search papers; return title/year/link\"\"\""
         },
         {
           "id": "L11",
@@ -217,7 +217,7 @@ title: 接口类型：类型即 schema
       "top": 462,
       "width": 880,
       "height": 60,
-      "content": "<p style=\"font-size: 14px; color: #334155;\">映射：str/int/float/bool → schema 基本类型｜docstring / Annotated → 工具描述｜Literal → 枚举约束取值｜Pydantic / list[dict] → 收纳长参数</p>",
+      "content": "<p style=\"font-size: 14px; color: #334155;\">Mapping: str/int/float/bool → schema primitives | docstring / Annotated → tool description | Literal → enum constraint | Pydantic / list[dict] → wraps long parameter lists</p>",
       "defaultFontName": "Microsoft YaHei",
       "defaultColor": "#334155"
     }

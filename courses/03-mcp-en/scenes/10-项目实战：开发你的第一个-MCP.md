@@ -1,19 +1,19 @@
 ---
 type: pbl
-title: "项目实战：开发你的第一个 MCP"
+title: "Project: Build Your First MCP"
 ---
 
 ## 讲稿
 
-学完了，该交作业了。这个实战项目只有一个任务：把你科研流程里一个真实的函数，变成一个能用的 MCP。
+You've learned it — now it's time to hand in your homework. This project has exactly one task: take a real function from your research workflow and turn it into a working MCP.
 
-怎么选题？三个方向任挑：文献批量处理，比如下载、去重、重命名；数据清洗，比如把某个仪器导出的乱格式整理成规整表格；或者绘图，把你反复在写的那段 matplotlib 封装成工具。原则就一条——选你真的会反复用的。
+How do you pick? Three directions, take your pick. Literature batch processing, like downloading, deduplication, renaming. Data cleaning, like turning an instrument's messy export into a tidy table. Or plotting: wrap that matplotlib snippet you keep rewriting into a tool. The rule is one line — choose something you will genuinely reuse.
 
-验收口径四条，都在项目页上。第一，跑得通，Server 能起、能接入；第二，被正确选用，Agent 在该用它的时候用它，而不是你求着它用——这一条考的就是描述写得行不行。
+There are four acceptance criteria, all on the project page. First, it runs: the Server starts and connects. Second, it gets chosen correctly — the Agent uses the tool when it should, not because you begged. That criterion is really testing your description.
 
-第三，结果可用，返回的数据干净、够精简；第四，描述达标，接口三件套完整。
+Third, usable results: the returned data is clean and lean. Fourth, a description up to standard, with the full interface trio in place.
 
-别贪大，一个函数就够。做完你会发现，从函数到工具，中间真的只隔一个装饰器加几个类型标注——但好工具和坏工具之间，隔的是这一整节课。下一讲，我们聊 Agent 的上下文管理——工具越接越多之后，怎么不让它"失忆"。
+Don't overreach — one function is enough. When you finish, you'll see it: from function to tool, there's really just a decorator and a few type annotations in between. But between a good tool and a bad one lies this entire lecture. Next time, we talk context management — as the tools pile up, how do you keep the Agent from losing its memory?
 
 ## 内容
 
@@ -22,22 +22,22 @@ title: "项目实战：开发你的第一个 MCP"
   "type": "pbl",
   "projectV2": {
     "uiPhase": "hero",
-    "title": "开发你的第一个 MCP",
-    "description": "从你的科研流程里挑一个真实函数（文献批量处理 / 数据清洗 / 绘图），用 fastmcp 封装成 MCP Server：强类型接口、清晰描述、精简返回，接入课程客户端，让 Agent 成功调用并返回可用结果。",
-    "learningObjective": "1. 完成一个可复用的 MCP Server；2. 交付达标的工具描述",
+    "title": "Build Your First MCP",
+    "description": "Pick a real function from your research workflow (batch literature processing / data cleaning / plotting) and wrap it as an MCP Server with fastmcp: strongly typed interface, clear descriptions, lean returns. Plug it into the course client and have the Agent call it successfully with usable results.",
+    "learningObjective": "1. Ship a reusable MCP Server; 2. Deliver tool descriptions that meet the bar",
     "gains": [
-      "掌握 fastmcp 最小构建路径：装饰器把普通函数变成工具",
-      "能设计强类型接口：类型即 schema，枚举约束取值",
-      "会写让模型正确选用的工具描述，并保持返回精简",
-      "会用 Client 做脚本化验收，问题按排查路径定位"
+      "Master the minimal fastmcp build path: a decorator turns a plain function into a tool",
+      "Design strongly typed interfaces: types are the schema, enums constrain the values",
+      "Write tool descriptions the model picks correctly, and keep returns lean",
+      "Run scripted acceptance checks with the Client, and locate problems along the debugging path"
     ],
     "tags": [
       "MCP",
       "fastmcp",
-      "工具开发"
+      "Tool Development"
     ],
-    "language": "zh-CN",
-    "languageDirective": "全程使用中文授课。技术术语如 Agent、MCP、fastmcp、Skill、SubAgent、Claude Code、WorkBuddy 等保留英文，不做翻译。",
+    "language": "en",
+    "languageDirective": "Teach in English throughout. Keep technical proper nouns such as Agent, MCP, fastmcp, Skill, SubAgent, Claude Code, and WorkBuddy in English, untranslated.",
     "proficiency": "intermediate",
     "status": "active",
     "createdAt": "2026-08-29T00:00:00.000Z",
@@ -46,43 +46,43 @@ title: "项目实战：开发你的第一个 MCP"
       {
         "id": "role_learner",
         "type": "user",
-        "name": "开发者",
-        "description": "完成函数选型、封装与验收"
+        "name": "Developer",
+        "description": "Pick the function, wrap it, and run acceptance"
       },
       {
         "id": "role_mentor",
         "type": "mentor",
-        "name": "课程导师",
-        "description": "对接口设计与描述质量给反馈"
+        "name": "Course Mentor",
+        "description": "Give feedback on interface design and description quality"
       }
     ],
     "milestones": [
       {
         "id": "ms_select",
-        "title": "选定函数并定义接口",
-        "description": "挑一个会反复使用的科研函数，写出工具名、参数（类型+必选/可选）、一句描述",
+        "title": "Pick the Function and Define the Interface",
+        "description": "Choose a research function you will reuse; write the tool name, parameters (type + required/optional), and a one-line description",
         "status": "active",
         "order": 1,
         "microtasks": [],
-        "completionCriteria": "接口三件套（工具名/参数/描述）完成并通过自查"
+        "completionCriteria": "The interface trio (tool name / parameters / description) is complete and self-checked"
       },
       {
         "id": "ms_build",
-        "title": "实现并接入",
-        "description": "用 fastmcp 实现 Server，stdio 启动，按三步接入课程客户端",
+        "title": "Implement and Connect",
+        "description": "Implement the Server with fastmcp, launch it over stdio, and plug it into the course client in three steps",
         "status": "locked",
         "order": 2,
         "microtasks": [],
-        "completionCriteria": "工具列表出现且可试调用"
+        "completionCriteria": "The tool appears in the tool list and can be test-called"
       },
       {
         "id": "ms_verify",
-        "title": "验收与打磨",
-        "description": "让 Agent 在真实任务中正确选用该工具；用 Client 写一条脚本化验收",
+        "title": "Acceptance and Polish",
+        "description": "Have the Agent pick the tool correctly in a real task; write one scripted acceptance check with the Client",
         "status": "locked",
         "order": 3,
         "microtasks": [],
-        "completionCriteria": "四条验收口径全部达成：跑通/被正确选用/结果可用/描述达标"
+        "completionCriteria": "All four acceptance criteria met: runs end to end / chosen correctly / usable results / passing description"
       }
     ],
     "submissions": [],

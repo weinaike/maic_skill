@@ -31,3 +31,13 @@ Inspector: Inspector
 函数: function
 装饰器: decorator
 类型即 schema: types are the schema
+接口三件套: the interface trio (tool name / parameters / description)
+验收口径: acceptance criteria
+客户端无关: client-agnostic
+三步接入: three-step setup
+一次封装多端可用: wrap it once, works in any client
+选花眼: gets choice paralysis
+用得飞起: hammers it
+干等: waiting in the dark
+及格线: the passing bar
+一遍就过: getting it right in one pass
