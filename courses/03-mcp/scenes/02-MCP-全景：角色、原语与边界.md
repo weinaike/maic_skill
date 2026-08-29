@@ -7,7 +7,9 @@ title: MCP 全景：角色、原语与边界
 
 开始之前，先把地图看全。MCP 的世界里就三个角色：Host 是客户端，比如 Claude Code、WorkBuddy；Server 是工具提供方，也就是你写的程序；中间的 Client 是协议层，负责按 MCP 的规范传话。通信走 JSON-RPC，本地用 stdio，远程用 HTTP——这两句记住就行，细节不用背。 @[text_roles]
 
-Server 能往外提供三样东西，我们叫三原语。第一是 Tools，工具——可以被调用的函数，让 Agent 执行动作、拿回结果，这是最常用的。第二是 Resources，资源——只读的数据，比如文件、数据库表、实验结果，按地址暴露出来给客户端读。第三是 Prompts，提示词模板——把常用的提问方式固化成参数化模板，用户一键套用。 @[text_card_tools]
+Server 能往外提供三样东西，我们叫三原语——从左往右看这三张卡。第一是 Tools，工具——可以被调用的函数，让 Agent 执行动作、拿回结果，这是最常用的。 @[text_card_tools]
+
+第二是 Resources，资源——只读的数据，比如文件、数据库表、实验结果，按地址暴露出来给客户端读。第三是 Prompts，提示词模板——把常用的提问方式固化成参数化模板，用户一键套用。 @[text_card_res]
 
 那什么时候该用 MCP？记住一条速记：要执行动作，做成 MCP 工具；要沉淀流程知识，写成 Skill；要多个角色分工协作，用 SubAgent——这三件套各管一摊，别混着用。 @[text_boundary]
 

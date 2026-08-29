@@ -7,11 +7,15 @@ title: 三原语接口：Tools / Resources / Prompts
 
 前面我们一直在用 tool，这一节把三个原语的接口都过一遍——不深入，就是让你认识它们长什么样、什么内容该装进哪个。 @[text_title]
 
-第一个，@mcp.tool，你已经熟了。参数进去、结果出来，Agent 执行动作用它。第二个，@mcp.resource，注意装饰器里带了一个 URI 地址：固定地址暴露一份配置，模板地址还能带上路径参数，把一整类只读数据挂出来——你的实验结果目录、数据库表，都可以这样暴露。第三个，@mcp.prompt，参数化的提示词模板：比如把"请从方法、数据、结论三个角度评审这篇论文"固化成模板，以后一键套用。 @[code_card_tool]
+三个接口，从左往右看这三张卡。第一个，@mcp.tool，你已经熟了。参数进去、结果出来，Agent 执行动作用它——比如批量下载论文：给它一组网址和一个保存目录，它把 PDF 逐个拉回来，返回保存清单。 @[code_card_tool]
+
+第二个，@mcp.resource，注意装饰器里带了一个 URI 地址：固定地址暴露一份配置，模板地址还能带上路径参数，把一整类只读数据挂出来——你的实验结果目录、数据库表，都可以这样暴露。 @[code_card_res]
+
+第三个，@mcp.prompt，参数化的提示词模板：比如把"请从方法、数据、结论三个角度评审这篇论文"固化成模板，以后一键套用。 @[code_card_pr]
 
 一句话选型：要执行动作，用 tool；要暴露只读数据，用 resource；要固化提问方式，用 prompt。 @[text_pick]
 
-返回值方面，三个原语都可以返回文本，tool 和 resource 还可以返回 Image 图片或者结构化内容——比如图表存成图片直接回给 Agent 看。科研场景里最有意思的玩法，就是把 matplotlib 出的图直接作为工具返回值。
+返回值方面，三个原语都可以返回文本，tool 还可以返回 Image 图片或者结构化内容——比如图表存成图片直接回给 Agent 看。科研场景里最有意思的玩法，就是把 matplotlib 出的图直接作为工具返回值。
 
 至于 Sampling、Elicitation、Roots 这些进阶原语，本课不讲，用到的时候再查文档就好。
 
@@ -132,15 +136,19 @@ title: 三原语接口：Tools / Resources / Prompts
         },
         {
           "id": "L2",
-          "content": "def add(a: int, b: int) -> int:"
+          "content": "def batch_download(urls: list[str],"
         },
         {
           "id": "L3",
-          "content": "    \"\"\"两数相加\"\"\""
+          "content": "        save_dir: str) -> list[dict]:"
         },
         {
           "id": "L4",
-          "content": "    return a + b"
+          "content": "    \"\"\"批量下载论文 PDF\"\"\""
+        },
+        {
+          "id": "L5",
+          "content": "    return save_all(urls, save_dir)"
         }
       ]
     },

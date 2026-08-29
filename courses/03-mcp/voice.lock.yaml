@@ -1,9 +1,4 @@
 # voice.lock — TTS cache: audioKey(text|voice|speed) → synthesized file. Managed by the voice module.
-t:63ceb59c65dd8dfea6c87aaec3a202747546cf4d:
-  file: audio/ast_6s7hbrpvdc.mp3
-  format: mp3
-  duration: 16.848
-  voice: zh_male_liufei_uranus_bigtts
 t:4d6d5e40c0a0c7ee338472a1ba673a18f757f95d:
   file: audio/ast_dlpg7jn8qu.mp3
   format: mp3
@@ -19,11 +14,6 @@ t:fe19e677d572a7f68e489a17652aa544836a950a:
   format: mp3
   duration: 24.288
   voice: zh_male_liufei_uranus_bigtts
-t:628611275a4109a97b9d20c5fa16586fb1adf4a6:
-  file: audio/ast_jrve6ye5d0.mp3
-  format: mp3
-  duration: 27.24
-  voice: zh_male_liufei_uranus_bigtts
 t:c64fdbc1534cc02ab523ef4e00cbfe89eb81135a:
   file: audio/ast_71mprop213.mp3
   format: mp3
@@ -33,16 +23,6 @@ t:32ed5d38e6b4c7ab5421497ef9b2565695ea7ffc:
   file: audio/ast_k6817mzpuo.mp3
   format: mp3
   duration: 12.672
-  voice: zh_male_liufei_uranus_bigtts
-t:bc39ed17d6762ce7ca8b07130d16b9600ab46d22:
-  file: audio/ast_iis9lg4hvg.mp3
-  format: mp3
-  duration: 19.08
-  voice: zh_male_liufei_uranus_bigtts
-t:36e14f80bc0b869610fba6bd1eebbdc84b48c6b6:
-  file: audio/ast_56q53bzk6i.mp3
-  format: mp3
-  duration: 16.272
   voice: zh_male_liufei_uranus_bigtts
 t:f93ab4f9133319882c70c6f957e276c5e7b72760:
   file: audio/ast_ihhot5zpaw.mp3
@@ -58,11 +38,6 @@ t:136a3a4e1aefa86cd21747a3150f1556ba978f30:
   file: audio/ast_608b766zfj.mp3
   format: mp3
   duration: 21.888
-  voice: zh_male_liufei_uranus_bigtts
-t:3ad4a947e8433499e57464632ae3e59aa8096764:
-  file: audio/ast_5qxswq3lkr.mp3
-  format: mp3
-  duration: 25.488
   voice: zh_male_liufei_uranus_bigtts
 t:92697fa87d622c5ca441e968833b4eeae74a5855:
   file: audio/ast_4qivqmit95.mp3
@@ -84,11 +59,6 @@ t:d8aff4220522a2a048f1f785f220ec5ade80a6a0:
   format: mp3
   duration: 17.856
   voice: zh_male_liufei_uranus_bigtts
-t:23bded20a6dbbbffdc06fa476b9faff709784282:
-  file: audio/ast_4prs9921tp.mp3
-  format: mp3
-  duration: 19.872
-  voice: zh_male_liufei_uranus_bigtts
 t:bf1e813d72048d7123487409c204273db8fa860b:
   file: audio/ast_t823jl752p.mp3
   format: mp3
@@ -98,11 +68,6 @@ t:f2efe162fef35168c6bd2c524b62beeb9c9b449f:
   file: audio/ast_qqhvr485q5.mp3
   format: mp3
   duration: 9.264
-  voice: zh_male_liufei_uranus_bigtts
-t:ad9368913408038f22a31926af56dbff9e657de4:
-  file: audio/ast_ae9dcr3xgx.mp3
-  format: mp3
-  duration: 16.68
   voice: zh_male_liufei_uranus_bigtts
 t:4ba5015c4c8f01d7a8429d0b61804c9e0ef020ef:
   file: audio/ast_cealziwxlk.mp3
@@ -139,11 +104,6 @@ t:3dccee584721615eafcce34322e33252641c2549:
   format: mp3
   duration: 9.24
   voice: zh_male_liufei_uranus_bigtts
-t:a0886aef613821d04bded5e6dbae2df03027dfd1:
-  file: audio/ast_qq7qklid2i.mp3
-  format: mp3
-  duration: 22.44
-  voice: zh_male_liufei_uranus_bigtts
 t:4ff63a6b19d2a7d5cfc21b0c0efae1bfc155092d:
   file: audio/ast_c7tm212c13.mp3
   format: mp3
@@ -153,11 +113,6 @@ t:069c76187f8910d699278722cb231e87ca6e2990:
   file: audio/ast_sm4zhtjmxj.mp3
   format: mp3
   duration: 8.64
-  voice: zh_male_liufei_uranus_bigtts
-t:ec3d19b1195d1096c2bf4f3b9c964c4d672d0c5a:
-  file: audio/ast_ax9mss1rbg.mp3
-  format: mp3
-  duration: 15.048
   voice: zh_male_liufei_uranus_bigtts
 t:2d1786eed211a02c0ac88b3789c5c69af17ec586:
   file: audio/ast_h2fc7n8r09.mp3
@@ -174,11 +129,6 @@ t:f640495801d453874375b642d86ae6dfe70aec4d:
   format: mp3
   duration: 20.04
   voice: zh_male_liufei_uranus_bigtts
-t:a1b8393db8df366ac8eab225ee723678ebe358e9:
-  file: audio/ast_c6sjguiyjv.mp3
-  format: mp3
-  duration: 21.648
-  voice: zh_male_liufei_uranus_bigtts
 t:d122934a577ec6d062f70289544a767427acb004:
   file: audio/ast_dnxsxnyjzf.mp3
   format: mp3
@@ -193,11 +143,6 @@ t:0a1b72a59d9c7f57f2757bc20a00b9351eac45c6:
   file: audio/ast_dx6voprqko.mp3
   format: mp3
   duration: 15.072
-  voice: zh_male_liufei_uranus_bigtts
-t:74027453e0799d7c4230e2e29dfe062413080b06:
-  file: audio/ast_8udwzn11m7.mp3
-  format: mp3
-  duration: 16.032
   voice: zh_male_liufei_uranus_bigtts
 t:045f2a86846dcbbd0d051d733be2d621ee8912ef:
   file: audio/ast_hi0x3hvsqq.mp3
@@ -214,20 +159,10 @@ t:3cad5b95c86ae58ca2cee11855038c880c6154a3:
   format: mp3
   duration: 18.648
   voice: zh_male_liufei_uranus_bigtts
-t:ca899c6bbf4dac1b028a9782ae30dc91786ae91f:
-  file: audio/ast_89oh8gmat8.mp3
-  format: mp3
-  duration: 32.712
-  voice: zh_male_liufei_uranus_bigtts
 t:535e3797b56fc61cbdc62ed2b4d165ecc8e32959:
   file: audio/ast_cu0hn992xu.mp3
   format: mp3
   duration: 10.032
-  voice: zh_male_liufei_uranus_bigtts
-t:d9f4ac22668b332adad4a1118434e416adf6be18:
-  file: audio/ast_nxv86sa2kn.mp3
-  format: mp3
-  duration: 25.248
   voice: zh_male_liufei_uranus_bigtts
 t:d8e1e642977662f96cc3d8c0ccb10318a533b3ce:
   file: audio/ast_aqvllar2g0.mp3
@@ -243,4 +178,109 @@ t:2e4ca436c733c54da10e6b78fce0fb56d7cf8850:
   file: audio/ast_41ffrdrxa7.mp3
   format: mp3
   duration: 14.016
+  voice: zh_male_liufei_uranus_bigtts
+t:e56a3e6324b2437952932d0217bc869c24c4e56e:
+  file: audio/ast_1dtyhtpdu1.mp3
+  format: mp3
+  duration: 17.856
+  voice: zh_male_liufei_uranus_bigtts
+t:3c1476c09df974ea89d6a42004b849e4d0a5b2d0:
+  file: audio/ast_pr2cnvlgng.mp3
+  format: mp3
+  duration: 13.056
+  voice: zh_male_liufei_uranus_bigtts
+t:b38b0b0dea1a3078d8b9234d88ed00d07297dd78:
+  file: audio/ast_t9x41af2rs.mp3
+  format: mp3
+  duration: 16.848
+  voice: zh_male_liufei_uranus_bigtts
+t:052824fb7d9ebad65bdd813e33c84f61ec48f14e:
+  file: audio/ast_q0n6htqpvu.mp3
+  format: mp3
+  duration: 16.656
+  voice: zh_male_liufei_uranus_bigtts
+t:e8dc16838b69cda7ced363cd2f3940bebbfecf72:
+  file: audio/ast_plab6v5v5y.mp3
+  format: mp3
+  duration: 10.248
+  voice: zh_male_liufei_uranus_bigtts
+t:da2cc973f2c55b929c45b40c7d2667c2891cec13:
+  file: audio/ast_rr0wmr4xy4.mp3
+  format: mp3
+  duration: 16.464
+  voice: zh_male_liufei_uranus_bigtts
+t:8ce812d42c99737ed3c5ed50de2f2e35603cd6e8:
+  file: audio/ast_scbz45iqn9.mp3
+  format: mp3
+  duration: 14.808
+  voice: zh_male_liufei_uranus_bigtts
+t:e8102a691ec91beecbaf6281b2632b7d05487f1b:
+  file: audio/ast_7u5c1l09l7.mp3
+  format: mp3
+  duration: 10.272
+  voice: zh_male_liufei_uranus_bigtts
+t:5b9d06895023c00c83ab4d62cb00d6313b9cacc1:
+  file: audio/ast_2hftr2jyv2.mp3
+  format: mp3
+  duration: 14.664
+  voice: zh_male_liufei_uranus_bigtts
+t:38477465dd64c88345d2af08004dff1b95de8b46:
+  file: audio/ast_m3rluvuwpv.mp3
+  format: mp3
+  duration: 21.24
+  voice: zh_male_liufei_uranus_bigtts
+t:4ea4daf2fca998ac536b817d03b370602d3c659d:
+  file: audio/ast_18isssafpi.mp3
+  format: mp3
+  duration: 17.856
+  voice: zh_male_liufei_uranus_bigtts
+t:1428cf3698a481a88c7e38f526c8109e47bbaf5c:
+  file: audio/ast_447ow7f8d4.mp3
+  format: mp3
+  duration: 16.032
+  voice: zh_male_liufei_uranus_bigtts
+t:7572694bbf6da9e8503a320078cb82e6cd14da0e:
+  file: audio/ast_b8ij1m9f4t.mp3
+  format: mp3
+  duration: 13.464
+  voice: zh_male_liufei_uranus_bigtts
+t:cca6cf73bcd78ff270ce2dd1ccf1b8636c2dfe5a:
+  file: audio/ast_1riefcji2z.mp3
+  format: mp3
+  duration: 15.912
+  voice: zh_male_liufei_uranus_bigtts
+t:6f7eb9a666439e7eff445869974b24c7d37fbacf:
+  file: audio/ast_dpvhct8m75.mp3
+  format: mp3
+  duration: 21.072
+  voice: zh_male_liufei_uranus_bigtts
+t:349598188d6fe748bb2decc46e761f33c39baa80:
+  file: audio/ast_8yj2afhoaj.mp3
+  format: mp3
+  duration: 5.616
+  voice: zh_male_liufei_uranus_bigtts
+t:3bb8f630107061c52e6c0f6d8c612bcda820a8c0:
+  file: audio/ast_ipj92s5lfz.mp3
+  format: mp3
+  duration: 10.68
+  voice: zh_male_liufei_uranus_bigtts
+t:be0f77e11915599c330176aa6d4a9c1741b23e75:
+  file: audio/ast_5wqqv9xr7r.mp3
+  format: mp3
+  duration: 14.64
+  voice: zh_male_liufei_uranus_bigtts
+t:e6419997fce5ccbe865acf0fbaf9f4a90bc29603:
+  file: audio/ast_14yv1pyvdv.mp3
+  format: mp3
+  duration: 18.048
+  voice: zh_male_liufei_uranus_bigtts
+t:bc16d7c54f2ab87ff000034ad76ed580c9efba1a:
+  file: audio/ast_jlgmj0oee4.mp3
+  format: mp3
+  duration: 14.016
+  voice: zh_male_liufei_uranus_bigtts
+t:c7637846fd72a36aa1077293f2221129ab0245d1:
+  file: audio/ast_10czof9vnr.mp3
+  format: mp3
+  duration: 7.224
   voice: zh_male_liufei_uranus_bigtts

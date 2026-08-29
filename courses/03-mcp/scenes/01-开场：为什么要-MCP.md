@@ -5,7 +5,7 @@ title: 开场：为什么要 MCP
 
 ## 讲稿
 
-好，欢迎大家来到 Agent 系列的第三讲。前几讲我们一路走过来：认识了 Token，理解了模型是怎么读文字的；学了 Prompt，学会了怎么把任务讲清楚；上一讲又搭起了 Agent 的框架。到这里，你的 Agent 已经会思考、会规划了。 @[text_main_title]
+好，欢迎大家来到 Agent 系列的第三讲。前几讲我们一路走过来：也上手了工具的使用，认识了 Token，理解了模型是怎么读文字的；学了 Prompt，学会了怎么把任务讲清楚；上一讲又搭起了 Agent 的框架。到这里，你的 Agent 已经会思考、会规划了。 @[text_main_title]
 
 但它会干活吗？还不会。你手里有现成的文献处理函数、数据清洗脚本、绘图代码，可这些都在你的代码库里，Agent 够不着——它现在还只是个会聊天的脑子。 @[text_subtitle]
 
@@ -168,7 +168,7 @@ MCP 就是来解决这件事的开放标准——Model Context Protocol，模型
       "top": 417,
       "width": 500,
       "height": 44,
-      "content": "<p style=\"font-size: 16px; text-align: center; color: #e2e8f0;\">前置：工具 · Prompt · Token · Agent 框架｜本课产出：你的第一个 MCP</p>",
+      "content": "<p style=\"font-size: 14px; text-align: center; color: #e2e8f0;\">前置：工具 · Prompt · Token · Agent 框架｜本课产出：你的第一个 MCP</p>",
       "defaultFontName": "Microsoft YaHei",
       "defaultColor": "#e2e8f0"
     }
