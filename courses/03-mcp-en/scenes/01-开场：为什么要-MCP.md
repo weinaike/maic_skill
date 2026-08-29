@@ -5,9 +5,9 @@ title: Opening: Why MCP?
 
 ## 讲稿
 
-Alright, welcome to Lecture Three of the Agent series. In the past few lectures we've come a long way: we used tools hands-on, met the Token and saw how the model reads text, picked up Prompts and learned to explain a task clearly, and last time we built the Agent framework. By now, your Agent can think and plan. @[text_main_title]
+Alright, welcome to Lecture Three of the Agent series. We've come a long way. You've worked with the tools hands-on. You met Token, and saw how the model reads text. You picked up Prompting, and learned to explain a task clearly. And last time, we built the Agent framework. By now, your Agent can think and plan. @[text_main_title]
 
-But can it get real work done? Not yet. You've got paper-processing functions, data-cleaning scripts, plotting code — but they all live in your codebase, out of the Agent's reach; for now, it's just a brain that can chat. @[text_subtitle]
+But can it get real work done? Not yet. You've got paper-processing functions, data-cleaning scripts, plotting code. But they all live in your codebase, out of the Agent's reach. For now, it's just a brain that can chat. @[text_subtitle]
 
 Here's the bigger headache: before, getting a client to use a tool meant writing a custom integration just for that pair. More tools, more clients — there's no way to maintain all that one-to-one custom code.
 

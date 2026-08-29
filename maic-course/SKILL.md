@@ -63,6 +63,7 @@ node scripts/build.mjs  <courseDir>     # compile + check/review 门禁 + zip(st
 - `references/workflow-edit.md` —— 编辑模块：指令路由表 + 级联收敛 + 全课终审（**任何编辑前必读**）
 - `references/workflow-auto.md` —— 全自动模式流水线 + 停止红线 + 报告模板（**自动出课前必读**）
 - `references/workflow-translate.md` —— 翻译模块：派生课程/术语表/译者派发/审查与配音（**翻译前必读**）
+- `references/translation-style.md` —— 翻译风格契约：反翻译腔清单/生态惯用表述/盲读与回译规程（**译者与翻译审查必读**）
 - `references/agents.md` —— 上下文隔离派发配置：导演-演员分工矩阵 + 三个 sub agent 提示词模板（**批量生成/审查前必读**）
 
 ## 环境变量（语音模块，M4；豆包首发、可替换）

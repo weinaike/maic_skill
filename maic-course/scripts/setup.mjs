@@ -37,7 +37,7 @@ if (args.includes('--check')) {
   const requiredRefs = [
     'scene-source-spec.md', 'maic-format.md', 'dsl-cheatsheet.md', 'layout-patterns.md',
     'review-checklists.md', 'workflow-outline.md', 'workflow-generate.md',
-    'workflow-voice.md', 'workflow-edit.md', 'workflow-auto.md', 'speech-style.md', 'agents.md', 'workflow-translate.md',
+    'workflow-voice.md', 'workflow-edit.md', 'workflow-auto.md', 'speech-style.md', 'agents.md', 'workflow-translate.md', 'translation-style.md',
   ];
   for (const ref of requiredRefs) {
     if (!existsSync(path.join(SKILL_ROOT, 'references', ref))) failures.push(`references/${ref} 缺失`);

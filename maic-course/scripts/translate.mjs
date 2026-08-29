@@ -155,8 +155,45 @@ export function verifyTranslation(targetDir, options = {}) {
     if (sq !== tq) out.errors.push(`${tag} quiz 题数不一致：${sq} → ${tq}`);
   }
 
-  // 2. 源语残留（非 zh 目标里的 CJK 比例）
+  // 2a. 全角标点残留 + 超长句（非 zh 目标——地道性的机械信号，translation-style §五；
+  //     只查"已翻译"场景：按场景 CJK 比例门控，未译场景跳过；单个 em-dash — 是合法
+  //     英文标点，只有中文式双 —— 记错）
   const lang = String(target.course['lang'] ?? 'en');
+  if (lang !== 'zh') {
+    const FW = /[，。；：！？（）「」『』【】……]|——/g;
+    const sceneText = (scene) => {
+      let s = '';
+      for (const b of scene.speech) if (b.kind === 'speech') s += b.text;
+      for (const el of scene.canvas?.['elements'] ?? []) {
+        if (el['type'] === 'text') s += String(el['content'] ?? '').replace(/<[^>]+>/g, '');
+      }
+      return s;
+    };
+    const cjkRatio = (s) => {
+      let cjk = 0;
+      for (const ch of s) if (/[一-鿿]/.test(ch)) cjk++;
+      return s.length ? cjk / s.length : 0;
+    };
+    for (const scene of target.scenes) {
+      if (cjkRatio(sceneText(scene)) > 0.2) continue; // 未翻译场景，跳过（由残留检测报告进度）
+      for (const block of scene.speech) {
+        if (block.kind !== 'speech') continue;
+        const hits = block.text.match(FW);
+        if (hits) out.errors.push(`${scene.file} 讲稿全角标点残留 ${JSON.stringify([...new Set(hits)])}：${block.text.slice(0, 30)}…（译为半角，见 translation-style §一.9）`);
+        for (const sent of block.text.split(/[.!?]+/)) {
+          const words = sent.trim().split(/\s+/).filter(Boolean).length;
+          if (words > 28) out.warnings.push(`${scene.file} 单句 ${words} 词（演讲体建议拆短）：${sent.trim().slice(0, 40)}…`);
+        }
+      }
+      for (const el of scene.canvas?.['elements'] ?? []) {
+        if (el['type'] !== 'text') continue;
+        const hits = String(el['content'] ?? '').match(FW);
+        if (hits) out.errors.push(`${scene.file} 画布 ${el['id']} 全角标点残留 ${JSON.stringify([...new Set(hits)])}`);
+      }
+    }
+  }
+
+  // 2. 源语残留（非 zh 目标里的 CJK 比例）
   if (lang !== 'zh') {
     for (const scene of target.scenes) {
       let cjk = 0;

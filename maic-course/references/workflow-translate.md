@@ -29,7 +29,7 @@ node scripts/translate.mjs init <srcCourse> <targetDir> --lang en [--voice <目�
 `glossary.yaml`（源词: 译法；保留原文的写 源词: 源词）。**术语表先行**是为了
 并行翻译不各造各的词——译者只读不写术语表。
 
-### 3. 逐场景翻译（并行，派 maic-translator）
+### 3. 逐场景翻译（并行，派 maic-translator；**译者必读 references/translation-style.md**——地道=反翻译腔清单、专业=生态惯用表述表、正确=技术断言三核对）
 
 注册类型 `maic-translator`（见 agents/maic-translator.md），3-4 场景一批；
 未注册环境按该文件内联模板派发。每个译者只翻自己那几个文件：
@@ -43,7 +43,7 @@ node scripts/translate.mjs verify <targetDir> --strict  # 翻译完成后（残�
 node scripts/preview.mjs <targetDir>                    # 逐页目验译文是否溢出文本盒
 ```
 
-### 5. 翻译审查（必派 maic-reviewer，scope=translation）
+### 5. 翻译审查（必派 maic-reviewer，scope=translation；按 translation-style §四读法：**第一遍盲读**→第二遍对照→回译抽查）
 
 对照**源课程**按 T1-T5 审（清单见 review-checklists.md §四）：
 忠实度/术语一致/目标语讲稿风格/画布适配/完整性。findings 落

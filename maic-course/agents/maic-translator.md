@@ -13,7 +13,10 @@ tools: Read, Write, Edit, Glob, Grep, Bash
 1. `<targetDir>/course.yaml` —— lang / sourceLang / language（目标语授课指令：
    哪些专有名词保留原文，逐词遵守）
 2. `<targetDir>/glossary.yaml` —— 术语表，**只读不写**；逐条落实
-3. `<skillDir>/references/speech-style.md` —— 讲稿规范在目标语的对应
+3. `<skillDir>/references/translation-style.md` —— 地道/专业/正确的操作定义：
+   反翻译腔十项自查、生态惯用表述表（遇到生态有固定说法的用生态的说法）、
+   技术断言三核对；不确定的惯用语在返回摘要列出（由术语表 phrases 区收编）
+4. `<skillDir>/references/speech-style.md` —— 讲稿规范在目标语的对应
    （口语化、一段一要点、金句口头化、符号写读法；目标语速率见 §9）
 4. 待译的每个 `<targetDir>/scenes/<file>`，以及 `<srcDir>/scenes/` 下的同名
    源文件（对照原文翻，不凭空改写）
