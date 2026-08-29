@@ -2,12 +2,12 @@
 course: "MCP：让 Agent 接入你的工具"
 audience: "一线科研人员，已完成前置课程（工具使用、Prompt、Token、Agent 框架），手上有待封装的业务/功能函数"
 goal: "学完本课能快速上手开发一个自己的 MCP：用 fastmcp 把科研函数封装成接口规范、描述清晰、可调试的 MCP Server"
-totalMinutes: 28
+totalMinutes: 21.0
 style: professional
 voice: zh_male_liufei_uranus_bigtts
 ---
 
-## 1. 开场：为什么要 MCP · slide · 2min
+## 1. 开场：为什么要 MCP · slide · 1.5min
 
 要点：
 - 承接前置：Agent 框架已就位，但要干活必须接工具；函数在代码里，Agent 够不着
@@ -17,7 +17,7 @@ voice: zh_male_liufei_uranus_bigtts
 画布意图：cover 封面版式（系列风格）+ 底部一行"本课产出：你的第一个 MCP"
 讲稿意图：痛点快讲（2 分钟内）→ 直接给本课路线图：先会用、再会建、建得好
 
-## 2. MCP 全景：角色、原语与边界 · slide · 2.5min
+## 2. MCP 全景：角色、原语与边界 · slide · 2.0min
 
 要点：
 - 三角色：Host（客户端）/ Client（协议层）/ Server（工具提供方）
@@ -27,7 +27,7 @@ voice: zh_male_liufei_uranus_bigtts
 画布意图：cards-3 三栏卡片（三原语）+ 标题区下 Host-Client-Server 关系行 + 底部一条边界对比行
 讲稿意图：只讲"是什么与选型判断"，怎么写留给 §6——避免与开发节重复
 
-## 3. 先用起来：现成生态与三步接入 · slide · 3min
+## 3. 先用起来：现成生态与三步接入 · slide · 2.0min
 
 要点：
 - 先找现成再自研：filesystem（读写文件）/ fetch（抓网页）/ 数据库 / 搜索——科研高频需求大多有官方 server
@@ -37,7 +37,7 @@ voice: zh_male_liufei_uranus_bigtts
 画布意图：cards-3 三个现成 server 卡（filesystem/fetch/数据库）+ 底部三步接入路径线，可回扣 00 课 MCP 连接页
 讲稿意图：用现成 server 完成"第一次使用"建立直觉；给判断口诀"现成的组合，独有的自研"，为下节自研铺垫
 
-## 4. 最小构建：fastmcp 十行起步 · slide · 3.5min
+## 4. 最小构建：fastmcp 十行起步 · slide · 2.0min
 
 要点：
 - 安装与初始化：pip install fastmcp → FastMCP("名字")
@@ -47,7 +47,7 @@ voice: zh_male_liufei_uranus_bigtts
 画布意图：process-3 变体 + code 元素展示完整最小示例（约 10 行，左流程右代码）
 讲稿意图：以"文献批量下载函数"现场封装；强调"只多了装饰器和类型"；TS SDK 一句带过（同构）
 
-## 5. 接口类型：类型即 schema · slide · 3.5min
+## 5. 接口类型：类型即 schema · slide · 2.5min
 
 要点：
 - 基础类型映射：str/int/float/bool → JSON Schema；返回类型同样重要
@@ -58,7 +58,7 @@ voice: zh_male_liufei_uranus_bigtts
 画布意图：上下双 code 块（左：朴素写法 / 右：带类型与文档的写法）+ 底部类型映射一行
 讲稿意图：核心信息——"类型写得越准，模型调用越稳"；正反例对照（无类型 vs 强类型）
 
-## 6. 三原语开发：Tools / Resources / Prompts · slide · 2.5min
+## 6. 三原语接口：Tools / Resources / Prompts · slide · 2.0min
 
 要点：
 - @mcp.tool：入参→业务函数→结构化返回（承接 §4）
@@ -68,7 +68,7 @@ voice: zh_male_liufei_uranus_bigtts
 画布意图：cards-3 三栏卡片，每栏一个装饰器签名 + 一行用途
 讲稿意图：接口层面的简单介绍——三个装饰器长什么样、怎么用、什么内容该用哪个装；各配一个科研场景一句话示例；进阶原语（Sampling/Elicitation/Roots）本课不讲，不做展开
 
-## 7. 好用之道：描述、返回与错误 · slide · 3min
+## 7. 好用之道：描述、返回与错误 · slide · 2.5min
 
 要点：
 - 描述写法：工具描述就是写给模型看的提示词（何时用/怎么用/何时不用）
@@ -80,7 +80,7 @@ voice: zh_male_liufei_uranus_bigtts
 画布意图：grid-2x2 四象限卡（描述/返回/错误/Context）+ 底部安全提示条
 讲稿意图：核心信息——"工具好不好用，一半取决于描述写得好不好"；每象限一个正反例
 
-## 8. 调试与部署：从跑不通到稳定用 · slide · 3min
+## 8. 调试与部署：从跑不通到稳定用 · slide · 2.5min
 
 要点：
 - 调试工具链：MCP Inspector 连接本地 Server、客户端日志、stdio 日志重定向
@@ -91,7 +91,7 @@ voice: zh_male_liufei_uranus_bigtts
 画布意图：上半 grid-2x2 坑卡片 + 下半一条三段排查路径线（连不上→查配置进程；不选用→查描述；结果怪→查返回）
 讲稿意图：坑各配一句避法；排查路径教方法论；两个坑已在 §5/§7 讲过防法，此处点回即可
 
-## 9. 检验理解 · quiz · 2min
+## 9. 检验理解 · quiz · 2.0min
 
 要点：
 - 原语选择与角色辨析
@@ -99,7 +99,7 @@ voice: zh_male_liufei_uranus_bigtts
 - 工具描述与返回设计
 quiz 意图：2 单选（原语选择场景题 + 类型 schema 作用题）+ 1 简答（给自己的函数定接口：工具名/参数/描述怎么写，练 §5+§7）；干扰项用常见误解
 
-## 10. 项目实战：开发你的第一个 MCP · pbl · 2.5min
+## 10. 项目实战：开发你的第一个 MCP · pbl · 2.0min
 
 要点：
 - 从科研流程挑一个真实函数（文献批量处理/数据清洗/绘图）
