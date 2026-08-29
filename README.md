@@ -51,6 +51,10 @@ node maic-course/scripts/check.mjs courses/00-agent-intro
 node maic-course/scripts/build.mjs courses/00-agent-intro
 # → courses/00-agent-intro/build/00.Agent-系列课程介绍.maic.zip
 # 平台 → 课程列表 → 导入 → 选择该 zip
+
+# 大纲（解包课程反推骨架 → 充实 → 审查）
+node maic-course/scripts/outline.mjs sync courses/00-agent-intro
+node maic-course/scripts/outline.mjs lint courses/00-agent-intro
 ```
 
 在 Claude Code 会话中直接对话（"帮我生成大纲/给这页配音/把第 3 页改成两栏"），
@@ -61,7 +65,7 @@ skill 按 SKILL.md 路由。
 | M | 内容 | 状态 |
 |---|------|------|
 | M1 | 骨架 + 编译/三层校验/打包 + 黄金测试 | ✅ 完成（`node test/golden-roundtrip.mjs` 三项全过） |
-| M2 | 审查框架 + outline 模块（大纲审查闭环） | ⬜ |
+| M2 | 审查框架 + outline 模块（大纲审查闭环） | ✅ 完成（findings 门禁已接入 build；outline lint/sync） |
 | M3 | generate 模块（内容+规范审查、修复闭环、版式配方、preview） | ⬜ |
 | M4 | voice 模块（豆包 adapter + env + doctor + 哈希缓存） | ⬜ |
 | M5 | edit 模块 + 全课终审 | ⬜ |

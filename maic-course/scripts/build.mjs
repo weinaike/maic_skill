@@ -16,6 +16,7 @@ import { spawnSync } from 'node:child_process';
 import { readCourse } from './lib/course.mjs';
 import { compileCourse } from './compile.mjs';
 import { checkCourse } from './check.mjs';
+import { reviewVerdict } from './review.mjs';
 import { loadConfig } from './lib/dsl.mjs';
 
 const isMain = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
@@ -34,6 +35,18 @@ export async function buildCourse(courseDir, options = {}) {
   if (errors.length > 0) {
     for (const f of errors) console.error(`  ✗ [${f.layer}] ${f.location} — ${f.message}`);
     throw new Error(`${errors.length} error(s) — fix them before building (run check.mjs for the full report)`);
+  }
+
+  // Review gate: open blockers from any review scope refuse to ship.
+  const review = reviewVerdict(courseDir);
+  for (const b of review.blockers) {
+    console.error(`  ✗ [review:${b.file}] ${b.id} ${b.location} — ${b.finding}`);
+  }
+  if (review.blockers.length > 0) {
+    throw new Error(`${review.blockers.length} open review blocker(s) — resolve (fix + re-review) before building`);
+  }
+  for (const s of review.stale) {
+    console.log(`  ⚠ 审查后源又变更：${s.target} — 建议重审`);
   }
 
   const buildDir = path.join(courseDir, options.out ?? 'build');
