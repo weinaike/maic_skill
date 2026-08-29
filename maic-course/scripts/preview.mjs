@@ -89,8 +89,11 @@ export function renderPreviewHtml(project, manifest, notes) {
   .scene-wrap { flex:1 1 auto; display:none; min-width:0; flex-direction:column; }
   .scene-wrap.active { display:flex; }
   .canvas-card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px; box-shadow:0 1px 8px rgba(15,23,42,.06); }
-  .stage-wrap2 { overflow:auto; background:repeating-conic-gradient(#f8fafc 0% 25%, #fff 0% 50%) 0/16px 16px; border-radius:8px; }
-  .canvas { position:relative; width:850px; height:478px; margin:0 auto; background:#fff; overflow:hidden; }
+  /* 画布按原生 1000×562.5 渲染（元素坐标与内联字号都原生），整体 transform 等比缩放 */
+  .stage-wrap2 { width:850px; height:478.5px; overflow:hidden; background:repeating-conic-gradient(#f8fafc 0% 25%, #fff 0% 50%) 0/16px 16px; border-radius:8px; }
+  .canvas { position:relative; width:1000px; height:562.5px; transform:scale(0.85); transform-origin:0 0; background:#fff; overflow:hidden; }
+  /* 平台渲染器 reset 了段落默认边距——不重置的话每个文本框都被 p 的 1em margin 撑高，布局漂移 */
+  .canvas p, .canvas ul, .canvas li { margin:0; padding:0; }
   .canvas > * { position:absolute; }
   .canvas img { object-fit:contain; }
   .canvas .ph { border:1px dashed #cbd5e1; background:#f8fafc; color:#94a3b8; display:flex; align-items:center; justify-content:center; font-size:11px; }
@@ -127,14 +130,13 @@ export function renderPreviewHtml(project, manifest, notes) {
   .dot.quiz { border-radius:6px; }
   .hint { margin-left:14px; color:#94a3b8; font-size:11px; }
   body.panel-hidden .panel { display:none; }
-  body.panel-hidden .stage { max-width:900px; }
-  /* 窄视口纵向堆叠：缩放画布（zoom 影响布局占位），给讲稿面板留出可读高度 */
+  body.panel-hidden .stage { max-width:920px; }
+  /* 窄视口纵向堆叠：整体 scale 到 0.62（字号坐标同缩），给讲稿面板留出可读高度 */
   @media (max-width:1240px) {
-    .stage { flex-direction:column; align-items:center; }
-    .canvas-card { width:632px; }           /* 850 × .72 + padding ≈ 640 */
-    .canvas { zoom:.72; }
-    .panel { flex:0 0 auto; width:632px; max-height:40vh; }
-    body.panel-hidden .stage, body.panel-hidden .panel { width:auto; }
+    .stage { flex-direction:column; align-items:center; max-width:700px; }
+    .stage-wrap2 { width:620px; height:349px; }
+    .canvas { transform:scale(0.62); }
+    .panel { flex:0 0 auto; width:652px; max-height:40vh; }
   }
 </style>
 </head>
@@ -173,8 +175,9 @@ let cur = -1;
 let playToken = 0;      // bump to cancel the running play sequence
 let playing = false;
 
-function show(i) {
-  stopPlay();
+function show(i, opts) {
+  const keepPlay = opts && opts.keepPlay;
+  if (!keepPlay) stopPlay();
   cur = Math.max(0, Math.min(i, DECK.length - 1));
   els.wraps.forEach((w, k) => w.classList.toggle('active', k === cur));
   els.dots.forEach((d, k) => d.classList.toggle('cur', k === cur));
@@ -182,6 +185,8 @@ function show(i) {
   els.btnPrev.disabled = cur === 0;
   els.btnNext.disabled = cur === DECK.length - 1;
 }
+// 手动翻页：连播中从新页继续按节奏播，未播则普通跳页
+function go(i) { playing ? playFrom(i) : show(i); }
 
 // ── sequential play engine ────────────────────────────────────────────────
 // Walks a scene's actions in order: spotlight pairs light up their canvas
@@ -202,12 +207,13 @@ function lightTarget(si, elementId) {
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 async function playFrom(si) {
-  const token = ++playToken;
+  stopPlay();                 // cancel any running sequence cleanly…
+  const token = ++playToken;  // …then this run owns the token
   playing = true;
   els.btnPlay.textContent = '⏸ 暂停连播';
   for (let i = si; i < DECK.length; i++) {
     if (token !== playToken) return;
-    if (cur !== i) show(i);
+    if (cur !== i) show(i, { keepPlay: true });
     const wrap = els.wraps[i];
     const actions = DECK[i].actions;
     // spotlights buffered directly before the next speech light up with it
@@ -261,17 +267,17 @@ function stopPlay() {
   els.wraps.forEach(clearLights);
 }
 
-els.btnPrev.onclick = () => show(cur - 1);
-els.btnNext.onclick = () => show(cur + 1);
+els.btnPrev.onclick = () => go(cur - 1);
+els.btnNext.onclick = () => go(cur + 1);
 els.btnPlay.onclick = () => { playing ? stopPlay() : playFrom(cur); };
 els.btnPanel.onclick = () => {
   document.body.classList.toggle('panel-hidden');
   els.btnPanel.textContent = document.body.classList.contains('panel-hidden') ? '显示讲稿' : '隐藏讲稿';
 };
-els.dots.forEach((d) => (d.onclick = () => show(Number(d.dataset.go))));
+els.dots.forEach((d) => (d.onclick = () => go(Number(d.dataset.go))));
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'ArrowLeft') { show(cur - 1); }
-  else if (e.key === 'ArrowRight') { show(cur + 1); }
+  if (e.key === 'ArrowLeft') { go(cur - 1); }
+  else if (e.key === 'ArrowRight') { go(cur + 1); }
   else if (e.key === ' ') { e.preventDefault(); playing ? stopPlay() : playFrom(cur); }
 });
 show(0);
@@ -325,9 +331,12 @@ function renderNonSlide(scene) {
 }
 
 /**
- * Approximate PPTist canvas render: text passes through as real HTML, shapes
- * as filled boxes, images as <img>, tables as HTML tables, code as a dark
- * <pre>, lines as SVG. Each element carries data-el for spotlight lighting.
+ * Approximate PPTist canvas render at NATIVE 1000×562.5 coordinates (the
+ * parent .canvas scales everything uniformly via transform, so inline
+ * font-sizes shrink with the boxes — no wrap/overflow drift). Text passes
+ * through as real HTML, shapes as filled boxes, images as <img>, tables as
+ * HTML tables, code as a dark <pre>, lines as SVG. Each element carries
+ * data-el for spotlight lighting.
  * @param {any} canvas
  */
 function renderCanvas(canvas) {
@@ -336,7 +345,7 @@ function renderCanvas(canvas) {
   /** @type {{x1:number,y1:number,x2:number,y2:number,color:string,width:number}[]} */
   const lines = [];
   for (const el of canvas.elements ?? []) {
-    const box = `left:${el.left * 0.85}px;top:${el.top * 0.85}px;width:${el.width * 0.85}px;height:${(el.height ?? 40) * 0.85}px;`;
+    const box = `left:${el.left}px;top:${el.top}px;width:${el.width}px;height:${el.height ?? 40}px;`;
     const tag = `data-el="${escapeAttr(String(el.id ?? ''))}"`;
     if (el.type === 'text') {
       out.push(`<div ${tag} style="${box}">${el.content ?? ''}</div>`);
@@ -355,7 +364,7 @@ function renderCanvas(canvas) {
     } else if (el.type === 'table') {
       out.push(renderTable(el, box, tag));
     } else if (el.type === 'code') {
-      const fs = (el.fontSize ?? 14) * 0.85;
+      const fs = el.fontSize ?? 14;
       const codeLines = (el.lines ?? []).map((/** @type {{content: string}} */ l) => escapeHtml(l.content ?? ''));
       out.push(
         `<pre ${tag} style="${box}margin:0;padding:8px 10px;background:#0f172a;color:#e2e8f0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:${fs}px;line-height:1.55;overflow:hidden;border-radius:4px;white-space:pre;">${codeLines.join('\n')}</pre>`,
@@ -366,9 +375,9 @@ function renderCanvas(canvas) {
   }
   if (lines.length > 0) {
     const svg = lines
-      .map((l) => `<line x1="${l.x1 * 0.85}" y1="${l.y1 * 0.85}" x2="${l.x2 * 0.85}" y2="${l.y2 * 0.85}" stroke="${l.color}" stroke-width="${l.width}"/>`)
+      .map((l) => `<line x1="${l.x1}" y1="${l.y1}" x2="${l.x2}" y2="${l.y2}" stroke="${l.color}" stroke-width="${l.width}"/>`)
       .join('');
-    out.push(`<svg style="left:0;top:0;width:850px;height:478px;pointer-events:none;" viewBox="0 0 850 478">${svg}</svg>`);
+    out.push(`<svg style="left:0;top:0;width:1000px;height:562.5px;pointer-events:none;" viewBox="0 0 1000 562.5">${svg}</svg>`);
   }
   return out.join('');
 }
