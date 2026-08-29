@@ -20,6 +20,39 @@ sub agent 之间、sub↔主之间不靠对话记忆交接。**派发前自检**
 口头偏好（"别太口语"/"多用例子"）必须已写入 course.yaml 或 outline——没落盘的信息
 sub agent 永远看不到。
 
+## 机制保证（注册 agent 类型）
+
+提示词纪律只是第一层；本 skill 在 `agents/` 下维护三个**受限工具的注册 agent 类型**，
+隔离由 Claude Code 的工具面机制兜底：
+
+| 注册类型 | 工具面 | 机制保证 |
+|---|---|---|
+| `maic-scene-generator` | Read/Write/Glob/Grep/Bash | fresh context（进程级隔离）+ 自检两关 + 批后 git 校验（见下） |
+| `maic-reviewer` | **Read/Glob/Grep（无写权限）** | 审查员**机制上无法修改任何文件**——只能读与返回；findings 由主 Agent 落盘 |
+| `maic-fixer` | Read/Write/Edit/Glob/Grep/Bash | 只按 findings 修；音频级联明示禁区 |
+
+**审查流（返回即所得）**：主 Agent 先跑 `check.mjs` 并把结果放进派发参数 →
+reviewer 纯读审查 → 最终消息返回**纯 JSON findings** → 主 Agent 写入
+`build/review/<scope>-review.rN.json` 并跑 `validate`/`verdict`。reviewer 全程零写盘。
+
+**生成批后校验（写面核对）**：每批生成器返回后，主 Agent 在课程目录跑
+`git status --porcelain`——变更文件集合必须 ⊆ 本批目标场景文件；多出来的变更
+（越权写入）直接回滚该文件并重派。课程项目应 git 化（courses/ 已在 skill 仓库内）。
+
+**安装**（agent 类型注册在会话启动时加载，装完需重启会话生效）：
+
+```bash
+mkdir -p <项目>/.claude/agents
+for f in maic-scene-generator maic-reviewer maic-fixer; do
+  ln -sfn <skillDir>/agents/$f.md <项目>/.claude/agents/$f.md
+done
+```
+
+已注册时派发用 `subagent_type` + 短参数（模板正文即其系统提示词）；未注册/跨环境时
+退回下方 A/B/C 内联模板（内容与注册版一致）。
+
+---
+
 ## 模板 A：场景生成器（每节一个实例）
 
 用 Agent 工具派发，prompt 按下式填充（`<>` 为占位符）：
@@ -79,10 +112,10 @@ sub agent 永远看不到。
 可执行 fix；不确定的记 warning 并说明不确定点，不猜测不脑补。
 诚实性：没审到的维度不要装作审过；没问题的维度明确记"无发现"。
 
-第三步，写 build/review/<scope>-review.r<N>.json（格式见
-<skillDir>/scripts/review.mjs 头注释，id 连续、blocker 必带 fix），
-然后运行 node <skillDir>/scripts/review.mjs validate <该文件> 自校格式。
-返回：一行摘要（blocker/warning/nit 计数 + verdict 文件路径），不要贴 findings 全文。
+第三步（未注册 agent 类型时的内联流程）：把 findings JSON 写入
+build/review/<scope>-review.r<N>.json，运行 review.mjs validate 自校格式。
+已注册 maic-reviewer 时：不写任何文件，最终消息直接返回纯 JSON（主 Agent 落盘）。
+返回：一行摘要（blocker/warning/nit 计数），不要贴 findings 全文。
 ```
 
 ## 模板 C：修复器（blocker 修复轮）

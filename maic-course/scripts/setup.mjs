@@ -42,6 +42,15 @@ if (args.includes('--check')) {
   for (const ref of requiredRefs) {
     if (!existsSync(path.join(SKILL_ROOT, 'references', ref))) failures.push(`references/${ref} 缺失`);
   }
+  // 3.5 registered agent types (mechanical context isolation)
+  for (const agent of ['maic-scene-generator.md', 'maic-reviewer.md', 'maic-fixer.md']) {
+    const p = path.join(SKILL_ROOT, 'agents', agent);
+    if (!existsSync(p)) failures.push(`agents/${agent} 缺失`);
+    else {
+      const fm = readFileSync(p, 'utf8').match(/^---\n([\s\S]*?)\n---/);
+      if (!fm || !/^tools:/m.test(fm[1])) failures.push(`agents/${agent}: frontmatter 缺 tools 限制`);
+    }
+  }
   // 4. scripts syntax
   const scriptsDir = path.join(SKILL_ROOT, 'scripts');
   for (const f of readdirSync(scriptsDir).filter((f) => f.endsWith('.mjs'))) {

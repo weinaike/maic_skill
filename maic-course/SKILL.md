@@ -81,4 +81,4 @@ MAIC_TTS_MODEL=            # openai-compatible 专用
 3. 画布 text 元素 content 只用白名单 HTML（p/span/br/b/strong/i/em/u/a + 限定 style 属性）。
 4. 场景顺序 = 文件名数字前缀；重排序 = 改名。
 5. 自动模式（用户说全自动/不要问我）下，每个生成环节后仍必须执行对应审查并自动修复（≤2 轮），审查报告落 `build/review/`，未解决的 blocker 必须停下升级给人。
-6. 派发纪律（见 agents.md）：≥3 节批量生成或自动模式，生成派 sub agent（模板 A，风格锚点+承接缝合）；**审查永远派 sub agent**（模板 B，同上下文自审无效）；跨任务状态只走文件，派发前确认用户口头偏好已落盘。
+6. 派发纪律（见 references/agents.md）：≥3 节批量生成或自动模式，生成派 `maic-scene-generator`（风格锚点+批后承接缝合+git 写面校验）；**审查永远派 `maic-reviewer`**（工具面只读——机制保证隔离，同上下文自审无效）；修复派 `maic-fixer`。三个注册类型装于 `.claude/agents/`（软链，见 agents.md 安装节），未注册环境退回内联模板。跨任务状态只走文件，派发前确认用户口头偏好已落盘。
