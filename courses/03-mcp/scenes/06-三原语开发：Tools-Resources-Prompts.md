@@ -296,7 +296,7 @@ title: 三原语接口：Tools / Resources / Prompts
       "top": 448,
       "width": 880,
       "height": 60,
-      "content": "<p style=\"font-size: 14px; color: #334155;\">选型：要执行动作 → tool｜要暴露只读数据 → resource（URI 模板带参数）｜要固化提问 → prompt<br />返回可为文本、Image 或结构化内容（如图表直接回传）</p>",
+      "content": "<p style=\"font-size: 14px; color: #334155;\">选型：要执行动作 → tool｜要暴露只读数据 → resource（URI 模板带参数）｜要固化提问 → prompt<br />返回：三原语皆可文本；tool 另可回传 Image 或结构化内容</p>",
       "defaultFontName": "Microsoft YaHei",
       "defaultColor": "#334155"
     }
