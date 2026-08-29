@@ -1,0 +1,12 @@
+# course metadata — edited by humans/agents; secrets never live here
+name: 00.Agent 系列课程介绍
+createdAt: 1786501220767
+updatedAt: 1786756647763
+description: ""
+language: 全程使用中文授课。技术术语如 Agent、MCP、Token、Prompt、Skill、SubAgent、Claude Code、WorkBuddy、Cursor 等保留英文，不做翻译。面向一线科研人员，使用专业但易懂的表达方式，结合科研场景举例说明，降低技术门槛。
+style: professional
+videoManifest: {}
+appVersion: 0.0.0
+voice:
+  voice: zh_male_liufei_uranus_bigtts
+  speed: 1

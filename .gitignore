@@ -1,0 +1,10 @@
+.DS_Store
+node_modules/
+# vendored DSL dist — re-sync with `node scripts/setup.mjs`
+maic-course/vendor/dsl/
+# per-course build artifacts and caches
+courses/*/build/
+courses/*/.cache/
+# course media binaries (large)
+courses/*/audio/
+courses/*/media/
