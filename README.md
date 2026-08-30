@@ -1,5 +1,7 @@
 # maic_skill —— OpenMAIC 课程创作 skill（maic-course）
 
+**中文** | [English](README.en.md)
+
 在 Claude Code 中离线创作符合 `@openmaic/dsl` 协议的课程，产出可直接导入
 OpenMAIC 平台播放的 `.maic.zip`。四个功能模块 + 审查体系 + 编译/校验/打包管线。
 
@@ -14,6 +16,9 @@ OpenMAIC 平台播放的 `.maic.zip`。四个功能模块 + 审查体系 + 编�
   `use-import-classroom` 的验收语义）。error 拒绝出包。
 - **审查体系（自动化必备）**：大纲审查 / 内容审查 / 规范审查，独立 reviewer + findings
   落盘 `build/review/` + 有界自动修复闭环（≤2 轮，未解决 blocker 升级给人）。
+- **交互页契约**：`interactive` 场景全契约（`references/interactive-spec.md`）——
+  自包含 HTML + `widget_*` 时间轴动作 postMessage 驱动、与 slide 对齐的 16:9 视口、
+  沙箱约束、视频导出冻结语义。
 - **TTS 可插拔**：豆包首发（对齐平台 `generateDoubaoTTS` 契约，同一把 key 两边通用），
   `MAIC_TTS_*` 环境变量配置；讲稿-音频经 `voice.lock.yaml` 哈希缓存，改一句只重合成一句。
 
@@ -22,12 +27,16 @@ OpenMAIC 平台播放的 `.maic.zip`。四个功能模块 + 审查体系 + 编�
 ```
 maic-course/     skill 本体（自包含，可整体 symlink 到 ~/.claude/skills/ 或项目 .claude/skills/）
   SKILL.md       入口 + 路由 + 硬性规则
-  references/    契约文档：scene-source-spec / maic-format / dsl-cheatsheet（+M2+ 的 layout-patterns、review-checklists、workflow-*）
-  scripts/       setup / unpack / compile / check / build（+M4 的 tts、preview）
+  references/    契约文档：scene-source-spec / maic-format / dsl-cheatsheet /
+                  layout-patterns / interactive-spec / review-checklists / workflow-*
+  scripts/       setup / init / unpack / outline / generate / compile / check /
+                  preview / tts / edit / translate / review / build（零依赖 node ≥ 20）
+  agents/        注册 sub agent 类型（生成器 / 只读审查员 / 修复器 / 翻译器）
   templates/     新课程骨架
   vendor/dsl/    @openmaic/dsl dist 副本（setup 同步，gitignore）
-courses/         本地课程项目（样例：00-agent-intro）
-test/            golden-roundtrip.mjs
+courses/         本地课程项目（样例：03-mcp、03-mcp-en）
+test/            集成测试（12 项，含黄金 round-trip）
+install.sh       一键安装
 ```
 
 ## 安装
