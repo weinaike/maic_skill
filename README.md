@@ -33,11 +33,22 @@ test/            golden-roundtrip.mjs
 ## 安装
 
 ```bash
+./install.sh                   # 一键装进当前项目：skill + agents + vendor DSL + 环境体检
+./install.sh /path/to/OpenMAIC # 装进指定项目
+./install.sh --user            # 个人级：装进 ~/.claude（任意目录的会话可用）
+```
+
+手动等价（或只要 skill 不注册 agents 时）：
+
+```bash
 node maic-course/scripts/setup.mjs          # vendor DSL dist + 环境体检（需要 zip/unzip/ffprobe）
 # 作为个人 skill（任意目录可用）：
 ln -s "$(pwd)/maic-course" ~/.claude/skills/maic-course
 # 或作为项目 skill（仅该 repo 内会话）：
 ln -s "$(pwd)/maic-course" /path/to/OpenMAIC/.claude/skills/maic-course
+# sub agent 注册（生成/审查/翻译/修复的受限工具面类型）：
+mkdir -p /path/to/OpenMAIC/.claude/agents
+for f in maic-course/agents/*.md; do ln -sfn "$(pwd)/$f" /path/to/OpenMAIC/.claude/agents/; done
 ```
 
 ## 使用
