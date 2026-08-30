@@ -5,7 +5,8 @@
 
 前置：`outline.md` 冻结、`outline.mjs lint` 无 error。
 必读：`references/layout-patterns.md`（版式配方）、`dsl-cheatsheet.md`（元素契约）、
-`scene-source-spec.md`（源格式）。
+`scene-source-spec.md`（源格式）；大纲含 interactive 节时另读
+`references/interactive-spec.md`（交互页全契约）。
 
 ## 流程
 
@@ -45,11 +46,25 @@ node scripts/generate.mjs scaffold <courseDir> [--scenes 3-5]   # 全部或指�
 **pbl**：projectV2 按 dsl `PBLProject` 形状生成（title/description/learningObjective/
 gains/proficiency/language…），生成后 `check.mjs` 会过 validatePBLContent。
 
+**interactive**（全契约见 `references/interactive-spec.md`，骨架模板在其 §5）：
+- `## 内容` fence 写 `{type:'interactive', html, widgetType?, widgetConfig?}`——html 是
+  **完整自包含文档**（16:9 横屏、1280×720 基准、流式布局、零外链或可降级）
+- **先页面后讲稿**：HTML 先埋带语义 id 的状态/隐藏层/可高亮元素；讲稿 raw action
+  的 `widget_*` 只引用既有 id
+- 页面**必须自带** `window.addEventListener('message', …)` 监听器（平台不注入运行时，
+  四个消息类型见 interactive-spec §2）
+- **首帧自含主要信息**：视频导出会把页面冻结在 load 瞬间，`widget_reveal` 揭示的
+  关键信息讲稿必须口播兜底
+- **注意**：`check.mjs` 对 interactive 内容零校验（透传）——配对自检
+  （interactive-spec §6）是唯一的机器外把关，必须做；抽检 = 提取 html 开 1280×720
+  窗口核对
+
 ### 3. 审查闭环（每 ~3 节一批，或用户指定批大小）
 
 1. `node scripts/check.mjs <courseDir>` —— 结构层先清零
 2. **用模板 B 派独立审查 sub agent**（审查永远隔离——同上下文自审只找得到小毛病），
-   按 `review-checklists.md` §内容审查 C1-C6 + §规范审查 S1-S5 逐节审；findings 写
+   按 `review-checklists.md` §内容审查 C1-C6 + §规范审查 S1-S5 逐节审（interactive
+   场景另加 §交互审查 I1-I5）；findings 写
    `build/review/content-review.rN.json` 与 `build/review/spec-review.rN.json`
    （target 均为 `scenes`）
 3. `node scripts/review.mjs verdict <courseDir>` —— open blocker ⇒ 生成者按 findings
@@ -60,6 +75,8 @@ gains/proficiency/language…），生成后 `check.mjs` 会过 validatePBLConte
 - spotlight 指向了装饰元素而非内容卡（C2）
 - 要点页给了 1min 但讲稿写了 500 字（C5）
 - 卡片浅底全用同一色系（S1/S2）
+- interactive 页忘写 message 监听器 / widget_* 引用了页面不存在的 id（I1）
+- interactive 关键信息只靠 widget_reveal 揭示、讲稿没口播（I5）
 
 ### 4. 门2 —— 预览抽检（协作模式）
 

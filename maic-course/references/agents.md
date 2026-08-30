@@ -39,12 +39,13 @@ reviewer 纯读审查 → 最终消息返回**纯 JSON findings** → 主 Agent 
 `git status --porcelain`——变更文件集合必须 ⊆ 本批目标场景文件；多出来的变更
 （越权写入）直接回滚该文件并重派。课程项目应 git 化（courses/ 已在 skill 仓库内）。
 
-**安装**（agent 类型注册在会话启动时加载，装完需重启会话生效）：
+**安装**（推荐仓库根的一键脚本：`./install.sh [项目目录]`，或 `./install.sh --user`
+装到个人级；agent 类型注册在会话启动时加载，装完需重启会话生效）。手动等价：
 
 ```bash
 mkdir -p <项目>/.claude/agents
-for f in maic-scene-generator maic-reviewer maic-fixer; do
-  ln -sfn <skillDir>/agents/$f.md <项目>/.claude/agents/$f.md
+for f in <skillDir>/agents/*.md; do
+  ln -sfn "$f" <项目>/.claude/agents/"$(basename "$f")"
 done
 ```
 
@@ -68,7 +69,8 @@ done
 2. outline.md 中 "## <N>. <节标题>" 一节 —— 要点 / 画布意图 / 讲稿意图 / 时长预算
 3. skill 目录 <skillDir>/references/ 下四份契约：
    scene-source-spec.md（源格式）、layout-patterns.md（版式配方与坐标）、
-   dsl-cheatsheet.md（元素与动作契约）、speech-style.md（讲稿十条规范）
+   dsl-cheatsheet.md（元素与动作契约）、speech-style.md（讲稿十条规范）；
+   目标节是 interactive 时另读 interactive-spec.md（交互页全契约，骨架模板在其 §5）
 4. 风格锚点：scenes/01-*.md 的 讲稿 部分——口吻、称呼、承接句式与第一页对齐；
    若目标就是第 1 页，跳过此项
 
@@ -79,7 +81,9 @@ done
   文件末段获取承接点）、末段引出下一节；讲到哪张卡尾注 @[该卡元素id]；
   符号写读法（speech-style §6）
 - quiz 节按 quiz 意图出题（干扰项=常见误解，每题带 analysis）；
-  pbl 节按 dsl PBLProject 形状写内容 fence
+  pbl 节按 dsl PBLProject 形状写内容 fence；
+  interactive 节按 interactive-spec.md 生成——先页面后讲稿（HTML 埋语义 id）、
+  自带 message 监听器、首帧自含主要信息、reveal 信息讲稿口播兜底
 
 第三步，自检（两项都过才算完成）：
 1. node <skillDir>/scripts/generate.mjs normalize <目标文件绝对路径>

@@ -13,7 +13,8 @@ tools: Read, Write, Glob, Grep, Bash
 2. `<courseDir>/outline.md` 中 `## <N>.` 一节 —— 要点 / 画布意图 / 讲稿意图 / 时长预算
 3. `<skillDir>/references/` 四份契约：`scene-source-spec.md`（源格式）、
    `layout-patterns.md`（版式配方与坐标）、`dsl-cheatsheet.md`（元素与动作契约）、
-   `speech-style.md`（讲稿十条规范）
+   `speech-style.md`（讲稿十条规范）；**目标节是 interactive 时另读**
+   `interactive-spec.md`（交互页全契约，骨架模板在其 §5）
 4. 风格锚点：`<courseDir>/scenes/` 中编号最小的场景文件的 `## 讲稿` 部分——
    口吻、称呼、承接句式与已定稿页对齐（若目标就是最小编号页，跳过）
 5. 承接上下文：上一节（N-1）场景文件讲稿的**末段**（首段要承接它；N=1 时读
@@ -29,6 +30,8 @@ tools: Read, Write, Glob, Grep, Bash
 - **quiz 节**：按 quiz 意图出题——干扰项写常见误解，每题带 analysis
 - **pbl 节**：按 dsl `PBLProject` 形状写 `## 内容` fence（必填 createdAt/updatedAt/
   roles 枚举 type/status；microtasks 可空）
+- **interactive 节**：按 `interactive-spec.md` 生成——先页面后讲稿（HTML 埋语义
+  id）、自带 message 监听器、首帧自含主要信息、reveal 信息讲稿口播兜底
 
 ## 第三步，自检（两项都过才算完成）
 

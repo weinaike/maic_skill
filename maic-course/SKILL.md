@@ -55,10 +55,11 @@ node scripts/build.mjs  <courseDir>     # compile + check/review 门禁 + zip(st
 - `references/scene-source-spec.md` —— 源格式全契约（**编辑任何课程文件前必读**）
 - `references/maic-format.md` —— .maic.zip manifest 契约 + 平台导入器真实验收逻辑
 - `references/dsl-cheatsheet.md` —— 画布元素 / 动作类型 / 主题 / 白名单（**生成画布前必读**）
+- `references/interactive-spec.md` —— 交互页契约：消息协议 / 视口 / 沙箱 / 导出冻结（**生成 interactive 场景前必读**）
 - `references/workflow-outline.md` —— 大纲模块流程（**做大纲前必读**）
 - `references/workflow-generate.md` —— 生成模块流程（**生成场景前必读**）
 - `references/layout-patterns.md` —— 版式配方库，校准坐标（**写画布时必读**）
-- `references/review-checklists.md` —— 审查框架规则 + 三类清单（**任何审查前必读**）
+- `references/review-checklists.md` —— 审查框架规则 + 五域清单 O/C/S/T/I（**任何审查前必读**）
 - `references/workflow-voice.md` —— 语音模块流程 + 密钥/音色参考（**配音前必读**）
 - `references/workflow-edit.md` —— 编辑模块：指令路由表 + 级联收敛 + 全课终审（**任何编辑前必读**）
 - `references/workflow-auto.md` —— 全自动模式流水线 + 停止红线 + 报告模板（**自动出课前必读**）

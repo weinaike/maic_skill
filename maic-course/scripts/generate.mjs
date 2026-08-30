@@ -61,7 +61,12 @@ export function scaffoldScenes(courseDir, options = {}) {
       speech: speech.length > 0 ? speech : [{ kind: 'raw', action: { type: 'TODO', note: '待生成讲稿' } }],
       canvas: s.type === 'slide' ? { TODO: '按画布意图选配方生成：' + (s.canvasIntent ?? '') } : undefined,
       quiz: s.type === 'quiz' ? { questions: [] } : undefined,
-      rawContent: s.type === 'pbl' || s.type === 'interactive' ? { TODO: 'pbl/interactive 内容待生成' } : undefined,
+      rawContent:
+        s.type === 'interactive'
+          ? { TODO: 'interactive 内容待生成：完整自包含 HTML + message 监听器，契约见 references/interactive-spec.md' }
+          : s.type === 'pbl'
+            ? { TODO: 'pbl 内容待生成（PBLProject 形状）' }
+            : undefined,
     });
     // serialize writes a canvas fence for any truthy value; the TODO stub is
     // fine — check.mjs flags it until replaced.
