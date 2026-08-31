@@ -68,6 +68,8 @@ Manual equivalent (or when you only want the skill without the agents):
 ```bash
 node maic-course/scripts/setup.mjs          # vendor the DSL dist + env check
                                            # (requires zip/unzip/ffprobe)
+# DSL source priority: --repo / dslRepoPath in config.json (local OpenMAIC checkout) →
+# auto-fetch @openmaic/dsl from npm (a dependency-free standalone package — no checkout needed)
 # as a personal skill (available everywhere):
 ln -s "$(pwd)/maic-course" ~/.claude/skills/maic-course
 # or as a project skill (sessions inside that repo only):

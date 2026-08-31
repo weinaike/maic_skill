@@ -51,6 +51,7 @@ install.sh       一键安装
 
 ```bash
 node maic-course/scripts/setup.mjs          # vendor DSL dist + 环境体检（需要 zip/unzip/ffprobe）
+# DSL 来源优先级：--repo / config.json 的 dslRepoPath（本地 OpenMAIC checkout）→ npm 自动拉取 @openmaic/dsl（零依赖独立包，无需 checkout）
 # 作为个人 skill（任意目录可用）：
 ln -s "$(pwd)/maic-course" ~/.claude/skills/maic-course
 # 或作为项目 skill（仅该 repo 内会话）：

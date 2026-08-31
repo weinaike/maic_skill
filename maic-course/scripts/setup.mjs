@@ -5,8 +5,13 @@
  *
  * Usage:
  *   node scripts/setup.mjs [--repo /path/to/OpenMAIC]
+ *
+ * DSL source: --repo > config.json dslRepoPath > npm (@openmaic/dsl — pin
+ * with config.json dslNpmVersion). The package is dependency-free, so the
+ * tarball's dist/ is self-contained.
  */
-import { cpSync, rmSync, existsSync, readdirSync, readFileSync } from 'node:fs';
+import { cpSync, rmSync, existsSync, readdirSync, readFileSync, mkdtempSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { loadConfig, dslCandidates, loadDsl, SKILL_ROOT } from './lib/dsl.mjs';
@@ -73,14 +78,28 @@ const repoFlag = readFlag(args, '--repo');
 const config = loadConfig();
 const repoPath = repoFlag ?? config.dslRepoPath;
 
-const distDir = repoPath
+let distDir = repoPath
   ? path.join(repoPath, 'packages', '@openmaic', 'dsl', 'dist')
   : undefined;
 
+// No usable monorepo checkout → the DSL is a zero-dependency published npm
+// package; its tarball ships the very dist/ the monorepo builds. Pack it into
+// a temp dir and vendor from there.
+let npmTmp = null;
+let tarball = null;
 if (!distDir || !existsSync(distDir)) {
-  console.error(`✗ DSL dist not found at ${distDir ?? '(no repo path configured)'}`);
-  console.error('  Pass --repo /path/to/OpenMAIC or set dslRepoPath in config.json');
-  process.exit(1);
+  const spec = config.dslNpmVersion
+    ? `@openmaic/dsl@${config.dslNpmVersion}`
+    : '@openmaic/dsl';
+  console.log(`→ repo 路径不可用（${distDir ?? '未配置'}），改从 npm 拉取 ${spec}`);
+  try {
+    ({ distDir, tmp: npmTmp, tarball } = npmPackDist(spec));
+  } catch (err) {
+    console.error(`✗ DSL dist not found at ${distDir ?? '(no repo path configured)'}，且 npm fallback 失败：`);
+    console.error(`  ${err instanceof Error ? err.message : err}`);
+    console.error('  Pass --repo /path/to/OpenMAIC, set dslRepoPath in config.json, or check npm connectivity.');
+    process.exit(1);
+  }
 }
 
 // Copy the dist into vendor/ (drop source maps — dead weight for us).
@@ -90,6 +109,7 @@ cpSync(distDir, vendorDir, {
   recursive: true,
   filter: (src) => !src.endsWith('.map') && !src.endsWith('.tsbuildinfo'),
 });
+if (npmTmp) rmSync(npmTmp, { recursive: true, force: true });
 
 // Report what we vendored.
 const files = readdirSync(vendorDir, { recursive: true }).filter(
@@ -98,7 +118,7 @@ const files = readdirSync(vendorDir, { recursive: true }).filter(
 const dsl = await loadDsl();
 const exported = Object.keys(dsl).length;
 
-console.log(`✓ vendored @openmaic/dsl → ${path.relative(process.cwd(), vendorDir)}`);
+console.log(`✓ vendored @openmaic/dsl → ${path.relative(process.cwd(), vendorDir)}${tarball ? `（npm ${tarball.replace(/^openmaic-dsl-|\.tgz$/g, '')}）` : ''}`);
 console.log(`  DSL_VERSION = ${dsl.DSL_VERSION}`);
 console.log(`  exports     = ${exported} (${files.length} files + schema/)`);
 
@@ -115,6 +135,22 @@ function which(bin) {
 
 function cmd(bin) {
   return bin.padEnd(8);
+}
+
+/**
+ * `npm pack` the DSL into a temp dir and extract it.
+ * @param {string} spec npm spec, e.g. `@openmaic/dsl` or `@openmaic/dsl@0.11.0`
+ * @returns {{ distDir: string, tmp: string, tarball: string }}
+ */
+function npmPackDist(spec) {
+  const tmp = mkdtempSync(path.join(tmpdir(), 'maic-dsl-'));
+  const pack = spawnSync('npm', ['pack', spec, '--silent'], { cwd: tmp, stdio: 'pipe', encoding: 'utf8' });
+  if (pack.status !== 0) throw new Error(`npm pack ${spec}: ${(pack.stderr || pack.stdout || '').trim()}`);
+  const tarball = readdirSync(tmp).find((f) => f.endsWith('.tgz'));
+  if (!tarball) throw new Error(`npm pack ${spec}: no tarball produced`);
+  const untar = spawnSync('tar', ['-xzf', tarball, '-C', tmp], { cwd: tmp, stdio: 'pipe' });
+  if (untar.status !== 0) throw new Error(`tar extract ${tarball}: ${untar.stderr}`);
+  return { distDir: path.join(tmp, 'package', 'dist'), tmp, tarball };
 }
 
 /** @param {string[]} args @param {string} flag @returns {string | undefined} */
