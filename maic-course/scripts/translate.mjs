@@ -18,6 +18,7 @@
  * verify exit 1 on: structural divergence (ids/counts/spotlights vs source),
  * or (--strict) source-language residue in a non-zh target.
  */
+import { createHash } from 'node:crypto';
 import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -25,6 +26,22 @@ import { readCourse } from './lib/course.mjs';
 import { isMainModule } from './lib/main.mjs';
 
 const isMain = isMainModule(import.meta.url);
+
+// lang 简写 → BCP-47（平台 supportedLocales 口径；未映射的 lang 原样透传）
+const LOCALE_BY_LANG = { en: 'en-US', zh: 'zh-CN', ja: 'ja-JP', ko: 'ko-KR' };
+
+/**
+ * Fallback translationGroupId for a source course that lacks one:
+ * `maic-<srcDirName>-<6位指纹>` — namespaced + fingerprinted so it cannot
+ * collide with another course's id (deterministic in the source course name).
+ * @param {string} srcDir
+ * @param {Record<string, unknown>} srcCourse
+ */
+function fallbackGroupId(srcDir, srcCourse) {
+  const seed = String(srcCourse['name'] ?? srcDir);
+  const fp = createHash('sha256').update(seed).digest('hex').slice(0, 6);
+  return `maic-${path.basename(srcDir)}-${fp}`;
+}
 
 // ---------------------------------------------------------------------------
 // init — scaffold the derived course
@@ -62,6 +79,16 @@ export function initTranslation(srcDir, targetDir, options = {}) {
     `lang: ${lang}`,
     `sourceLang: zh`,
     `translatedFrom: ${JSON.stringify(path.relative(targetDir, srcDir))}`,
+    // 翻译血缘（平台按 translationGroupId 折叠同课多语言）：locale 用 BCP-47；
+    // 组 id 继承源课。源课没有时生成带命名空间+指纹的兜底 id（裸目录名/讲号
+    // 容易跨课程撞车，撞了会被平台错误折叠），主线课可后续改为正式 id——
+    // 改时两门课必须同步。
+    `locale: ${LOCALE_BY_LANG[lang] ?? lang}`,
+    `translationGroupId: ${JSON.stringify(
+      String(src.course['translationGroupId'] ?? fallbackGroupId(srcDir, src.course)),
+    )}`,
+    `translationOf: ${JSON.stringify(String(src.course['name'] ?? path.basename(srcDir)))}`,
+    `translatedAt: ${now}`,
     `createdAt: ${now}`,
     `updatedAt: ${now}`,
     'voice:',

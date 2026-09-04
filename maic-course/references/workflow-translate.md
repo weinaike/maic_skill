@@ -21,7 +21,11 @@ node scripts/translate.mjs init <srcCourse> <targetDir> --lang en [--voice <目�
 ```
 
 然后填 course.yaml 两个 TODO（译名；目标语言授课指令——明确哪些专有名词保留
-原文）。未给 --voice 时配音前必须补（目标语言音色，`tts.mjs doctor` 试合成验证）。
+原文）。init 已自动带翻译血缘字段（locale/translationGroupId/translationOf/translatedAt）
+——**源课需手补 `locale` 与同一 `translationGroupId`**，否则平台不会把两门课折叠成
+同课多语言。组 id 必须全库唯一（撞车 = 错误折叠成一门课）：用
+`maic-<系列>-<讲号>-<主题>` 形式（如 `maic-agent-05-mcp`），禁用裸讲号/裸目录名；
+init 兜底生成的 `maic-<目录名>-<指纹>` 仅是占位，主线定稿时应改为正式 id。未给 --voice 时配音前必须补（目标语言音色，`tts.mjs doctor` 试合成验证）。
 
 ### 2. 术语表 pass（单次，翻译前）
 

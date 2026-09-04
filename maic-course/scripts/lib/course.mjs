@@ -100,6 +100,12 @@ export function stageFromCourse(project, defaults) {
   if (c['language'] !== undefined) stage['language'] = c['language'];
   if (c['style'] !== undefined) stage['style'] = c['style'];
   if (c['videoManifest'] !== undefined) stage['videoManifest'] = c['videoManifest'];
+  // 翻译血缘：locale（BCP-47）+ translationGroupId 让平台把同课多语言折叠成
+  // 一门课；translationOf/translatedAt 仅派生课携带（源课留空）。
+  if (c['locale'] !== undefined) stage['locale'] = String(c['locale']);
+  if (c['translationGroupId'] !== undefined) stage['translationGroupId'] = String(c['translationGroupId']);
+  if (c['translationOf'] !== undefined) stage['translationOf'] = String(c['translationOf']);
+  if (c['translatedAt'] !== undefined) stage['translatedAt'] = Number(c['translatedAt']);
   return stage;
 }
 

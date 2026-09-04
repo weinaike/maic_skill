@@ -22,7 +22,11 @@ media/ast_<id>.<ext>   # 图片/生成媒体（可选）
     "style": "professional",
     "createdAt": 1786501220767,     // epoch ms
     "updatedAt": 1786756647763,
-    "videoManifest": {}             // 可选
+    "videoManifest": {},            // 可选
+    "locale": "zh-CN",              // 可选，BCP-47；平台语言切换/折叠按此标注
+    "translationGroupId": "maic-agent-05-mcp", // 可选；同课多语言共享同一 id → 平台折叠成一门课。全库唯一：命名空间-系列-讲号-主题，禁用裸讲号/裸目录名
+    "translationOf": "…",           // 可选，仅派生课；源课名（源成员留空）
+    "translatedAt": 1788410854278   // 可选，仅派生课；epoch ms
     // 注意：interactiveMode / taskEngineMode 平台导出时故意不携带
   },
   "agents": [                        // roster；身份按数组下标定位（无 id）
