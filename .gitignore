@@ -10,3 +10,4 @@ courses/*/audio/
 courses/*/media/
 # 本机 install.sh 安装产物（symlink 指向本 checkout）
 .claude/
+courses
