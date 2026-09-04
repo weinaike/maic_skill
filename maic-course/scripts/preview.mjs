@@ -72,7 +72,9 @@ export function renderPreviewHtml(project, manifest, notes) {
   body { margin:0; font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif; color:var(--ink); background:var(--bg); display:flex; flex-direction:column; }
 
   /* ── header ─────────────────────────────────────────── */
-  header { display:flex; align-items:center; gap:14px; padding:10px 18px; background:#fff; border-bottom:1px solid var(--line); flex:0 0 auto; }
+  header { display:flex; flex-direction:column; gap:8px; padding:10px 18px 12px; background:#fff; border-bottom:1px solid var(--line); flex:0 0 auto; }
+  header .hrow { display:flex; align-items:center; gap:14px; min-width:0; }
+  header .hrow-ctrl { justify-content:center; gap:10px; }
   header h1 { font-size:15px; margin:0; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:32vw; }
   header .meta { color:var(--muted); font-size:12px; white-space:nowrap; }
   header .grow { flex:1; }
@@ -143,14 +145,17 @@ export function renderPreviewHtml(project, manifest, notes) {
 </head>
 <body>
 <header>
-  <h1>${escapeHtml(String(manifest['stage']?.['name'] ?? 'course'))}</h1>
-  <span class="meta">${scenes.length} 场景 · 音频 ${Math.floor(totalSeconds / 60)}′${String(Math.round(totalSeconds % 60)).padStart(2, '0')}″${notes.audioMisses.length ? ` · <b style="color:#b45309">${notes.audioMisses.length} 句缺音频</b>` : ''}</span>
-  <span class="grow"></span>
-  <button class="btn" id="btnPrev" title="上一页 (←)">◀ 上一页</button>
-  <span class="counter" id="counter">1 / ${scenes.length}</span>
-  <button class="btn" id="btnNext" title="下一页 (→)">下一页 ▶</button>
-  <button class="btn primary" id="btnPlay" title="连播/暂停 (Space)">▶ 连播本课</button>
-  <button class="btn" id="btnPanel" title="隐藏/显示讲稿面板">隐藏讲稿</button>
+  <div class="hrow hrow-title">
+    <h1>${escapeHtml(String(manifest['stage']?.['name'] ?? 'course'))}</h1>
+    <span class="meta">${scenes.length} 场景 · 音频 ${Math.floor(totalSeconds / 60)}′${String(Math.round(totalSeconds % 60)).padStart(2, '0')}″${notes.audioMisses.length ? ` · <b style="color:#b45309">${notes.audioMisses.length} 句缺音频</b>` : ''}</span>
+  </div>
+  <div class="hrow hrow-ctrl">
+    <button class="btn" id="btnPrev" title="上一页 (←)">◀ 上一页</button>
+    <span class="counter" id="counter">1 / ${scenes.length}</span>
+    <button class="btn" id="btnNext" title="下一页 (→)">下一页 ▶</button>
+    <button class="btn primary" id="btnPlay" title="连播/暂停 (Space)">▶ 连播本课</button>
+    <button class="btn" id="btnPanel" title="隐藏/显示讲稿面板">隐藏讲稿</button>
+  </div>
 </header>
 <main><div class="stage">
 ${sections}
@@ -288,12 +293,36 @@ show(0);
 `;
 }
 
+/**
+ * 画布背景内联样式——与 player 的 useSlideBackgroundStyle 同契约：
+ * solid→颜色、gradient→CSS 渐变、image→url，未识别回落白（CSS 默认 #fff）。
+ * @param {any} scene
+ */
+function canvasBgStyle(scene) {
+  const bg = scene.type === 'slide' ? scene.content?.canvas?.background : undefined;
+  if (!bg) return '';
+  if (bg.type === 'solid' && typeof bg.color === 'string') return ` style="background:${bg.color};"`;
+  if (bg.type === 'gradient' && Array.isArray(bg.gradient?.colors) && bg.gradient.colors.length) {
+    const stops = bg.gradient.colors.map((/** @type {any} */ c) => `${c.color} ${c.pos}%`).join(',');
+    const g = bg.gradient.type === 'radial'
+      ? `radial-gradient(${stops})`
+      : `linear-gradient(${bg.gradient.rotate ?? 0}deg, ${stops})`;
+    return ` style="background:${g};"`;
+  }
+  if (bg.type === 'image' && bg.image?.src) {
+    const rep = bg.image.size === 'repeat' ? 'repeat' : 'no-repeat';
+    const size = bg.image.size === 'repeat' ? 'contain' : (bg.image.size || 'cover');
+    return ` style="background-image:url('${bg.image.src}');background-repeat:${rep};background-size:${size};"`;
+  }
+  return '';
+}
+
 /** @param {any} scene @param {number} index */
 function renderScene(scene, index) {
   const parts = [];
   parts.push(
     `<div class="scene-wrap" id="scene-${index}">`,
-    `<div class="canvas-card"><div class="stage-wrap2"><div class="canvas">${scene.type === 'slide' && scene.content?.canvas ? renderCanvas(scene.content.canvas) : renderNonSlide(scene)}`,
+    `<div class="canvas-card"><div class="stage-wrap2"><div class="canvas"${canvasBgStyle(scene)}>${scene.type === 'slide' && scene.content?.canvas ? renderCanvas(scene.content.canvas) : renderNonSlide(scene)}`,
     `</div></div></div>`,
   );
   // speech panel (always rendered — quiz/pbl pages get their content in it too)
@@ -349,9 +378,26 @@ function renderCanvas(canvas) {
     const box = `left:${el.left}px;top:${el.top}px;width:${el.width}px;height:${el.height ?? 40}px;`;
     const tag = `data-el="${escapeAttr(String(el.id ?? ''))}"`;
     if (el.type === 'text') {
-      out.push(`<div ${tag} style="${box}">${el.content ?? ''}</div>`);
+      // 与 BaseTextElement 对齐：内容盒有 10px 内边距，容器带默认色/字体
+      out.push(`<div ${tag} style="${box}padding:10px;box-sizing:border-box;overflow-wrap:break-word;${el.defaultColor ? `color:${el.defaultColor};` : ''}${el.defaultFontName ? `font-family:${el.defaultFontName};` : ''}">${el.content ?? ''}</div>`);
     } else if (el.type === 'shape') {
-      out.push(`<div ${tag} style="${box}background:${fillOf(el)};${borderOf(el)}${radiusOf(el)}"></div>`);
+      // 与 @openmaic/renderer BaseShapeElement 对齐：平台只画 path（SVG <path d>），
+      // 不读 shape 标签。有 path 且纯色填充时按真实路径渲染，预览=平台真相；
+      // 否则退回 CSS 盒子近似（gradient 填充走 fillOf）。
+      const vw = el.viewBox?.[0] || el.width || 1;
+      const vh = el.viewBox?.[1] || el.height || 1;
+      if (el.path && typeof el.fill === 'string') {
+        const ln = el.line ?? el.outline;
+        const stroke = ln?.color ? ` stroke="${escapeAttr(String(ln.color))}" stroke-width="${escapeAttr(String(ln.width ?? 1))}"` : '';
+        out.push(
+          `<div ${tag} style="${box}overflow:visible;">` +
+          `<svg width="${el.width}" height="${el.height}" viewBox="0 0 ${el.width} ${el.height}" overflow="visible" style="display:block;overflow:visible;">` +
+          `<g transform="scale(${el.width / vw}, ${el.height / vh})">` +
+          `<path d="${escapeAttr(String(el.path))}" fill="${escapeAttr(String(el.fill))}"${stroke} vector-effect="non-scaling-stroke"/></g></svg></div>`
+        );
+      } else {
+        out.push(`<div ${tag} style="${box}background:${fillOf(el)};${borderOf(el)}${radiusOf(el)}"></div>`);
+      }
     } else if (el.type === 'image') {
       const src = String(el.src ?? '');
       if (src.startsWith('data:')) out.push(`<img ${tag} style="${box}" src="${src}">`);
@@ -365,10 +411,20 @@ function renderCanvas(canvas) {
     } else if (el.type === 'table') {
       out.push(renderTable(el, box, tag));
     } else if (el.type === 'code') {
+      // 与 BaseCodeElement 对齐的近似：平台是浅色 mac 代码窗（#fafbfc + shiki
+      // github-light + 默认行号）。此处复现底色/边框/行号/字号；token 着色
+      // （shiki）静态预览无法零依赖复现，如实标注为近似。
       const fs = el.fontSize ?? 14;
-      const codeLines = (el.lines ?? []).map((/** @type {{content: string}} */ l) => escapeHtml(l.content ?? ''));
+      const showNo = el.showLineNumbers !== false;
+      const rows = (el.lines ?? [])
+        .map((/** @type {{content: string}} */ l, /** @type {number} */ i) =>
+          `<tr><td style="width:1%;padding:0 8px 0 10px;text-align:right;color:#94a3b8;user-select:none;">${showNo ? i + 1 : ''}</td><td style="padding:0 10px 0 0;">${escapeHtml(l.content ?? '') || '&nbsp;'}</td></tr>`)
+        .join('');
       out.push(
-        `<pre ${tag} style="${box}margin:0;padding:8px 10px;background:#0f172a;color:#e2e8f0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:${fs}px;line-height:1.55;overflow:hidden;border-radius:4px;white-space:pre;">${codeLines.join('\n')}</pre>`,
+        `<div ${tag} style="${box}background:#fafbfc;border:1px solid #e5e7eb;border-radius:6px;overflow:hidden;">` +
+        `<div style="height:26px;background:#f1f3f5;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;padding:0 10px;gap:6px;">` +
+        `<span style="width:10px;height:10px;border-radius:50%;background:#ff5f57;"></span><span style="width:10px;height:10px;border-radius:50%;background:#febc2e;"></span><span style="width:10px;height:10px;border-radius:50%;background:#28c840;"></span></div>` +
+        `<table style="border-collapse:collapse;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:${fs}px;line-height:1.6;color:#24292e;white-space:pre;">${rows}</table></div>`,
       );
     } else {
       out.push(`<div class="ph" ${tag} style="${box}">${el.type}</div>`);

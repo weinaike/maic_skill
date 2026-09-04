@@ -24,7 +24,7 @@ title: （场景标题）
     "outline": { "color": "#d14424", "width": 2, "style": "solid" },
     "shadow": { "h": 0, "v": 0, "blur": 10, "color": "#000000" }
   },
-  "background": { "type": "background", "color": "#ffffff" },
+  "background": { "type": "solid", "color": "#ffffff" },
   "elements": [
     {
       "id": "text_example",

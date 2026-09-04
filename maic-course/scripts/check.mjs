@@ -90,6 +90,26 @@ export async function checkCourse(project, manifest, notes) {
         }
       }
     }
+    // ---- 渲染保真规则（player 契约；三类历史 bug 的固化） ----
+    const canvas = scene.type === 'slide' ? scene.content?.canvas : undefined;
+    const bg = canvas?.background;
+    if (bg && !['solid', 'image', 'gradient'].includes(bg.type)) {
+      findings.push({ layer: 'L1', severity: 'error', location: `${where} canvas.background`, message: `background.type "${bg.type}" 不在枚举 solid|image|gradient —— 平台渲染器对未知类型一律回落白色（预览则照画 color，两边分叉）` });
+    }
+    for (const el of canvas?.elements ?? []) {
+      if (el.type !== 'shape') continue;
+      if ('line' in el) {
+        findings.push({ layer: 'L1', severity: 'error', location: `${where} shape ${el.id}`, message: `shape 描边字段应为 outline（player 读 elementInfo.outline，line 是非法属性且被忽略）` });
+      }
+      const label = String(el.shape ?? '');
+      const d = String(el.path ?? '');
+      if ((label === 'ellipse' || label === 'circle') && d && !/[Aa]/.test(d)) {
+        findings.push({ layer: 'L1', severity: 'warning', location: `${where} shape ${el.id}`, message: `shape 标注为 ${label} 但 path 无弧线命令（A）——平台按 path 画会变成方形，预览若按标签画圆则两边分叉` });
+      }
+      if (label === 'roundRect' && d && !/Q/.test(d)) {
+        findings.push({ layer: 'L1', severity: 'warning', location: `${where} shape ${el.id}`, message: `shape 标注为 roundRect 但 path 无 Q 曲线——平台按 path 画会是直角` });
+      }
+    }
   });
 
   // ---------------------------------------------------------------- L2: lint
