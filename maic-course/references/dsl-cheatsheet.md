@@ -33,8 +33,8 @@
 
 通用字段：`id`（spotlight 的目标）、`left/top/width/height`、`rotate?`、`animations?`、`lock?`。
 
-- **text**：`content` = **内联样式 HTML 字符串**，如 `<p style="font-size: 16px; text-align: center; color: #38bdf8;">AGENT · 智能体技术</p>`；`defaultFontName`、`defaultColor`。白名单（校准自真实课程）：标签 `p span br b strong i em u a`；style 属性 `font-size text-align color text-decoration font-weight font-family line-height letter-spacing text-indent background-color margin* padding*`。
-- **shape**：`shape`（`ShapePathFormulasKeys` 枚举：rect/roundRect/ellipse/triangle/…）、`path`/`viewBox`（normalize 可推导）、`fill`（颜色或 `{ type:'gradient', … }` 或 `{ type:'image', src, … }`）、`line`、`radius?`、`opacity?`。
+- **text**：`content` = **内联样式 HTML 字符串**，如 `<p style="font-size: 16px; text-align: center; color: #38bdf8;">AGENT · 智能体技术</p>`；`defaultFontName`、`defaultColor`、`vAlign?`（默认 `top`——单行标签/号牌落色块内必须显式 `middle`）、`lineHeight?`（默认 1.5）。**渲染契约：内容盒四向内缩 10px**——高度 ≥ 行数×字号×行高+20、折行宽度按 width−20 估（详见 layout-patterns「文本框预算」）。白名单（校准自真实课程）：标签 `p span br b strong i em u a`；style 属性 `font-size text-align color text-decoration font-weight font-family line-height letter-spacing text-indent background-color margin* padding*`。
+- **shape**：`shape`（`ShapePathFormulasKeys` 枚举：rect/roundRect/ellipse/triangle/…）、`path`/`viewBox`（normalize 可推导）、`fill`（颜色或 `{ type:'gradient', … }` 或 `{ type:'image', src, … }`）、`outline`（描边；player 不读 `line`）、`radius?`、`opacity?`。
 - **image**：`src` = base64 data URI（自包含、最稳）或引用；`mediaRef?`。
 - **table**：`data: TableCell[][]`（cell 带 `text/id/colspan/rowspan/borders?/padding?/vAlign?: top|middle|bottom`）、`rowHeights?`、`colWidths`、`theme`（表头/行色）。
 - **chart**：`chartType: 'bar'|'line'|'pie'`、`data: { labels, series:[{name,data,color?}] }`、`grid?`、`legend?`、`title?`。

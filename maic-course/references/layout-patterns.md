@@ -1,143 +1,126 @@
-# 版式配方库 —— 校准自真实平台课程（00.Agent 系列实测坐标）
+# 渲染契约细节 + T7+ 候选坐标 —— 版式权威已移至三层体系
 
-画布 1000×562.5，内容边距 **60**（内容宽 880）。生成画布时**必须**从本库选配方并
-按下述坐标骨架填充，然后跑 `node scripts/generate.mjs normalize <file>` 补默认值，
-`check.mjs` 过 L2（越界警告仅允许下述"有意出血"装饰）。
+> **本库已让位**（2026-09-07）：页型骨架的权威 = `references/design-system.md`
+> §5（T1-T6 + C）；颜色/字体的权威 = `themes/<name>.json`（course.yaml
+> `design.theme` 选包，缺省 platform）。旧"配方库+自配色"模式废弃——
+> 逐页自配色是风格漂移的根因（design-system §1.3）。
+>
+> 本文件只保留两块仍有独立价值的资产：
+> ① **文本框预算**（平台渲染契约的实施细则，check.mjs 按此估算）
+> ② **T7+ 候选页型坐标**（00.Agent/03-mcp 课实测坐标缓存，未锚定；
+>    使用时颜色一律走主题包 token，入库须按 design-system §9.3 声明变化点）
 
-## 通用规范（所有配方共用）
+## 一、文本框预算（渲染契约细则——check.mjs L2 按此估算）
 
-**色板**：从 canvas `theme.themeColors` 取主色；浅色卡底 = 主色的 8-12% 亮度变体
-（如蓝系 `#eff6ff/#e8f1fb/#dbeafe`，绿 `#f0fdf4/#ecfdf5`，橙 `#fffbeb/#fff7ed`，
-紫 `#faf5ff`，青 `#ecfeff/#f0fdfa`）。每页卡片色系**不重复用同一浅底**（样例惯例：
-3 栏卡各用一色系）。
+平台 `BaseTextElement` 的内容盒**四向内缩 10px**（预览同），`vAlign` 默认
+`top`、`lineHeight` 默认 1.5。写字号/坐标时必须按"渲染后"算，不是按字形盒算：
 
-**字号层级**（实测）：
+- 高度 ≥ 行数 × 字号 × 行高 **+ 20**；宽度按 **width − 20** 估折行
+  （CJK 字宽 ≈ 字号，ASCII ≈ 0.55 × 字号）——恰好塞满必然越界
+- 单行标签/号牌/角注落在色块内：元素盒对齐背景卡（四边内缩 10-16px）+ 显式
+  `"vAlign": "middle"`，**不要心算 top 居中**（平台默认顶对齐，心算必偏下）
+- 相邻文本盒留 ≥8px 名义间隙（渲染整体下移 10px 后仍不相叠）
+- 行盒高度速查（design-system §3）：18px 单行→48、16px→44、13px→40、
+  12px→38；两行（18+13 lh1.4）→66；均含 10px×2 padding
 
-| 用途 | px |
-|---|---|
-| 页标题 | 28–32 |
-| 卡片/小节标题 | 18–20 |
-| 正文/要点 | 14–16 |
-| 辅助/角注 | 13 |
-| 封面主标 | 36 |
-| 封面顶部小字/标签 | 16 |
+**text content**：白名单 HTML（`<p style="font-size/color/text-align/…">`）；
+多行要点用 `•` 或 `<br>` 分隔。字号阶梯（design-system §3 锁死）：
+28 页标题 / 24 面板头·关键词 / 18-20 卡片小节题 / 14-16 正文 / 13 角注 /
+12 副注 / 36 封面主标。**内容页字号天花板 32**（>32 即 check warning，
+40+ 只属于封面）。
 
-13px 为角注/辅助信息档（卡内小注、底部对比条反白小字等），course 内已成惯例。
-
-**text 元素**：`content` 用白名单 HTML（`<p style="font-size: …px; text-align: …; color: …">`），
-多行要点用 `•` 或 `<br>` 分隔（样例把多条要点放同一 text，用 `•` 前缀逐行）。
-
-**页头（内容页公共骨架）**：
+**页头三件套**（内容页公共骨架，坐标全课逐像素一致）：
 
 ```jsonc
-{ "type": "text",   "left": 60, "top": 50,  "width": 880, "height": 62,  // 标题 28-32px
-{ "type": "text",   "left": 60, "top": 130, "width": 880, "height": 44,  // 副标/引导语 14-16px 灰
-{ "type": "shape",  "left": 70, "top": 116, "width": 80,  "height": 3,   // 下划线（主色）
+{ "type": "text",  "left": 60, "top": 50,  "width": 880, "height": 62,  // 标题 28px
+{ "type": "shape", "left": 70, "top": 116, "width": 80,  "height": 3,   // 下划线 $titleRule
+{ "type": "text",  "left": 60, "top": 130, "width": 880, "height": 44,  // 副标 15px ≤18 字
 ```
 
-正文区：y 185–530（高 ~345）。以下配方只给正文区骨架（页头自加上）。
+正文区 y 190–508；T1 可 `generate.mjs skeleton <courseDir> T1 --spec …`
+直接展开（主题色焙入）；其余页型按 design-system §5 解剖手写，
+颜色 `$token` 写法由 `generate.mjs theme <file>` 落盘前解析。
 
-## 配方
+## 二、T7+ 候选页型坐标（未锚定缓存）
 
-### 1. cover · 封面
-适用：开场页/章节隔页。装饰出血是**唯一**允许越界的场景。
+以下来自 00.Agent/03-mcp 课实测，作为 design-system §9.3 候选页型的
+坐标起点。**使用规则**：色值全部换成主题 token；先在 §5 注册表登记
+（变化点+容量预算）再用于成课。
+
+### cover-geometry · 封面几何（C 页型的坐标参考）
 ```
-shape 出血大圆  (730,-140) 380×380  fill=深主色(如 #1e3a5f)
-shape 出血大圆  (-130,350) 340×340  fill=同上
-shape 顶部分隔条 (440,115) 120×3   fill=亮主色(如 #38bdf8)
-text  顶部小标   (350,130) 300×44   16px 居中（如 "AGENT · 智能体技术"）
-text  主标题     (200,195) 600×74   36px 居中
-shape 分隔线     (400,285) 200×3    fill=亮主色
-text  副标       (150,308) 700×50   20px 居中
-shape 深色标签底 (360,415) 280×50   fill=深底(如 #152a4a)
-text  受众标签   (380,417) 240×44   16px 居中 反白
+shape 出血大圆   (730,-140) 380×380   fill=$cover.deco[0]   ← 有意出血，唯一允许越界
+shape 出血大圆   (-130,350) 340×340   fill=$cover.deco[0]
+shape 顶部题线   (440,115) 120×3      fill=$titleRule.color
+text  kicker     (350,130) 300×44     16px 居中 $cover.text.accent
+text  主标题     (200,195) 600×74     36px 居中 $cover.text.title
+shape 分隔线     (400,285) 200×3      fill=$titleRule.color
+text  副标       (150,308) 700×50     20px 居中 $cover.text.muted
+shape 标签底     (210,415) 580×50     fill=$cover.deco[3]
+text  前置标签   (222,415) 556×50     13px 居中 $cover.text.title
+```
+（06-skill scenes/01 已按此几何 + platform 封面色落地，可作 C 锚参考。）
+
+### cards-3 · 三栏卡片（T7 候选：三方案并列）
+```
+每栏 i=0,1,2：x = 60 + i*305，宽 273，高 240，y=205
+shape 卡底 (x,205) 273×240  fill=$panel.bg（三栏同色；语义分化走 info/good/warn）
+text  卡题 (x+20,230) 233×50  18-20px
+text  卡文 (x+20,300) 233×92  14-16px，要点 "• " 逐行
 ```
 
-### 2. cards-3 · 三栏卡片（要点并列）
-适用："三个原因/三类方法/三要素"。
-```
-每栏 i=0,1,2：x = 60 + i*305，宽 270–274，高 240，y=205
-shape 卡底  (x,205) 273×240  fill=浅色A/B/C（三色系）
-text  卡标题 (x+20,230) 233×50   20px（如 "① AI 工具普及"）
-text  卡正文 (x+20,300) 233×92   16px，要点用 "• " 逐行
-```
-
-### 3. cards-4 · 四栏卡片（模块/并列清单）
+### cards-4 · 四栏编号卡（T7 候选）
 ```
 每栏 i=0..3：x = 60 + i*290，宽 200，高 295，y=200
-shape 卡底   (x,200) 200×295  fill=浅色
-shape 色头   (x,200) 200×56   fill=对应深主色
-text  编号   (x+10,205) 180×44  16px 反白（"01"…）
-text  卡标题 (x+10,268) 180×47  18px
-shape 短线   (x+60,322) 80×2    fill=浅主色
-text  卡正文 (x+10,334) 180×68  14px
+shape 卡底 (x,200) 200×295 + shape 色头 (x,200) 200×56 + text 编号反白
++ text 卡题 (x+10,268) 180×47 18px + shape 短线 (x+60,322) 80×2 + text 卡文 14px
 ```
 
-### 4. grid-2x2 · 四象限卡（痛点/问答）
+### grid-2x2 · 四象限（T10 矩阵候选）
 ```
-卡 (60,185)(510,185)(60,345)(510,345) 430×110
-shape 卡底 + text (x+20,y+8) 390×74  20px（标题+说明同框，标题行内 <br> 或粗细区分）
-```
-
-### 5. feature-cards · 左色条卡（特性/方式清单，2×2 或 3+2）
-```
-卡 270×140：x=60/365/670（y=210）或 212/517（y=370，交错排列）
-shape 卡底   (x,y) 270×140  fill=浅色
-shape 左色条 (x,y) 5×140    fill=深主色
-text  标题   (x+20,y+18) 230×47  18px
-text  说明   (x+20,y+71) 230×68  14px
+卡 (60,185)(510,185)(60,345)(510,345) 430×110，标题+说明同框（<br> 或粗细分档）
 ```
 
-### 6. table-compare · 表格对比
-适用：多维度对照、工具选型。
+### feature-cards · 左色条卡（T2 变体坐标）
 ```
-3 个选择卡 y=130 高160（同 cards-3 坐标）+ 表格 (60,315) 880×~200
-table: colWidths 均分 880，首行表头深主色反白；cell 文本 14-16px
-每卡：text 标题 (x+20,148) 230×74（"条件"+结论两行）+ text 说明 (x+20,240) 230×44
+卡 270×140：x=60/365/670（y=210）或 212/517（y=370 交错）
+shape 卡底 + shape 左条 5×140 $panel.accentBar + text 题 18px + text 说明 14px
 ```
 
-### 7. process-3 · 三步流程（带号牌）
-适用：操作步骤、连接方法。
+### table-compare · 表格对比（T8 数据表候选）
 ```
-shape 顶部色条 (0,0) 1000×6        fill=主色（可选）
-shape 分隔条    (400,124) 200×4
+3 选择卡 y=130 高 160（同 cards-3）+ table (60,315) 880×~200
+table: colWidths 均分，首行表头深主色反白，cell 14-16px
+```
+
+### process-3 · 号牌三步（T5 变体坐标）
+```
 每步 i=0,1,2：cx = 145 + i*220
-shape 号牌底   (cx,144) 50×50  fill=深主色（逐级变浅可）
-text  号码     (cx,143) 50×50  20px 居中反白
-text  步骤名   (cx-85,204) 220×68  14px 居中
-内容区（y=274 高238）：图片或说明卡，如 (160,274) 200×238 + (380,274) 460×238 双栏
-text  图注     (图x,458) 图宽×44  14px
+shape 号牌 (cx,144) 50×50 $panel.accentBar + text 号码反白 20px
+text 步骤名 (cx-85,204) 220×68 14px 居中；内容区 y=274 高 238
 ```
 
-### 8. image-hero · 图主文辅（截图讲解）
+### image-hero · 图主文辅（T7 候选）
 ```
-image 大图  (~24,96) ~952×371（几乎全幅，src=base64）
-text  角标数字 若干（28px，定位在图上要点处）
-text  底部提示条 (174,482) 581×68  16px（提示词/结论）
+image 大图 (~24,96) ~952×371 + text 角标数字 28px 定位图上 + text 底部提示条 16px
 ```
 
-### 9. stat · 大字结论/强调页
-```
-shape 出血装饰（同 cover，可只留一角）
-text  大结论 (100,200) 800×120  36-40px 居中
-text  支撑说明 (150,340) 700×60  18px 居中 灰
-```
+### code-variants · 代码版式（T9 候选，03-mcp 实测）
+code 元素：`{ "type": "code", "language": "…", "lines": [{"id":"L1","content":"…"}], "fontSize": N, "showLineNumbers": false }`
+- **code-right**（步骤+代码）：左步骤卡 (60,170) 330 宽；右 code (410,168) 530×300 fs13 ≤12 行
+- **code-compare**（正反对比）：双 code (60/510,168) 430×275 fs12；上方 ✕/✓ 标签；底部映射行 (60,455) 880×56
+- **code-cards**（卡内嵌码）：cards-3 卡内 (卡x+15,y+50) 240×130 fs11 ≤5 行
+- 代码行长度 ≤46 字符（不折行实测安全值）；code 元素渲染高度可能大于声明值，
+  下方元素留 ≥24px 余量（check 对 code 是盲区，靠坐标自律）
 
-## 生成规则
+## 三、生成规则（与 workflow-generate 配合）
 
-1. **页头必须有**（除 cover/image-hero）；标题文字 = 大纲节标题的可读化。
-2. 卡片标题元素是讲稿的 spotlight 主要目标——讲到一个要点就在该段加 `@[卡标题id]`。
-3. 元素 id 规范：`text_<slug>` / `shape_<slug>`（slug 用语义短词，如 `text_card1_title`）。
-4. 图表 chart 元素：`chartType` + `data.labels/series`，色取 themeColors，仅用于真数据。
-5. 生成后必跑：`generate.mjs normalize <file>`（补默认/派生几何）→ `check.mjs <dir>`。
-6. 一页配方只选**一个**主配方；混排（如 cards+底部表格）参照 table-compare 的组合方式。
-
-### 10. code-variants · 代码版式（03-mcp 课新增，已实测）
-
-code 元素形状：`{ "type": "code", "language": "python", "lines": [{"id":"L1","content":"…"}], "fontSize": N, "showLineNumbers": false }`（每行一个 CodeLine，id 用 L1..Ln）。
-
-- **code-right**（步骤+代码）：左侧窄栏步骤卡 (60,170) 330 宽；右侧 code (410,168) 530×300，fontSize 13，≤12 行
-- **code-compare**（正反对比）：双 code (60/510,168) 430×275，fontSize 12；上方各一行 ✕/✓ 标签 (y140)；底部类型映射行 (60,455) 880×56
-- **code-cards**（卡内嵌码）：cards-3 卡内嵌 code (卡x+15, y+50) 240×130，fontSize 11，≤5 行
-
-代码行长度 ≤46 字符（530 宽 13px / 240 宽 11px 下不折行的实测安全值）。
+1. 页头三件套必须有（C/image-hero 除外）；标题 = 大纲节标题的可读化。
+2. 页型选择按 design-system §5；新页型先注册再使用（check 拒绝未登记 layout）。
+3. 颜色一律 `$token` 或主题包色值；check 色板 lint 越界即 warning。
+4. 卡片标题元素是 spotlight 主要目标——讲到一个要点加 `@[卡标题id]`；
+   spotlight 引用的 id **原样保留**。
+5. 元素 id 规范：`text_<slug>` / `shape_<slug>`（语义短词）。
+6. chart 元素色取 `themeColors`，仅用于真数据。
+7. 生成后必跑：`generate.mjs normalize <file>` →（若有 $token）`generate.mjs
+   theme <file>` → `check.mjs <dir>`（0 error 才算完）。
