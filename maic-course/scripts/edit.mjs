@@ -207,6 +207,7 @@ export function applyTheme(courseDir, options = {}) {
     writeFileSync(filePath, serializeSceneMd({
       type: String(scene.frontmatter['type'] ?? 'slide'),
       title: String(scene.frontmatter['title'] ?? ''),
+      layout: scene.frontmatter['layout'],
       speech: scene.speech,
       canvas,
       quiz: scene.quiz,

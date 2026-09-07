@@ -113,7 +113,11 @@ export function parseSceneMd(text, file) {
  * @returns {string}
  */
 export function serializeSceneMd(scene) {
-  const out = ['---', `type: ${scene.type}`, `title: ${yamlScalar(scene.title)}`, '---', ''];
+  const out = ['---', `type: ${scene.type}`, `title: ${yamlScalar(scene.title)}`];
+  // layout = 页型身份标记（design-system.md §5；check.mjs 据此分档 lint）——
+  // 重写场景时必须保真，否则标记静默丢失。
+  if (scene.layout) out.push(`layout: ${scene.layout}`);
+  out.push('---', '');
 
   out.push('## 讲稿', '');
   if (scene.speech.length === 0) {

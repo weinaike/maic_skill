@@ -286,7 +286,10 @@ document.addEventListener('keydown', (e) => {
   else if (e.key === 'ArrowRight') { go(cur + 1); }
   else if (e.key === ' ') { e.preventDefault(); playing ? stopPlay() : playFrom(cur); }
 });
-show(0);
+// 深链：#s5 或 ?s=5 直达第 5 个场景（1-based）——审片定位与无头截图共用
+// （headless chrome 的 --screenshot 会丢 URL fragment，查询参数不丢）
+const deep = location.hash.match(/^#s(\\d+)$/) ?? location.search.match(/[?&]s=(\\d+)/);
+show(deep ? Math.min(els.wraps.length - 1, Number(deep[1]) - 1) : 0);
 </script>
 </body>
 </html>

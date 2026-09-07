@@ -1,0 +1,250 @@
+{
+  "$comment": "platform 主题黄金样例（platform.T1.json）——生成时的 few-shot 视觉锚（design-system.md §7-11）。来源：courses/06-skill/scenes/05-先用起来：现成-Skill-与-skill-creator.md。用法：生成器在写画布前先读本样例对齐观感；不要照抄文案。",
+  "layout": "T1",
+  "source": "courses/06-skill/scenes/05-先用起来：现成-Skill-与-skill-creator.md",
+  "canvas": {
+    "id": "slide_skill_05",
+    "viewportSize": 1000,
+    "viewportRatio": 0.5625,
+    "theme": {
+      "backgroundColor": "#ffffff",
+      "themeColors": [
+        "#5b9bd5",
+        "#ed7d31",
+        "#a5a5a5",
+        "#ffc000",
+        "#4472c4"
+      ],
+      "fontColor": "#333333",
+      "fontName": "Microsoft YaHei",
+      "outline": {
+        "color": "#d14424",
+        "width": 2,
+        "style": "solid"
+      },
+      "shadow": {
+        "h": 0,
+        "v": 0,
+        "blur": 10,
+        "color": "#000000"
+      }
+    },
+    "background": {
+      "type": "solid",
+      "color": "#ffffff"
+    },
+    "elements": [
+      {
+        "id": "text_page_title",
+        "type": "text",
+        "left": 60,
+        "top": 50,
+        "width": 880,
+        "height": 62,
+        "content": "<p style=\"font-size: 28px; font-weight: bold; color: #1e3a5f;\">先用起来：现成 Skill 与 skill-creator</p>",
+        "defaultFontName": "Microsoft YaHei",
+        "defaultColor": "#1e3a5f"
+      },
+      {
+        "id": "shape_title_underline",
+        "type": "shape",
+        "left": 70,
+        "top": 116,
+        "width": 80,
+        "height": 3,
+        "shape": "rect",
+        "fill": "#3b82f6",
+        "viewBox": [
+          80,
+          3
+        ],
+        "path": "M0 0 L80 0 L80 3 L0 3 Z",
+        "fixedRatio": false
+      },
+      {
+        "id": "text_page_subtitle",
+        "type": "text",
+        "left": 60,
+        "top": 130,
+        "width": 880,
+        "height": 44,
+        "content": "<p style=\"font-size: 15px; color: #64748b;\">先站在现成生态上，再动手写自己的</p>",
+        "defaultFontName": "Microsoft YaHei",
+        "defaultColor": "#64748b"
+      },
+      {
+        "id": "shape_eco_panel",
+        "type": "shape",
+        "left": 60,
+        "top": 190,
+        "width": 410,
+        "height": 324,
+        "shape": "roundRect",
+        "fill": "#eff6ff",
+        "fixedRatio": false,
+        "viewBox": [
+          410,
+          324
+        ],
+        "path": "M 8 0 L 402 0 Q 410 0 410 8 L 410 316 Q 410 324 402 324 L 8 324 Q 0 324 0 316 L 0 8 Q 0 0 8 0 Z"
+      },
+      {
+        "id": "shape_steps_panel",
+        "type": "shape",
+        "left": 530,
+        "top": 190,
+        "width": 410,
+        "height": 324,
+        "shape": "roundRect",
+        "fill": "#eff6ff",
+        "fixedRatio": false,
+        "viewBox": [
+          410,
+          324
+        ],
+        "path": "M 8 0 L 402 0 Q 410 0 410 8 L 410 316 Q 410 324 402 324 L 8 324 Q 0 324 0 316 L 0 8 Q 0 0 8 0 Z"
+      },
+      {
+        "id": "shape_eco_titlebar",
+        "type": "shape",
+        "left": 60,
+        "top": 190,
+        "width": 410,
+        "height": 48,
+        "shape": "roundRect",
+        "fill": "#dbeafe",
+        "fixedRatio": false,
+        "viewBox": [
+          410,
+          48
+        ],
+        "path": "M 8 0 L 402 0 Q 410 0 410 8 L 410 48 L 0 48 L 0 8 Q 0 0 8 0 Z"
+      },
+      {
+        "id": "text_repo_header",
+        "type": "text",
+        "left": 84,
+        "top": 190,
+        "width": 362,
+        "height": 48,
+        "vAlign": "middle",
+        "content": "<p style=\"font-size: 16px; font-weight: bold; color: #1e3a5f;\">anthropics/skills</p>",
+        "defaultFontName": "Microsoft YaHei",
+        "defaultColor": "#1e3a5f"
+      },
+      {
+        "id": "text_doc_title",
+        "type": "text",
+        "left": 84,
+        "top": 254,
+        "width": 362,
+        "height": 66,
+        "vAlign": "middle",
+        "content": "<p style=\"font-size: 18px; font-weight: bold; color: #1e293b; line-height: 1.5;\">document skills<br><span style=\"font-size: 13px; font-weight: normal; color: #64748b; line-height: 1.4;\">docx · pdf · pptx · xlsx · AI 内置常开</span></p>",
+        "defaultFontName": "Microsoft YaHei",
+        "defaultColor": "#1e293b"
+      },
+      {
+        "id": "text_example_title",
+        "type": "text",
+        "left": 84,
+        "top": 340,
+        "width": 362,
+        "height": 66,
+        "vAlign": "middle",
+        "content": "<p style=\"font-size: 18px; font-weight: bold; color: #1e293b; line-height: 1.5;\">example skills<br><span style=\"font-size: 13px; font-weight: normal; color: #64748b; line-height: 1.4;\">官方示例集 · 装来即用 · 可当范本</span></p>",
+        "defaultFontName": "Microsoft YaHei",
+        "defaultColor": "#1e293b"
+      },
+      {
+        "id": "text_creator",
+        "type": "text",
+        "left": 84,
+        "top": 426,
+        "width": 362,
+        "height": 66,
+        "vAlign": "middle",
+        "content": "<p style=\"font-size: 18px; font-weight: bold; color: #1e293b; line-height: 1.5;\">skill-creator<br><span style=\"font-size: 13px; font-weight: normal; color: #64748b; line-height: 1.4;\">对话说需求 · 自动生成与校验</span></p>",
+        "defaultFontName": "Microsoft YaHei",
+        "defaultColor": "#1e293b"
+      },
+      {
+        "id": "shape_steps_titlebar",
+        "type": "shape",
+        "left": 530,
+        "top": 190,
+        "width": 410,
+        "height": 48,
+        "shape": "roundRect",
+        "fill": "#dbeafe",
+        "fixedRatio": false,
+        "viewBox": [
+          410,
+          48
+        ],
+        "path": "M 8 0 L 402 0 Q 410 0 410 8 L 410 48 L 0 48 L 0 8 Q 0 0 8 0 Z"
+      },
+      {
+        "id": "text_steps_header",
+        "type": "text",
+        "left": 554,
+        "top": 190,
+        "width": 362,
+        "height": 48,
+        "vAlign": "middle",
+        "content": "<p style=\"font-size: 16px; font-weight: bold; color: #1e3a5f;\">Claude Code · 三步接入</p>",
+        "defaultFontName": "Microsoft YaHei",
+        "defaultColor": "#1e3a5f"
+      },
+      {
+        "id": "text_step1_title",
+        "type": "text",
+        "left": 554,
+        "top": 254,
+        "width": 362,
+        "height": 66,
+        "vAlign": "middle",
+        "content": "<p style=\"font-size: 18px; font-weight: bold; color: #1e293b; line-height: 1.5;\"><span style=\"color: #4472c4;\">1 ·</span> 添加 Marketplace<br><span style=\"font-size: 12px; font-weight: normal; font-family: Consolas, monospace; color: #64748b; line-height: 1.4;\">/plugin marketplace add anthropics/skills</span></p>",
+        "defaultFontName": "Microsoft YaHei",
+        "defaultColor": "#1e293b"
+      },
+      {
+        "id": "text_step2_title",
+        "type": "text",
+        "left": 554,
+        "top": 340,
+        "width": 362,
+        "height": 66,
+        "vAlign": "middle",
+        "content": "<p style=\"font-size: 18px; font-weight: bold; color: #1e293b; line-height: 1.5;\"><span style=\"color: #4472c4;\">2 ·</span> 安装套件<br><span style=\"font-size: 13px; font-weight: normal; color: #64748b; line-height: 1.4;\">文档套件 或 示例集</span></p>",
+        "defaultFontName": "Microsoft YaHei",
+        "defaultColor": "#1e293b"
+      },
+      {
+        "id": "text_step3_title",
+        "type": "text",
+        "left": 554,
+        "top": 426,
+        "width": 362,
+        "height": 66,
+        "vAlign": "middle",
+        "content": "<p style=\"font-size: 18px; font-weight: bold; color: #1e293b; line-height: 1.5;\"><span style=\"color: #4472c4;\">3 ·</span> 确认已装<br><span style=\"font-size: 12px; font-weight: normal; font-family: Consolas, monospace; color: #64748b; line-height: 1.4;\">/skills</span></p>",
+        "defaultFontName": "Microsoft YaHei",
+        "defaultColor": "#1e293b"
+      },
+      {
+        "id": "text_security",
+        "type": "text",
+        "left": 60,
+        "top": 518,
+        "width": 880,
+        "height": 40,
+        "vAlign": "middle",
+        "content": "<p style=\"font-size: 13px; color: #92400e;\">安全：只装可信来源 · 第三方 Skill 先审计 scripts 再启用</p>",
+        "defaultFontName": "Microsoft YaHei",
+        "defaultColor": "#92400e"
+      }
+    ],
+    "animations": []
+  }
+}

@@ -1,0 +1,307 @@
+{
+  "$comment": "platform 主题黄金样例（platform.T5.json）——生成时的 few-shot 视觉锚（design-system.md §7-11）。来源：courses/06-skill/scenes/04-渐进披露：护住上下文这块公共品.md。用法：生成器在写画布前先读本样例对齐观感；不要照抄文案。",
+  "layout": "T5",
+  "source": "courses/06-skill/scenes/04-渐进披露：护住上下文这块公共品.md",
+  "canvas": {
+    "id": "slide_skill_04",
+    "viewportSize": 1000,
+    "viewportRatio": 0.5625,
+    "theme": {
+      "backgroundColor": "#ffffff",
+      "themeColors": [
+        "#5b9bd5",
+        "#ed7d31",
+        "#a5a5a5",
+        "#ffc000",
+        "#4472c4"
+      ],
+      "fontColor": "#333333",
+      "fontName": "Microsoft YaHei",
+      "outline": {
+        "color": "#d14424",
+        "width": 2,
+        "style": "solid"
+      },
+      "shadow": {
+        "h": 0,
+        "v": 0,
+        "blur": 10,
+        "color": "#000000"
+      }
+    },
+    "background": {
+      "type": "solid",
+      "color": "#ffffff"
+    },
+    "elements": [
+      {
+        "id": "text_page_title",
+        "type": "text",
+        "left": 60,
+        "top": 50,
+        "width": 880,
+        "height": 62,
+        "content": "<p style=\"font-size: 28px; font-weight: bold; color: #1e3a5f;\">渐进披露：护住上下文这块公共品</p>",
+        "defaultFontName": "Microsoft YaHei",
+        "defaultColor": "#1e3a5f"
+      },
+      {
+        "id": "shape_title_underline",
+        "type": "shape",
+        "left": 70,
+        "top": 116,
+        "width": 80,
+        "height": 3,
+        "shape": "rect",
+        "fill": "#3b82f6",
+        "viewBox": [
+          80,
+          3
+        ],
+        "path": "M0 0 L80 0 L80 3 L0 3 Z",
+        "fixedRatio": false
+      },
+      {
+        "id": "text_page_subtitle",
+        "type": "text",
+        "left": 60,
+        "top": 130,
+        "width": 880,
+        "height": 44,
+        "content": "<p style=\"font-size: 15px; color: #64748b;\">三层加载：目录 · 正文 · 附录</p>",
+        "defaultFontName": "Microsoft YaHei",
+        "defaultColor": "#64748b"
+      },
+      {
+        "id": "text_hero_principle",
+        "type": "text",
+        "left": 60,
+        "top": 192,
+        "width": 880,
+        "height": 60,
+        "vAlign": "middle",
+        "lineHeight": 1,
+        "content": "<p style=\"font-size: 40px; font-weight: bold; color: #1e3a5f;\">用到哪层，才载入哪层</p>",
+        "defaultFontName": "Microsoft YaHei",
+        "defaultColor": "#1e3a5f"
+      },
+      {
+        "id": "text_callout_body",
+        "type": "text",
+        "left": 60,
+        "top": 258,
+        "width": 880,
+        "height": 40,
+        "vAlign": "middle",
+        "content": "<p style=\"font-size: 13px; color: #64748b;\">类比手册：目录常驻 · 章节才读 · 附录才查</p>",
+        "defaultFontName": "Microsoft YaHei",
+        "defaultColor": "#64748b"
+      },
+      {
+        "id": "shape_beat_panel_l0",
+        "type": "shape",
+        "left": 60,
+        "top": 326,
+        "width": 190,
+        "height": 140,
+        "shape": "roundRect",
+        "fill": "#eff6ff",
+        "viewBox": [
+          190,
+          140
+        ],
+        "path": "M 8 0 L 182 0 Q 190 0 190 8 L 190 132 Q 190 140 182 140 L 8 140 Q 0 140 0 132 L 0 8 Q 0 0 8 0 Z",
+        "fixedRatio": false
+      },
+      {
+        "id": "shape_beat_panel_l1",
+        "type": "shape",
+        "left": 270,
+        "top": 326,
+        "width": 190,
+        "height": 140,
+        "shape": "roundRect",
+        "fill": "#eff6ff",
+        "viewBox": [
+          190,
+          140
+        ],
+        "path": "M 8 0 L 182 0 Q 190 0 190 8 L 190 132 Q 190 140 182 140 L 8 140 Q 0 140 0 132 L 0 8 Q 0 0 8 0 Z",
+        "fixedRatio": false
+      },
+      {
+        "id": "shape_beat_panel_l2",
+        "type": "shape",
+        "left": 480,
+        "top": 326,
+        "width": 230,
+        "height": 140,
+        "shape": "roundRect",
+        "fill": "#eff6ff",
+        "viewBox": [
+          230,
+          140
+        ],
+        "path": "M 8 0 L 222 0 Q 230 0 230 8 L 230 132 Q 230 140 222 140 L 8 140 Q 0 140 0 132 L 0 8 Q 0 0 8 0 Z",
+        "fixedRatio": false
+      },
+      {
+        "id": "shape_compare_panel",
+        "type": "shape",
+        "left": 730,
+        "top": 326,
+        "width": 210,
+        "height": 140,
+        "shape": "roundRect",
+        "fill": "#eff6ff",
+        "viewBox": [
+          210,
+          140
+        ],
+        "path": "M 8 0 L 202 0 Q 210 0 210 8 L 210 132 Q 210 140 202 140 L 8 140 Q 0 140 0 132 L 0 8 Q 0 0 8 0 Z",
+        "fixedRatio": false
+      },
+      {
+        "id": "shape_flow_arrow_l0l1",
+        "type": "shape",
+        "left": 252,
+        "top": 387,
+        "width": 16,
+        "height": 18,
+        "shape": "triangle",
+        "fill": "#4472c4",
+        "viewBox": [
+          16,
+          18
+        ],
+        "path": "M 0 0 L 16 9 L 0 18 Z",
+        "fixedRatio": false
+      },
+      {
+        "id": "shape_flow_arrow_l1l2",
+        "type": "shape",
+        "left": 462,
+        "top": 387,
+        "width": 16,
+        "height": 18,
+        "shape": "triangle",
+        "fill": "#4472c4",
+        "viewBox": [
+          16,
+          18
+        ],
+        "path": "M 0 0 L 16 9 L 0 18 Z",
+        "fixedRatio": false
+      },
+      {
+        "id": "text_bar_l0",
+        "type": "text",
+        "left": 84,
+        "top": 350,
+        "width": 142,
+        "height": 46,
+        "vAlign": "middle",
+        "content": "<p style=\"font-size: 18px; font-weight: bold; color: #1e293b;\">L0 目录常驻</p>",
+        "defaultFontName": "Microsoft YaHei",
+        "defaultColor": "#1e293b"
+      },
+      {
+        "id": "text_desc_l0",
+        "type": "text",
+        "left": 84,
+        "top": 400,
+        "width": 142,
+        "height": 42,
+        "vAlign": "middle",
+        "content": "<p style=\"font-size: 13px; color: #64748b;\">约 100 token</p>",
+        "defaultFontName": "Microsoft YaHei",
+        "defaultColor": "#64748b"
+      },
+      {
+        "id": "text_bar_l1",
+        "type": "text",
+        "left": 294,
+        "top": 350,
+        "width": 142,
+        "height": 46,
+        "vAlign": "middle",
+        "content": "<p style=\"font-size: 18px; font-weight: bold; color: #1e293b;\">L1 章节按需</p>",
+        "defaultFontName": "Microsoft YaHei",
+        "defaultColor": "#1e293b"
+      },
+      {
+        "id": "text_desc_l1",
+        "type": "text",
+        "left": 294,
+        "top": 400,
+        "width": 142,
+        "height": 42,
+        "vAlign": "middle",
+        "content": "<p style=\"font-size: 13px; color: #64748b;\">SKILL.md 全文</p>",
+        "defaultFontName": "Microsoft YaHei",
+        "defaultColor": "#64748b"
+      },
+      {
+        "id": "text_step_l2",
+        "type": "text",
+        "left": 504,
+        "top": 350,
+        "width": 182,
+        "height": 46,
+        "vAlign": "middle",
+        "content": "<p style=\"font-size: 18px; font-weight: bold; color: #1e293b;\">L2 附录与工具</p>",
+        "defaultFontName": "Microsoft YaHei",
+        "defaultColor": "#1e293b"
+      },
+      {
+        "id": "text_bar_l2",
+        "type": "text",
+        "left": 504,
+        "top": 400,
+        "width": 182,
+        "height": 42,
+        "vAlign": "middle",
+        "content": "<p style=\"font-size: 13px; color: #64748b;\">references · scripts</p>",
+        "defaultFontName": "Microsoft YaHei",
+        "defaultColor": "#64748b"
+      },
+      {
+        "id": "text_compare_title",
+        "type": "text",
+        "left": 754,
+        "top": 350,
+        "width": 162,
+        "height": 46,
+        "vAlign": "middle",
+        "content": "<p style=\"font-size: 18px; font-weight: bold; color: #1e293b;\">工具 vs Skill</p>",
+        "defaultFontName": "Microsoft YaHei",
+        "defaultColor": "#1e293b"
+      },
+      {
+        "id": "text_compare_body",
+        "type": "text",
+        "left": 754,
+        "top": 400,
+        "width": 162,
+        "height": 42,
+        "vAlign": "middle",
+        "content": "<p style=\"font-size: 13px; color: #64748b;\">定义常驻 vs 目录常驻</p>",
+        "defaultFontName": "Microsoft YaHei",
+        "defaultColor": "#64748b"
+      },
+      {
+        "id": "text_footnote",
+        "type": "text",
+        "left": 60,
+        "top": 518,
+        "width": 880,
+        "height": 40,
+        "vAlign": "middle",
+        "content": "<p style=\"font-size: 13px; color: #92400e;\">前提：filesystem 与 bash 已就位</p>",
+        "defaultFontName": "Microsoft YaHei",
+        "defaultColor": "#92400e"
+      }
+    ],
+    "animations": []
+  }
+}
